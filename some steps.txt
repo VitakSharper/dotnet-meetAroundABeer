@@ -1,0 +1,12 @@
+dotnet new sln
+dotnet new classlib -n Domain
+dotnet new classlib -n Persistence
+dotnet new webapi -n API
+
+dotnet sln add Domain\
+dotnet sln add API\
+dotnet sln add Persistence\
+dotnet sln list
+
+cd API
+dotnet add reference ../Domain/
