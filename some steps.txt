@@ -10,3 +10,8 @@ dotnet sln list
 
 cd API
 dotnet add reference ../Domain/
+
+cd API
+dotnet ef migrations add InitialCreate -p ..\Persistence\ -s ..\API\
+
+docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=4zpYD72Av" -p 1433:1433 --name meetAroundABeerDb -d mcr.microsoft.com/mssql/server:2019-GA-ubuntu-16.04
