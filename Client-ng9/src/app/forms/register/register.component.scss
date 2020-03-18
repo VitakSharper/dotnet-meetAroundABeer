@@ -25,9 +25,16 @@ mat-form-field {
 
 .card-form {
   background: #EDE7F6;
-  margin-top: 1rem;
+  margin: 4rem auto;
+  box-shadow: 0 1.5rem 4rem rgba(#000, .15);
+  transition: transform .3s;
 
   &__title {
     margin: 1rem auto;
+  }
+
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 0 1.5rem 8rem rgba(#000, .10);
   }
 }
