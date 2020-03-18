@@ -1,14 +1,13 @@
 <section fxLayout="row wrap" fxLayoutAlign="center center">
-  <mat-card class="card-form">
-    <mat-card-title fxLayoutAlign="center" class="card-form__title">Sign Up</mat-card-title>
-
-    <form
-      class="form-register"
-      [formGroup]="reactForm"
-      fxLayoutAlign="center center"
-      fxLayoutGap="5px"
-      fxLayout="column wrap"
-      (ngSubmit)="onRegister()">
+  <form
+    class="form-register"
+    [formGroup]="reactForm"
+    fxLayoutAlign="center center"
+    fxLayoutGap="5px"
+    fxLayout="column wrap"
+    (ngSubmit)="onRegister()">
+    <mat-card class="card-form">
+      <mat-card-title fxLayoutAlign="center" class="card-form__title">Sign Up</mat-card-title>
 
       <mat-card-content fxLayout="column wrap" class="card-form__content">
 
@@ -96,6 +95,6 @@
         <button mat-raised-button color="primary" type="submit" [disabled]="!reactForm.valid">Register</button>
         <button mat-raised-button color="warn" type="button">Cancel</button>
       </mat-card-actions>
-    </form>
-  </mat-card>
+    </mat-card>
+  </form>
 </section>
