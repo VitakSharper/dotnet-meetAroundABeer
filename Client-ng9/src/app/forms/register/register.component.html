@@ -1,0 +1,101 @@
+<section fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-card class="card-form">
+    <mat-card-title fxLayoutAlign="center" class="card-form__title">Sign Up</mat-card-title>
+
+    <form
+      class="form-register"
+      [formGroup]="reactForm"
+      fxLayoutAlign="center center"
+      fxLayoutGap="5px"
+      fxLayout="column wrap"
+      (ngSubmit)="onRegister()">
+
+      <mat-card-content fxLayout="column wrap" class="card-form__content">
+
+        <mat-select placeholder="I am A:" formControlName="gender" class="form-register__select">
+          <mat-option value="female">Female</mat-option>
+          <mat-option value="male">Male</mat-option>
+        </mat-select>
+
+        <!--        <mat-radio-group formControlName="gender">-->
+        <!--          <mat-radio-button value="female">Female</mat-radio-button>-->
+        <!--          <mat-radio-button value="male">Male</mat-radio-button>-->
+        <!--        </mat-radio-group>-->
+
+        <mat-form-field>
+          <input
+            matInput type="text" formControlName="username" placeholder="Username"
+          >
+          <mat-error
+            *ngIf="reactForm.get('username').hasError('required')&&reactForm.get('username').touched">
+            Please choose a username!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input type="text" matInput placeholder="Known as" formControlName="knownAs">
+          <mat-error
+            *ngIf="reactForm.get('knownAs').touched && reactForm.get('knownAs').hasError('required')">Known as
+            is required!
+          </mat-error>
+        </mat-form-field>
+
+        <!--        <mat-form-field>-->
+        <!--          <input type="text" matInput placeholder="Date of Birth" formControlName="dateOfBirth" bsDatepicker-->
+        <!--                 [bsConfig]="bsConfig">-->
+        <!--          <mat-error-->
+        <!--            *ngIf="reactForm.get('dateOfBirth').touched && reactForm.get('dateOfBirth').hasError('required')">Date of-->
+        <!--            Birth is required!-->
+        <!--          </mat-error>-->
+        <!--        </mat-form-field>-->
+
+        <mat-form-field>
+          <input type="text" matInput placeholder="City" formControlName="city">
+          <mat-error
+            *ngIf="reactForm.get('city').touched && reactForm.get('city').hasError('required')"
+          >City is Required!
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input type="text" matInput formControlName="country" placeholder="Country">
+          <mat-error
+            *ngIf="reactForm.get('country').touched && reactForm.get('country').hasError('required')"
+          >Country is Required!
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" formControlName="password" placeholder="Password">
+          <mat-error
+            *ngIf="reactForm.get('password').hasError('required')&&reactForm.get('password').touched">Password
+            is required!
+          </mat-error>
+          <mat-error
+            *ngIf="reactForm.get('password').hasError('minlength')&&reactForm.get('password').touched">Password
+            must at least 4 characters!
+          </mat-error>
+          <mat-error
+            *ngIf="reactForm.get('password').hasError('maxlength')&&reactForm.get('password').touched">Password
+            cannot exceed 8 characters!
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput type="password" formControlName="confirmPassword" placeholder="Confirm Password">
+          <mat-error
+            *ngIf="reactForm.get('confirmPassword').hasError('required')&&reactForm.get('confirmPassword').touched"
+          >Password is Required!
+          </mat-error>
+          <mat-error
+            *ngIf="reactForm.hasError('mismatch')&&reactForm.get('confirmPassword').touched"
+          >Password must match!
+          </mat-error>
+        </mat-form-field>
+
+      </mat-card-content>
+      <mat-card-actions align="center">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!reactForm.valid">Register</button>
+        <button mat-raised-button color="warn" type="button">Cancel</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</section>

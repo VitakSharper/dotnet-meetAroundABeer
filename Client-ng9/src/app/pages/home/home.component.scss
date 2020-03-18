@@ -1,0 +1,23 @@
+.small-box, .large-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 8px;
+}
+
+.small-box {
+  height: 100px;
+  width: 100px;
+}
+
+.large-box {
+  height: 300px;
+  width: 300px;
+}
+
+.stretched-tabs {
+  margin: 0 auto;
+  max-width: 800px;
+}
