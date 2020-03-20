@@ -33,6 +33,6 @@ namespace Data.Repository
         }
 
         public async Task<bool> UserExists(string username) =>
-            await _context.Users.AnyAsync(u => u.Username == username);
+            await _context.Users.AnyAsync(u => u.Username.ToLower() == username.ToLower());
     }
 }

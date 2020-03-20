@@ -1,5 +1,6 @@
 using Data.Repository;
 using Data.Repository.Interfaces;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence;
+using System.Reflection;
 
 namespace API
 {
@@ -59,20 +61,15 @@ namespace API
                 });
             });
 
-            // Identity & Data Context builder
-            //var builder = services.AddIdentityCore<AppUser>(opt =>
-            //{
-            //    opt.Password.RequireDigit = false;
-            //    opt.Password.RequiredLength = 8;
-            //    opt.Password.RequireNonAlphanumeric = true;
-            //    opt.Password.RequireUppercase = true;
-            //});
-            //var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
-            //identityBuilder.AddEntityFrameworkStores<DataContext>();
-
             services.AddScoped<IAuthRepository, AuthRepository>();
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddFluentValidation(opt =>
+                    {
+                        opt.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                        opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+                    }
+                );
 
             services.AddAuthorization();
         }
