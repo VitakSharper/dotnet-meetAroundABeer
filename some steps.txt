@@ -20,3 +20,18 @@ npm uninstall -g @angular/cli
 npm cache clean --force
 
 npm install -g @angular/cli
+
+netcfg -d 
+
+// fix docker port binding
+netsh interface ipv4 show excludedportrange protocol=tcp
+netsh int ipv4 add excludedportrange protocol=tcp startport=1433 numberofports=100
+
+Disable hyper-v (which will required a couple of restarts)
+dism.exe /Online /Disable-Feature:Microsoft-Hyper-V
+
+When you finish all the required restarts, reserve the port you want so hyper-v doesn't reserve it back
+netsh int ipv4 add excludedportrange protocol=tcp startport=1433 numberofports=5
+
+Re-Enable hyper-V (which will require a couple of restart)
+dism.exe /Online /Enable-Feature:Microsoft-Hyper-V /All

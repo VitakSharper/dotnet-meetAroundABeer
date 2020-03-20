@@ -9,7 +9,12 @@ import {MatCardModule} from '@angular/material/card';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
 
-const materialComponents = [MatButtonModule, MatToolbarModule, MatIconModule, MatInputModule, MatFormFieldModule, MatTabsModule, MatCardModule, MatRadioModule, MatSelectModule];
+const materialComponents = [
+  MatButtonModule, MatToolbarModule,
+  MatIconModule, MatInputModule,
+  MatFormFieldModule, MatTabsModule,
+  MatCardModule, MatRadioModule,
+  MatSelectModule];
 
 @NgModule({
   imports: [materialComponents],

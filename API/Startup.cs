@@ -1,7 +1,7 @@
-using Domain;
+using Data.Repository;
+using Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,16 +35,46 @@ namespace API
                 opt.UseSqlServer(
                     $"Server={server},{port};Initial Catalog=devSqlDb;User ID={user};Password={password}");
             });
+
+            ConfigureServices(services);
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
+            // CORS Policy
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsPolicy", policy =>
+                {
+                    policy
+                        .WithHeaders("authorization",
+                            "accept",
+                            "content-type",
+                            "origin",
+                            "x-requested-with")
+                        .WithExposedHeaders("WWW-Authenticate")
+                        .WithMethods("GET", "POST", "UPDATE", "PUT")
+                        .WithOrigins("http://localhost:4200")
+                        .AllowCredentials();
+                });
+            });
+
             // Identity & Data Context builder
-            var builder = services.AddIdentityCore<AppUser>();
-            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
-            identityBuilder.AddEntityFrameworkStores<DataContext>();
+            //var builder = services.AddIdentityCore<AppUser>(opt =>
+            //{
+            //    opt.Password.RequireDigit = false;
+            //    opt.Password.RequiredLength = 8;
+            //    opt.Password.RequireNonAlphanumeric = true;
+            //    opt.Password.RequireUppercase = true;
+            //});
+            //var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
+            //identityBuilder.AddEntityFrameworkStores<DataContext>();
+
+            services.AddScoped<IAuthRepository, AuthRepository>();
 
             services.AddControllers();
+
+            services.AddAuthorization();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +88,8 @@ namespace API
             //app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("CorsPolicy");
 
             app.UseAuthorization();
 
