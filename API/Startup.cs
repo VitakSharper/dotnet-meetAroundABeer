@@ -1,14 +1,25 @@
+using Data.Interfaces;
 using Data.Repository;
 using Data.Repository.Interfaces;
+using Data.Security;
+using Domain.Identity;
 using FluentValidation.AspNetCore;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Persistence;
 using System.Reflection;
+using System.Text;
 
 namespace API
 {
@@ -63,13 +74,40 @@ namespace API
 
             services.AddScoped<IAuthRepository, AuthRepository>();
 
-            services.AddControllers()
+
+            services.AddControllers(opt =>
+                {
+                    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                    opt.Filters.Add(new AuthorizeFilter(policy));
+                })
                 .AddFluentValidation(opt =>
                     {
                         opt.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                         opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
                     }
                 );
+
+            // JWT
+            services.AddScoped<IJwtGenerator, JwtGenerator>();
+
+            // Identity
+            services.TryAddSingleton<ISystemClock, SystemClock>();
+            var builder = services.AddIdentityCore<AppUser>();
+            var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
+            identityBuilder.AddEntityFrameworkStores<DataContext>();
+            identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(opt =>
+                {
+                    opt.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["tokenKey"])),
+                        ValidateAudience = false,
+                        ValidateIssuer = false
+                    };
+                });
 
             services.AddAuthorization();
         }
@@ -87,6 +125,8 @@ namespace API
             app.UseRouting();
 
             app.UseCors("CorsPolicy");
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

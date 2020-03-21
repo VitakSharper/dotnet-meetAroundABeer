@@ -3,11 +3,11 @@ using FluentValidation;
 
 namespace API.Validators
 {
-    public class UserValidator : AbstractValidator<UserForRegisterDto>
+    public class UserValidator : AbstractValidator<UserForLoginDto>
     {
         public UserValidator()
         {
-            RuleFor(p => p.Username).NotEmpty();
+            RuleFor(p => p.Email).NotEmpty();
             RuleFor(p => p.Password).Password();
         }
     }

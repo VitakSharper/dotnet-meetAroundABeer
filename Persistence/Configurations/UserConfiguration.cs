@@ -14,9 +14,7 @@ namespace Persistence.Configurations
                 .HasMaxLength(50);
             builder.Property(p => p.Gender)
                 .HasMaxLength(15);
-            builder.Property(p => p.KnownAs)
-                .HasMaxLength(50);
-            builder.Property(p => p.Username)
+            builder.Property(p => p.DisplayName)
                 .HasMaxLength(50);
             builder.Property(p => p.LookingFor)
                 .HasMaxLength(50);

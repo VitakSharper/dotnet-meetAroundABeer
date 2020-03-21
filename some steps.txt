@@ -1,3 +1,8 @@
+develop:
+identity: 96a@Ks5@Q
+
+
+
 dotnet new sln
 dotnet new classlib -n Domain
 dotnet new classlib -n Persistence
@@ -21,9 +26,9 @@ npm cache clean --force
 
 npm install -g @angular/cli
 
-netcfg -d 
 
 // fix docker port binding
+
 netsh interface ipv4 show excludedportrange protocol=tcp
 netsh int ipv4 add excludedportrange protocol=tcp startport=1433 numberofports=100
 
@@ -34,4 +39,4 @@ When you finish all the required restarts, reserve the port you want so hyper-v 
 netsh int ipv4 add excludedportrange protocol=tcp startport=1433 numberofports=5
 
 Re-Enable hyper-V (which will require a couple of restart)
-dism.exe /Online /Enable-Feature:Microsoft-Hyper-V /All
+dism.exe /Online /Enable-Feature:Microsoft-Hyper-V /All 
