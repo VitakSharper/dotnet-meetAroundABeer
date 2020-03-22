@@ -7,8 +7,8 @@ namespace API.Validators
     {
         public UserValidator()
         {
-            RuleFor(p => p.Email).NotEmpty();
-            RuleFor(p => p.Password).Password();
+            RuleFor(p => p.Email).NotEmpty().EmailAddress();
+            RuleFor(p => p.Password).NotEmpty();
         }
     }
 }

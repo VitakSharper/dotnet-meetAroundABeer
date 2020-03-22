@@ -90,13 +90,17 @@ namespace API
             // JWT
             services.AddScoped<IJwtGenerator, JwtGenerator>();
 
-            // Identity
+            // User accessor
+            services.AddScoped<IUserAccessor, UserAccessor>();
+
+            // Identity config
             services.TryAddSingleton<ISystemClock, SystemClock>();
             var builder = services.AddIdentityCore<AppUser>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
             identityBuilder.AddEntityFrameworkStores<DataContext>();
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
+            // JWT config
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
                 {

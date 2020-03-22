@@ -1,4 +1,6 @@
-﻿using Data.Repository.Interfaces;
+﻿using Data.Dtos;
+using Data.Interfaces;
+using Data.Repository.Interfaces;
 using Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
@@ -9,37 +11,60 @@ namespace Data.Repository
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IUserAccessor _userAccessor;
 
-        public AuthRepository(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) =>
-            (_userManager, _signInManager) = (userManager, signInManager);
-
-        public async Task<AppUser> Register(AppUser user, string password)
+        public AuthRepository(
+            UserManager<AppUser> userManager,
+            SignInManager<AppUser> signInManager,
+            IUserAccessor userAccessor
+        )
         {
-            //await _context.Users.AddAsync(user.CreatePasswordHash(password));
-            //await _context.SaveChangesAsync();
-
-            return user;
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _userAccessor = userAccessor;
         }
 
-        public async Task<AppUser> Login(string email, string password)
+        public async Task<AppUser> Register(UserForRegisterDto userForRegisterDto)
         {
-            var user = await _userManager.FindByEmailAsync(email);
+            if (await _userManager.FindByEmailAsync(userForRegisterDto.Email) != null) return null;
+
+            if (await _userManager.FindByNameAsync(userForRegisterDto.Username) != null) return null;
+
+            var user = new AppUser
+            {
+                DisplayName = userForRegisterDto.DisplayName,
+                Email = userForRegisterDto.Email,
+                UserName = userForRegisterDto.Username
+            };
+
+            var result = await _userManager.CreateAsync(user, userForRegisterDto.Password);
+
+            if (result.Succeeded)
+            {
+                return new AppUser
+                {
+                    DisplayName = userForRegisterDto.DisplayName,
+                    UserName = userForRegisterDto.Username
+                };
+            }
+
+            return null;
+        }
+
+        public async Task<AppUser> Login(UserForLoginDto userForLoginDto)
+        {
+            var user = await _userManager.FindByEmailAsync(userForLoginDto.Email);
 
             if (user == null) return null;
 
-            var result = await _signInManager.CheckPasswordSignInAsync(user, password, false);
+            var result = await _signInManager.CheckPasswordSignInAsync(user, userForLoginDto.Password, false);
 
             return result.Succeeded
                 ? user
                 : null;
         }
 
-        public Task<bool> UserExists(string username)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        //public async Task<bool> UserExists(string username) =>
-        //    await _context.Users.AnyAsync(u => u.DisplayName.ToLower() == username.ToLower());
+        public async Task<AppUser> CurrentUser() =>
+            await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
     }
 }
