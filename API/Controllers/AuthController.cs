@@ -1,4 +1,5 @@
-﻿using Data.Dtos;
+﻿using AutoMapper;
+using Data.Dtos;
 using Data.Interfaces;
 using Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Authorization;
@@ -13,11 +14,16 @@ namespace API.Controllers
     {
         private readonly IAuthRepository _authRepository;
         private readonly IJwtGenerator _jwtGenerator;
+        private readonly IMapper _mapper;
 
-        public AuthController(IAuthRepository authRepository, IJwtGenerator jwtGenerator)
+        public AuthController(
+            IAuthRepository authRepository,
+            IJwtGenerator jwtGenerator,
+            IMapper mapper)
         {
             _authRepository = authRepository;
             _jwtGenerator = jwtGenerator;
+            _mapper = mapper;
         }
 
         [AllowAnonymous]
@@ -41,9 +47,11 @@ namespace API.Controllers
         {
             var user = await _authRepository.Login(userForLoginDto);
             if (user == null) return Unauthorized(new { Login = "User or password is not correct." });
+            var userToReturn = _mapper.Map<UserForListDto>(user);
 
             return Ok(new
             {
+                userToReturn,
                 token = _jwtGenerator.CreateToken(user)
             });
         }

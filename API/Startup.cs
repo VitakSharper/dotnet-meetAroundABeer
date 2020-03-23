@@ -1,3 +1,4 @@
+using AutoMapper;
 using Data.Interfaces;
 using Data.Repository;
 using Data.Repository.Interfaces;
@@ -71,6 +72,9 @@ namespace API
                         .AllowCredentials();
                 });
             });
+
+            // AutoMapper
+            services.AddAutoMapper(typeof(AuthRepository).Assembly);
 
             services.AddScoped<IAuthRepository, AuthRepository>();
 
