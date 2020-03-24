@@ -56,19 +56,20 @@
         <!--        LOGIN-->
         <button
           type="submit"
-          mat-raised-button
+          mat-stroked-button
           color="primary"
+          class="card-form__submit"
           [disabled]="!loginForm.valid"
         >Login
         </button>
         <!--       CANCEL-->
-        <button
-          type="button"
-          mat-raised-button
-          color="warn"
-          (click)="cancelHandler()"
-        >Cancel
-        </button>
+        <!--        <button-->
+        <!--          type="button"-->
+        <!--          mat-raised-button-->
+        <!--          color="warn"-->
+        <!--          (click)="cancelHandler()"-->
+        <!--        >Cancel-->
+        <!--        </button>-->
       </mat-card-actions>
     </mat-card>
   </form>

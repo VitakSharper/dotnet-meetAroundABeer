@@ -76,6 +76,7 @@ namespace API
             // AutoMapper
             services.AddAutoMapper(typeof(AuthRepository).Assembly);
 
+            // Repository services
             services.AddScoped<IAuthRepository, AuthRepository>();
 
 
@@ -91,10 +92,10 @@ namespace API
                     }
                 );
 
-            // JWT
+            // JWT service
             services.AddScoped<IJwtGenerator, JwtGenerator>();
 
-            // User accessor
+            // User accessor service
             services.AddScoped<IUserAccessor, UserAccessor>();
 
             // Identity config

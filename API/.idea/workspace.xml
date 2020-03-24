@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4cb23a17-a193-4e41-b332-11ae2266fa4c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/API.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/API.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Controllers/AuthController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Controllers/AuthController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../some steps.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../some steps.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Startup.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,6 +35,7 @@
       <option name="presentableId" value="Default" />
       <updated>1584810194931</updated>
       <workItem from="1584810199430" duration="10000" />
+      <workItem from="1584964672368" duration="13000" />
     </task>
     <servers />
   </component>

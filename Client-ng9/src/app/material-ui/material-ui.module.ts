@@ -8,13 +8,19 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatCardModule} from '@angular/material/card';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 const materialComponents = [
   MatButtonModule, MatToolbarModule,
   MatIconModule, MatInputModule,
   MatFormFieldModule, MatTabsModule,
   MatCardModule, MatRadioModule,
-  MatSelectModule];
+  MatSelectModule, MatMenuModule,
+  MatIconModule, MatChipsModule,
+  MatDividerModule, MatGridListModule];
 
 @NgModule({
   imports: [materialComponents],

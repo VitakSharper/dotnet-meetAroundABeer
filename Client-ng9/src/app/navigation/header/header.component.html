@@ -1,6 +1,33 @@
 <mat-toolbar color="primary" class="mat-elevation-z6 header" role="heading">
   <mat-toolbar-row aria-label="Top Toolbar" class="header__nav">
-    <a mat-button routerLink="#">Test1</a>
+    <a mat-button routerLink="#">LOGO</a>
     <span class="flex-spacer"></span>
+    <a mat-button routerLink="#">Matches</a>
+    <a mat-button routerLink="#">Lists</a>
+    <a mat-button routerLink="#">Messages</a>
+    <span class="flex-spacer"></span>
+
+
+    <mat-chip-list *ngIf="!onLoggedIn else loggedIn">
+      <mat-chip color="primary" selected>You are not logged in</mat-chip>
+    </mat-chip-list>
+
+    <ng-template #loggedIn>
+      <button mat-button [matMenuTriggerFor]="afterMenu">
+        Welcome USER
+        <mat-icon>arrow_drop_down</mat-icon>
+      </button>
+      <mat-menu #afterMenu="matMenu" xPosition="after" class="header__menu">
+        <button mat-menu-item class="header__menu-item" (click)="logOut()">
+          <mat-icon class="menu-icon">input</mat-icon>
+          Logout
+        </button>
+        <button mat-menu-item class="header__menu-item">
+          <mat-icon class="menu-icon">face</mat-icon>
+          Profile
+        </button>
+      </mat-menu>
+    </ng-template>
+
   </mat-toolbar-row>
 </mat-toolbar>

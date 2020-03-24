@@ -45,14 +45,14 @@ namespace API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
-            var user = await _authRepository.Login(userForLoginDto);
-            if (user == null) return Unauthorized(new { Login = "User or password is not correct." });
-            var userToReturn = _mapper.Map<UserForListDto>(user);
+            var userToReturn = await _authRepository.Login(userForLoginDto);
+            if (userToReturn == null) return Unauthorized(new { Login = "User or password is not correct." });
+            var user = _mapper.Map<UserForListDto>(userToReturn);
 
             return Ok(new
             {
-                userToReturn,
-                token = _jwtGenerator.CreateToken(user)
+                user,
+                token = _jwtGenerator.CreateToken(userToReturn)
             });
         }
 
@@ -62,9 +62,11 @@ namespace API.Controllers
             var user = await _authRepository.CurrentUser();
             if (user == null) return BadRequest();
 
+            var userToReturn = _mapper.Map<UserForListDto>(user);
+
             return Ok(new
             {
-                user,
+                userToReturn,
                 Token = _jwtGenerator.CreateToken(user)
             });
         }

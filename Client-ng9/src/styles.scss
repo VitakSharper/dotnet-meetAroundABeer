@@ -15,10 +15,39 @@ body {
   box-sizing: border-box;
   padding: 6rem;
   margin: 0;
+  color: #1c1e21;
+  direction: ltr;
+  line-height: 1.34;
+  unicode-bidi: embed;
 }
 
 html {
   height: 100%;
+}
+
+.mat-select-panel {
+  background: #EDE7F6;
+}
+
+.header__menu {
+  background-image: linear-gradient(
+      135deg,
+      rgb(103, 58, 183) 0%,
+      rgb(33, 138, 174) 69%
+  ) !important;
+  margin-top: 0.7rem;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+}
+
+.header__menu-item {
+  color: #eee;
+  text-align: center !important;
+}
+
+.menu-icon {
+  color: #eee !important;
+  margin-right: 3px !important;
 }
 
 .mat-tab-body-content {

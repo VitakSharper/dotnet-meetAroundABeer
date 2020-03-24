@@ -20,10 +20,11 @@ export class RegisterComponent implements OnInit {
 
   private createRegisterForm() {
     this.reactForm = this.fb.group({
-      gender: ['female'],
+      gender: [null, Validators.required],
       username: ['', Validators.required],
-      knownAs: ['', Validators.required],
-      dateOfBirth: [null, Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      displayName: ['', Validators.required],
+      //dateOfBirth: [null,Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
@@ -36,5 +37,9 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
+  }
+
+  onCancel() {
+    this.reactForm.reset();
   }
 }

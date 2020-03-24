@@ -16,12 +16,17 @@
 
   &__select {
     margin: 1rem 0;
+    width: 20%;
   }
 }
 
 mat-form-field {
   width: 35rem
 }
+
+//.select-form-field {
+//  width: 40% !important;
+//}
 
 .card-form {
   background: #EDE7F6;
