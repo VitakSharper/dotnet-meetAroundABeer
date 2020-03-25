@@ -2,6 +2,22 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 
+interface RegUser {
+  gender: string,
+  username: string,
+  email: string,
+  displayName: string,
+  //dateOfBirth: [null,Validators.required],
+  city: string,
+  country: string,
+  password: string,
+}
+
+interface LogUser {
+  email: string,
+  password: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,7 +27,7 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
-  login(model: any) {
+  login(model: LogUser) {
     return this.http.post(`${this.baseUrl}/login`, model)
       .pipe(
         map((resp: any) => {
@@ -20,6 +36,15 @@ export class AuthService {
           }
         })
       );
+  }
+
+  register(user: RegUser) {
+    return this.http.post(`${this.baseUrl}/register`, user)
+      .subscribe((resp: any) => {
+        if (resp) {
+          localStorage.setItem('token', resp.token);
+        }
+      }, error => console.log(error));
   }
 
 }

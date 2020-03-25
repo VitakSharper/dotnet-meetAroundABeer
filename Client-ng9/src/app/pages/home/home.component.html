@@ -5,8 +5,8 @@
 <mat-divider></mat-divider>
 
 
-<mat-tab-group mat-stretch-tabs class="stretched-tabs">
-  <mat-tab label="Login">
+<mat-tab-group mat-stretch-tabs class="stretched-tabs" *ngIf="!onLoggedIn">
+  <mat-tab label="Sign In">
     <div>
       <app-login></app-login>
     </div>

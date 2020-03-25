@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CustomValidatorsComponent} from '../custom-validators.component';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -11,7 +12,9 @@ export class RegisterComponent implements OnInit {
   reactForm: FormGroup;
 
   constructor(
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+    private auth: AuthService
+  ) {
   }
 
   ngOnInit(): void {
@@ -27,7 +30,7 @@ export class RegisterComponent implements OnInit {
       //dateOfBirth: [null,Validators.required],
       city: ['', Validators.required],
       country: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]],
+      password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(16)]],
       confirmPassword: ['', Validators.required]
     }, {validator: CustomValidatorsComponent.passwordMatchValidator});
   }
@@ -36,7 +39,7 @@ export class RegisterComponent implements OnInit {
     if (!this.reactForm.valid) {
       return;
     }
-
+    this.auth.register(this.reactForm.value);
   }
 
   onCancel() {

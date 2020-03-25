@@ -7,7 +7,9 @@
     fxLayout="column wrap"
     (ngSubmit)="onRegister()">
     <mat-card class="card-form">
-      <mat-card-title fxLayoutAlign="center" class="card-form__title">Sign Up</mat-card-title>
+      <mat-card-title fxLayoutAlign="center" class="card-form__title">
+        <mat-icon>create</mat-icon>
+      </mat-card-title>
 
       <mat-card-content fxLayout="column wrap" class="card-form__content">
         <mat-form-field appearance="standard" class="select-form-field">
@@ -108,7 +110,7 @@
                 [disabled]="!reactForm.valid">
           Register
         </button>
-        <button mat-stroked-button color="warn" type="button" (click)="onCancel()">Cancel</button>
+        <button mat-stroked-button color="warn" type="button" (click)="onCancel()">Reset</button>
       </mat-card-actions>
     </mat-card>
   </form>

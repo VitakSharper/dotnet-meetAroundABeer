@@ -33,12 +33,10 @@ namespace API.Controllers
             var user = await _authRepository.Register(userForRegisterDto);
             if (user == null) return BadRequest(new { Register = "User already exists or problem creating user." });
 
-            //return Ok(new
-            //{
-            //    user,
-            //    token = _jwtGenerator.CreateToken(user)
-            //});
-            return StatusCode(201);
+            return Ok(new
+            {
+                token = _jwtGenerator.CreateToken(user)
+            });
         }
 
         [AllowAnonymous]

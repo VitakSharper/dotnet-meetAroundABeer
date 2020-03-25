@@ -29,7 +29,9 @@ mat-form-field {
 //}
 
 .card-form {
-  background: #EDE7F6;
+  border: 1px solid #000;
+
+  //background: #EDE7F6;
   margin: 4rem auto;
   box-shadow: 0 1.5rem 4rem rgba(#000, .15);
   transition: transform .3s;
