@@ -10,6 +10,7 @@ import {AuthService} from '../../services/auth.service';
 })
 export class RegisterComponent implements OnInit {
   reactForm: FormGroup;
+  errors = [];
 
   constructor(
     private fb: FormBuilder,
@@ -39,10 +40,17 @@ export class RegisterComponent implements OnInit {
     if (!this.reactForm.valid) {
       return;
     }
-    this.auth.register(this.reactForm.value);
+    this.auth.register(this.reactForm.value).subscribe((resp: any) => {
+      if (resp) {
+        localStorage.setItem('token', resp.token);
+      }
+    }, error => {
+      this.errors = error;
+    });
   }
 
   onCancel() {
     this.reactForm.reset();
+    this.errors = [];
   }
 }

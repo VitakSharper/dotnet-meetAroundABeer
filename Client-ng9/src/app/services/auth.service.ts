@@ -39,12 +39,7 @@ export class AuthService {
   }
 
   register(user: RegUser) {
-    return this.http.post(`${this.baseUrl}/register`, user)
-      .subscribe((resp: any) => {
-        if (resp) {
-          localStorage.setItem('token', resp.token);
-        }
-      }, error => console.log(error));
+    return this.http.post(`${this.baseUrl}/register`, user);
   }
 
 }

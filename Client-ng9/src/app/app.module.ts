@@ -12,6 +12,7 @@ import {RegisterComponent} from './forms/register/register.component';
 import {LoginComponent} from './forms/login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {httpInterceptorProviders} from './interceptors/error.interceptor';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import {HttpClientModule} from '@angular/common/http';
     FlexLayoutModule,
     MaterialUiModule
   ],
-  providers: [],
+  providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule {

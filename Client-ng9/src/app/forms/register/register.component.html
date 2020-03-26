@@ -103,6 +103,10 @@
           </mat-error>
         </mat-form-field>
 
+        <mat-list *ngIf="errors.length>0">
+          <mat-list-item *ngFor="let error of errors; let i=index;" class="mat-list-item">{{error}}</mat-list-item>
+        </mat-list>
+
       </mat-card-content>
       <mat-card-actions align="center">
         <button mat-stroked-button
