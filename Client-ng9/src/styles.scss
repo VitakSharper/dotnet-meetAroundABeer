@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "../node_modules/alertifyjs/build/css/alertify.min.css";
+@import "../node_modules/alertifyjs/build/css/themes/semantic.min.css";
 
 *,
 *::after,
@@ -27,6 +29,10 @@ html {
 
 .mat-select-panel {
   background: #EDE7F6;
+}
+
+.alertify-notifier.ajs-top {
+  top: 55px !important;
 }
 
 .header__menu {

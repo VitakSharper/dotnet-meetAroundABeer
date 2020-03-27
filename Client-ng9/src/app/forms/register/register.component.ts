@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CustomValidatorsComponent} from '../custom-validators.component';
 import {AuthService} from '../../services/auth.service';
+import {AlertifyService} from '../../services/alertify.service';
 
 @Component({
   selector: 'app-register',
@@ -14,7 +15,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private auth: AuthService
+    private auth: AuthService,
+    private alertify: AlertifyService
   ) {
   }
 
@@ -46,6 +48,7 @@ export class RegisterComponent implements OnInit {
       }
     }, error => {
       this.errors = error;
+      this.alertify.errorAlert('Problem register user.');
     });
   }
 
