@@ -13,6 +13,7 @@ import {LoginComponent} from './forms/login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {httpInterceptorProviders} from './interceptors/error.interceptor';
+import {JwtModule} from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,14 @@ import {httpInterceptorProviders} from './interceptors/error.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     FlexLayoutModule,
-    MaterialUiModule
+    MaterialUiModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => {
+          return localStorage.getItem('token');
+        }
+      }
+    })
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

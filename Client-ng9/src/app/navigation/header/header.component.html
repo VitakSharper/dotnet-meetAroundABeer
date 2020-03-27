@@ -16,7 +16,7 @@
 
     <ng-template #loggedIn>
       <button mat-button [matMenuTriggerFor]="afterMenu">
-        Welcome USER
+        Welcome {{displayName|titlecase}}
         <mat-icon>arrow_drop_down</mat-icon>
       </button>
       <mat-menu #afterMenu="matMenu" xPosition="after" class="header__menu">

@@ -49,7 +49,6 @@ namespace API.Controllers
 
             return Ok(new
             {
-                user,
                 token = _jwtGenerator.CreateToken(userToReturn)
             });
         }
@@ -65,7 +64,7 @@ namespace API.Controllers
             return Ok(new
             {
                 userToReturn,
-                Token = _jwtGenerator.CreateToken(user)
+                token = _jwtGenerator.CreateToken(user)
             });
         }
     }

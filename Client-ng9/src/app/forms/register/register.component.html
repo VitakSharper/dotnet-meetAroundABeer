@@ -114,7 +114,11 @@
                 [disabled]="!reactForm.valid">
           Register
         </button>
-        <button mat-stroked-button color="warn" type="button" (click)="onCancel()">Reset</button>
+        <button mat-stroked-button color="warn" type="button"
+                (click)="onCancel()"
+                [disabled]="!reactForm.dirty"
+        >Reset
+        </button>
       </mat-card-actions>
     </mat-card>
   </form>

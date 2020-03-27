@@ -1,17 +1,28 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
+import {AlertifyService} from '../../services/alertify.service';
+import {AuthService} from '../../services/auth.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
+  unsubscription: Subscription;
+  displayName: string;
+
+  get onLoggedIn(): boolean {
+    return this.auth.loggedIn();
+  }
 
   constructor(
     private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
+    private domSanitizer: DomSanitizer,
+    private alertify: AlertifyService,
+    private auth: AuthService
   ) {
     this.matIconRegistry.addSvgIcon(
       'beer',
@@ -20,13 +31,20 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  get onLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    this.unsubscription = this.auth.getDecToken.subscribe(resp => {
+      this.displayName = resp && resp.nameid;
+    });
   }
 
   logOut() {
     localStorage.removeItem('token');
+    this.auth.getDecToken.next('');
+    setTimeout(() => {
+      this.alertify.warningAlert('Logged Out.');
+    }, 500);
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscription.unsubscribe();
   }
 }
