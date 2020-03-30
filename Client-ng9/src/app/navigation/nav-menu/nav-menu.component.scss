@@ -1,0 +1,148 @@
+.navigation {
+  &__checkbox {
+    display: none;
+  }
+
+  &__button {
+    position: fixed;
+    background-color: rgb(197, 181, 225);
+    height: 4.5rem;
+    width: 4.5rem;
+    text-align: center;
+    cursor: pointer;
+    top: 12.5rem;
+    right: 1.5rem;
+    border-radius: 50%;
+    z-index: 2000;
+    //    box-shadow: 0 1rem 3rem rgba(#000, .1);
+    box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+  }
+
+  &__background {
+    position: fixed;
+    height: 3.5rem;
+    width: 3.5rem;
+    border-radius: 50%;
+    top: 12.5rem;
+    right: 2rem;
+    background-image: radial-gradient(rgb(149, 117, 205, .5) 20%, rgb(33, 138, 174, .5) 69%);
+    //background-image: radial-gradient(rgba(189, 189, 189), rgba(117, 117, 117));
+    z-index: 1000;
+
+    transition: transform .8s cubic-bezier(0.83, 0, 0.17, 1);
+  }
+
+  &__nav {
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 1500;
+    opacity: 0;
+    width: 0;
+    transition: all .8s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  }
+
+  &__list {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-30%, -30%);
+
+    width: 100%;
+    list-style: none;
+    text-align: center;
+  }
+
+  &__item {
+    margin: 2rem;
+  }
+
+  &__link {
+    //pointer-events: none;
+    //cursor: not-allowed;
+    &:link,
+    &:visited {
+      display: inline-block;
+      font-size: 3rem;
+      font-weight: 300;
+      color: #fff;
+      padding: 1rem 2rem;
+      text-decoration: none;
+      text-transform: uppercase;
+      background-image: linear-gradient(120deg, transparent 0%, transparent 50%, #fff 50%);
+      background-size: 230%;
+      transition: all .4s;
+    }
+
+    &:hover,
+    &:active {
+      background-position: 100%;
+      color: rgb(33, 138, 174, .5);
+      transform: translateX(1rem);
+    }
+  }
+
+  &__checkbox:checked ~ &__background {
+    transform: scale(55);
+  }
+
+  &__checkbox:checked ~ &__nav {
+    opacity: 1;
+    width: 100%;
+  }
+
+  // ICON
+
+  &__icon {
+    position: relative;
+    margin-top: 2.2rem;
+
+    &,
+    &::before,
+    &::after {
+      width: 1.7rem;
+      height: 3px;
+      background-color: #fff;
+      display: inline-block;
+    }
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      transition: all .2s;
+    }
+
+    &::before {
+      top: -.6rem;
+    }
+
+    &::after {
+      top: .6rem
+    }
+  }
+
+  &__button:hover &__icon::before {
+    top: -.7rem
+  }
+
+  &__button:hover &__icon::after {
+    top: .7rem
+  }
+
+  &__checkbox:checked + &__button &__icon {
+    background-color: transparent;
+  }
+
+  &__checkbox:checked + &__button &__icon::before {
+    top: 0;
+    transform: rotate(135deg);
+  }
+
+  &__checkbox:checked + &__button &__icon::after {
+    top: 0;
+    transform: rotate(-135deg);
+  }
+}

@@ -14,6 +14,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {httpInterceptorProviders} from './interceptors/error.interceptor';
 import {JwtModule} from '@auth0/angular-jwt';
+import { NavMenuComponent } from './navigation/nav-menu/nav-menu.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {JwtModule} from '@auth0/angular-jwt';
     HeaderComponent,
     HomeComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    NavMenuComponent
   ],
   imports: [
     BrowserModule,
