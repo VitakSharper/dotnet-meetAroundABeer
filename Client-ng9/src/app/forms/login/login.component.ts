@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {AlertifyService} from '../../services/alertify.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private router: Router
   ) {
   }
 
@@ -32,7 +34,10 @@ export class LoginComponent implements OnInit {
   onLogIn() {
     this.authService.login(this.loginForm.value)
       .subscribe(next => {
-        this.alertify.successAlert('Logged in successfully.');
-      }, error => this.alertify.errorAlert(error));
+          this.alertify.successAlert('Logged in successfully.');
+        }, error => this.alertify.errorAlert(error),
+        () => {
+          this.router.navigate(['/members']);
+        });
   }
 }

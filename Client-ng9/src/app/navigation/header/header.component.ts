@@ -4,6 +4,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {AlertifyService} from '../../services/alertify.service';
 import {AuthService} from '../../services/auth.service';
 import {Subscription} from 'rxjs';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -22,7 +23,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private matIconRegistry: MatIconRegistry,
     private domSanitizer: DomSanitizer,
     private alertify: AlertifyService,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) {
     this.matIconRegistry.addSvgIcon(
       'beer',
@@ -42,6 +44,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.alertify.warningAlert('Logged Out.');
     }, 500);
+    this.router.navigate(['/']);
   }
 
   ngOnDestroy(): void {

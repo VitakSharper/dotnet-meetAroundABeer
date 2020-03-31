@@ -1,12 +1,16 @@
 <mat-toolbar color="primary" class="mat-elevation-z6 header" role="heading">
   <mat-toolbar-row aria-label="Top Toolbar" class="header__nav">
-    <a mat-button routerLink="#">
+    <a mat-button [routerLink]="['/']">
       <mat-icon class="header__nav-logo" svgIcon="beer"></mat-icon>
     </a>
     <span class="flex-spacer"></span>
-    <a mat-button routerLink="#">Matches</a>
-    <a mat-button routerLink="#">Lists</a>
-    <a mat-button routerLink="#">Messages</a>
+
+    <mat-nav-list fxLayout class="header__mat-list" *ngIf="onLoggedIn">
+      <a mat-list-item routerLinkActive="active" [routerLink]="['/members']" class="header__mat-item">Matches</a>
+      <a mat-list-item routerLinkActive="active" [routerLink]="['/lists']" class="header__mat-item">Lists</a>
+      <a mat-list-item routerLinkActive="active" [routerLink]="['/messages']" class="header__mat-item">Messages</a>
+    </mat-nav-list>
+
     <span class="flex-spacer"></span>
 
 

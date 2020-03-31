@@ -14,7 +14,10 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {httpInterceptorProviders} from './interceptors/error.interceptor';
 import {JwtModule} from '@auth0/angular-jwt';
-import { NavMenuComponent } from './navigation/nav-menu/nav-menu.component';
+import {NavMenuComponent} from './navigation/nav-menu/nav-menu.component';
+import {MemberListComponent} from './pages/member-list/member-list.component';
+import {ListsComponent} from './pages/lists/lists.component';
+import {MessagesComponent} from './pages/messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -23,12 +26,16 @@ import { NavMenuComponent } from './navigation/nav-menu/nav-menu.component';
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    NavMenuComponent
+    NavMenuComponent,
+    MemberListComponent,
+    ListsComponent,
+    MessagesComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
