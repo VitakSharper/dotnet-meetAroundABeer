@@ -16,8 +16,10 @@ namespace Persistence.Configurations
                 .HasMaxLength(15);
             builder.Property(p => p.DisplayName)
                 .HasMaxLength(50);
-            builder.Property(p => p.LookingFor)
-                .HasMaxLength(50);
+            builder.HasMany(p => p.Photos)
+                .WithOne(u => u.User).IsRequired()
+                .HasForeignKey(f => f.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

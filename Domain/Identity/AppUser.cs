@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections.Generic;
 
 namespace Domain.Identity
 {
@@ -15,5 +16,6 @@ namespace Domain.Identity
         public DateTime DateOfBirth { get; set; }
         public DateTime Created { get; set; }
         public DateTime LastActive { get; set; }
+        public virtual ICollection<Photo> Photos { get; set; }
     }
 }
