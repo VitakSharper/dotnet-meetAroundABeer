@@ -2,6 +2,7 @@ using Domain.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -13,6 +14,12 @@ namespace API
 {
     public class Program
     {
+        private readonly IConfiguration _configuration;
+
+        public Program(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();

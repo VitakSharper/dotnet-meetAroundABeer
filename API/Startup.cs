@@ -99,19 +99,7 @@ namespace API
 
             // Repository services
             services.AddScoped<IAuthRepository, AuthRepository>();
-
-
-            services.AddControllers(opt =>
-                {
-                    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-                    opt.Filters.Add(new AuthorizeFilter(policy));
-                })
-                .AddFluentValidation(opt =>
-                    {
-                        opt.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
-                        opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-                    }
-                );
+            services.AddScoped<IDatingRepository, DatingRepository>();
 
             // JWT service
             services.AddScoped<IJwtGenerator, JwtGenerator>();
@@ -138,6 +126,18 @@ namespace API
                         ValidateIssuer = false
                     };
                 });
+
+            services.AddControllers(opt =>
+                {
+                    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                    opt.Filters.Add(new AuthorizeFilter(policy));
+                })
+                .AddFluentValidation(opt =>
+                    {
+                        opt.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+                        opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+                    }
+                );
 
             services.AddAuthorization();
         }

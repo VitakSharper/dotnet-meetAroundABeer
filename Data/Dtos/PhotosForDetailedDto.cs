@@ -1,10 +1,8 @@
-﻿using Domain.Identity;
-using System;
-using System.Text.Json.Serialization;
+﻿using System;
 
-namespace Domain
+namespace Data.Dtos
 {
-    public class Photo
+    public class PhotosForDetailedDto
     {
         public string Id { get; set; }
         public string Url { get; set; }
@@ -12,7 +10,5 @@ namespace Domain
         public DateTime DateAdded { get; set; }
         public bool IsMain { get; set; }
         public bool Status { get; set; }
-        public string UserId { get; set; }
-        [JsonIgnore] public virtual AppUser User { get; set; }
     }
 }

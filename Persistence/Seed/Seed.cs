@@ -49,6 +49,7 @@ namespace Persistence.Seed
                     await userManager.CreateAsync(userToSeed, "96a@Ks5@Q");
                 }
 
+
                 await context.SaveChangesAsync();
             }
         }
