@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Data.Dtos;
+using Data.Interfaces;
 using Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -11,11 +12,21 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
+        private readonly IAuthRepository _authRepository;
+        private readonly IJwtGenerator _jwtGenerator;
         private readonly IDatingRepository _datingRepository;
         private readonly IMapper _mapper;
 
-        public UsersController(IDatingRepository datingRepository, IMapper mapper) =>
+        public UsersController(
+            IDatingRepository datingRepository,
+            IAuthRepository authRepository,
+            IJwtGenerator jwtGenerator,
+            IMapper mapper)
+        {
+            _authRepository = authRepository;
+            _jwtGenerator = jwtGenerator;
             (_datingRepository, _mapper) = (datingRepository, mapper);
+        }
 
         [HttpGet]
         public async Task<IActionResult> GetUsers()
@@ -36,6 +47,21 @@ namespace API.Controllers
 
             var userToReturn = _mapper.Map<UserForDetailedDto>(user);
             return Ok(userToReturn);
+        }
+
+        [HttpGet("current")]
+        public async Task<IActionResult> CurrentUser()
+        {
+            var user = await _authRepository.CurrentUser();
+            if (user == null) return BadRequest();
+
+            var userToReturn = _mapper.Map<UserForListDto>(user);
+
+            return Ok(new
+            {
+                userToReturn,
+                token = _jwtGenerator.CreateToken(user)
+            });
         }
     }
 }

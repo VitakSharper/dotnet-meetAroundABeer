@@ -45,6 +45,7 @@ export class RegisterComponent implements OnInit {
     this.auth.register(this.reactForm.value).subscribe((resp: any) => {
       if (resp) {
         localStorage.setItem('token', resp.token);
+        this.auth.getDecToken.next(this.auth.jwtHelper.decodeToken(resp.token));
       }
     }, error => {
       this.errors = error;

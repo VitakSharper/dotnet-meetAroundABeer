@@ -88,6 +88,7 @@ namespace API
                             "content-type",
                             "origin",
                             "x-requested-with")
+                        .WithExposedHeaders("WWW-Authenticate")
                         .WithMethods("GET", "POST", "UPDATE", "PUT")
                         .WithOrigins("http://localhost:4200")
                         .AllowCredentials();

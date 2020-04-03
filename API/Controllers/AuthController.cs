@@ -52,20 +52,5 @@ namespace API.Controllers
                 token = _jwtGenerator.CreateToken(userToReturn)
             });
         }
-
-        [HttpGet]
-        public async Task<IActionResult> CurrentUser()
-        {
-            var user = await _authRepository.CurrentUser();
-            if (user == null) return BadRequest();
-
-            var userToReturn = _mapper.Map<UserForListDto>(user);
-
-            return Ok(new
-            {
-                userToReturn,
-                token = _jwtGenerator.CreateToken(user)
-            });
-        }
     }
 }

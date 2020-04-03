@@ -45,7 +45,9 @@ import {MessagesComponent} from './pages/messages/messages.component';
       config: {
         tokenGetter: () => {
           return localStorage.getItem('token');
-        }
+        },
+        whitelistedDomains: ['localhost:5000'],
+        blacklistedRoutes: ['localhost:5000/api/auth']
       }
     })
   ],

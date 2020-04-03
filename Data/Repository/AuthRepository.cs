@@ -34,7 +34,10 @@ namespace Data.Repository
             {
                 DisplayName = userForRegisterDto.DisplayName,
                 Email = userForRegisterDto.Email,
-                UserName = userForRegisterDto.Username
+                UserName = userForRegisterDto.Username,
+                City = userForRegisterDto.City,
+                Country = userForRegisterDto.Country,
+                Gender = userForRegisterDto.Gender
             };
 
             var result = await _userManager.CreateAsync(user, userForRegisterDto.Password);
