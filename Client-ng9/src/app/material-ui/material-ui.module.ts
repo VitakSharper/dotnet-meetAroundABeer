@@ -22,7 +22,7 @@ const materialComponents = [
   MatSelectModule, MatMenuModule,
   MatIconModule, MatChipsModule,
   MatDividerModule, MatGridListModule,
-  MatListModule];
+  MatListModule, MatGridListModule];
 
 @NgModule({
   imports: [materialComponents],

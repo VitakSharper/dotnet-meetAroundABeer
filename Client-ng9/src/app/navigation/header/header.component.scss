@@ -12,7 +12,7 @@
       rgb(94, 53, 177) 89%
   ) !important;
 
-  &__nav {
+  .header-nav {
     //flex-wrap: wrap;
     align-items: center;
     display: inline-flex;
@@ -21,29 +21,38 @@
     padding-top: 5px;
     position: relative;
     width: 100%;
-  }
 
-  &__nav-logo {
-    height: 4rem;
-    width: 4rem;
-  }
-
-  &__mat-list {
-    padding: 0 !important;
-  }
-
-  &__mat-item {
-    color: #fff !important;
-    transition: all 0.2s ease-out 0s;
-
-    &:hover {
-      border-bottom: 6px solid #eee;
+    &__button {
+      .logo {
+        height: 4rem;
+        width: 4rem;
+      }
     }
 
-    &.active {
-      border-bottom: 6px solid #eee;
+    &__links {
+      padding: 0 !important;
+
+      .link-item {
+        color: #fff !important;
+        transition: all 0.2s ease-out 0s;
+
+        &:hover {
+          border-bottom: 6px solid #eee;
+        }
+
+        &.active {
+          border-bottom: 6px solid #eee;
+          margin-top: 10px;
+
+        }
+      }
+    }
+
+    &__spacer {
+      flex: 1 1 auto;
     }
   }
+
 
   &__menu-item {
     text-transform: uppercase;
@@ -57,6 +66,3 @@
 }
 
 
-.flex-spacer {
-  flex: 1 1 auto;
-}

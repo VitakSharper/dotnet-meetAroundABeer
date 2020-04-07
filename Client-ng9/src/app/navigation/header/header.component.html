@@ -1,21 +1,21 @@
-<mat-toolbar color="primary" class="mat-elevation-z6 header" role="heading">
-  <mat-toolbar-row aria-label="Top Toolbar" class="header__nav">
-    <a mat-button [routerLink]="['/']">
-      <mat-icon class="header__nav-logo" svgIcon="beer"></mat-icon>
+<mat-toolbar class="mat-elevation-z6 header" color="primary" role="heading">
+  <mat-toolbar-row class="header-nav" aria-label="Top Toolbar">
+    <a class="header-nav__button" mat-button [routerLink]="['/']">
+      <mat-icon class="logo" svgIcon="beer"></mat-icon>
     </a>
-    <span class="flex-spacer"></span>
+    <span class="header-nav__spacer"></span>
 
-    <mat-nav-list fxLayout class="header__mat-list" *ngIf="onLoggedIn">
-      <a mat-list-item routerLinkActive="active" [routerLink]="['/members']" class="header__mat-item">Matches</a>
-      <a mat-list-item routerLinkActive="active" [routerLink]="['/lists']" class="header__mat-item">Lists</a>
-      <a mat-list-item routerLinkActive="active" [routerLink]="['/messages']" class="header__mat-item">Messages</a>
+    <mat-nav-list class="header-nav__links" fxLayout *ngIf="onLoggedIn">
+      <a class="link-item" mat-list-item routerLinkActive="active" [routerLink]="['/members']">Matches</a>
+      <a class="link-item" mat-list-item routerLinkActive="active" [routerLink]="['/lists']">Lists</a>
+      <a class="link-item" mat-list-item routerLinkActive="active" [routerLink]="['/messages']">Messages</a>
     </mat-nav-list>
 
-    <span class="flex-spacer"></span>
+    <span class="header-nav__spacer"></span>
 
 
-    <mat-chip-list *ngIf="!onLoggedIn else loggedIn">
-      <mat-chip color="primary" selected>You are not logged in</mat-chip>
+    <mat-chip-list class="header-nav__chip-list" *ngIf="!onLoggedIn else loggedIn">
+      <mat-chip class="chip" color="primary" selected>You are not logged in</mat-chip>
     </mat-chip-list>
 
     <ng-template #loggedIn>

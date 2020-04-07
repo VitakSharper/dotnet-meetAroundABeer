@@ -40,3 +40,35 @@ netsh int ipv4 add excludedportrange protocol=tcp startport=1433 numberofports=5
 
 Re-Enable hyper-V (which will require a couple of restart)
 dism.exe /Online /Enable-Feature:Microsoft-Hyper-V /All 
+
+
+// https://www.json-generator.com/#
+
+[
+  '{{repeat(25)}}',
+  {
+    Username: '{{firstName("male")}}',
+    Email:function(){ return this.Username.toLowerCase()+'@'+'dot.net'; },
+    Gender: 'male',
+    DateOfBirth: '{{date(new Date(1950,0,1), new Date(1999, 11, 31), "YYYY-MM-dd")}}',
+    Password: '96a@Ks5@Q',
+    DisplayName: function(){ return this.Username; },
+    Created: '{{date(new Date(2017,0,1), new Date(2017, 7, 31), "YYYY-MM-dd")}}',
+    LastActive: function(){return this.Created; },
+    Introduction: '{{lorem(1, "paragraphs")}}',
+    LookingFor: '{{lorem(1, "paragraphs")}}',
+    Interests: '{{lorem(1, "sentences")}}',
+    City: '{{city()}}',
+    Country: '{{country()}}',
+    Photos: [
+        {
+          Url: function(num) {
+          return 'https://randomuser.me/api/portraits/men/' + num.integer(1,99) + '.jpg';
+        },
+        IsMain: true,
+        Status:true,
+        Description: '{{lorem()}}'
+      }
+    ]
+  }
+]

@@ -18,6 +18,7 @@ import {NavMenuComponent} from './navigation/nav-menu/nav-menu.component';
 import {MemberListComponent} from './pages/member-list/member-list.component';
 import {ListsComponent} from './pages/lists/lists.component';
 import {MessagesComponent} from './pages/messages/messages.component';
+import { MemberCardComponent } from './components/member-card/member-card.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import {MessagesComponent} from './pages/messages/messages.component';
     NavMenuComponent,
     MemberListComponent,
     ListsComponent,
-    MessagesComponent
+    MessagesComponent,
+    MemberCardComponent
   ],
   imports: [
     BrowserModule,
