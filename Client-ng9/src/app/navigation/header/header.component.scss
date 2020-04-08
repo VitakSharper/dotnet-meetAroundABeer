@@ -33,18 +33,45 @@
       padding: 0 !important;
 
       .link-item {
+        position: relative;
         color: #fff !important;
         transition: all 0.2s ease-out 0s;
 
+
+        &.active::after {
+          width: 100%;
+          border-bottom: 6px solid #eee;
+          display: inline-block;
+          border-bottom: 5px solid #eee;
+          transition: all 0.2s ease-out 0.2s;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+        }
+
         &:hover {
-          border-bottom: 6px solid #eee;
+          &::after {
+            width: 100%;
+            display: inline-block;
+            border-bottom: 7px solid #eee;
+            transition: all 0.2s ease-out 0s;
+          }
+
+          &::after {
+            content: "";
+            position: absolute;
+          }
         }
 
-        &.active {
-          border-bottom: 6px solid #eee;
-          margin-top: 10px;
 
-        }
+        //&.active {
+        //  border-bottom: 6px solid #eee;
+        //  //margin-bottom: 10px;
+        //
+        //}
       }
     }
 

@@ -6,12 +6,27 @@
   </mat-card-header>
   <div class="member-card__img-wrapper">
     <img class="card-img" mat-card-image src="{{user.photoUrl}}" alt="{{user.displayName}} photo">
-    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-      <mat-button-toggle value="bold">Bold</mat-button-toggle>
-      <mat-button-toggle value="italic">Italic</mat-button-toggle>
-      <mat-button-toggle value="underline">Underline</mat-button-toggle>
-    </mat-button-toggle-group>
+
+    <ul class="user-list-member-icons">
+      <li class="icon-item">
+        <button class="icon-item__button" mat-icon-button>
+          <mat-icon class="icon-button1">account_circle</mat-icon>
+        </button>
+      </li>
+      <li class="icon-item">
+        <button class="icon-item__button" mat-icon-button>
+          <mat-icon class="icon-button2">favorite</mat-icon>
+        </button>
+      </li>
+      <li class="icon-item">
+        <button class="icon-item__button" mat-icon-button>
+          <mat-icon class="icon-button3">mail</mat-icon>
+        </button>
+      </li>
+    </ul>
   </div>
+
+
   <mat-card-content class="member-card__content">
     <p class="city">City: {{user.city}}</p>
   </mat-card-content>

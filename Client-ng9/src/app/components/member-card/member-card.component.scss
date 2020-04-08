@@ -13,6 +13,7 @@
   }
 
   &__img-wrapper {
+    position: relative;
     overflow: hidden;
 
     .card-img {
@@ -27,7 +28,45 @@
         opacity: 0.7;
       }
     }
+
+    .user-list-member-icons {
+      position: absolute;
+      top: 60%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      list-style: none;
+      text-align: center;
+
+      .icon-item {
+        display: inline-block;
+        transform: scale(1.0, 1.0);
+        transition: ease-out .4s;
+        opacity: 0.7;
+
+        &:hover {
+          transform: scale(1.4, 1.4);
+          transition: ease-out .4s;
+          opacity: 1;
+        }
+
+        &__button {
+          .icon-button1 {
+            color: #7E57C2;
+          }
+
+          .icon-button2 {
+            color: #FF7043;
+          }
+
+          .icon-button3 {
+            color: #26A69A;
+          }
+        }
+      }
+    }
   }
+
 
   &__content {
     .city {
