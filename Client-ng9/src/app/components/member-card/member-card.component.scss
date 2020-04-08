@@ -9,13 +9,24 @@
 
   &__header {
     .title {
-
     }
   }
 
-  &__img {
-    width: 100% !important;
-    margin: 0 !important;
+  &__img-wrapper {
+    overflow: hidden;
+
+    .card-img {
+      width: 100% !important;
+      margin: 0 !important;
+      transform: scale(1.0, 1.0);
+      transition: transform ease-out .5s;
+
+      &:hover {
+        transform: scale(1.2, 1.2);
+        transition: ease-out .5s;
+        opacity: 0.7;
+      }
+    }
   }
 
   &__content {
@@ -25,21 +36,5 @@
   }
 
   &__actions {
-
   }
 }
-
-
-//<mat-card class="member-card">
-//<mat-card-header class="member-card__header">
-//<div mat-card-avatar class="avatar-img"></div>
-//<mat-card-title class="title">{{user.displayName}}, {{user.age}}</mat-card-title>
-//</mat-card-header>
-//<img mat-card-image src="{{user.photoUrl}}" alt="{{user.displayName}} photo" class="member-card__img">
-//<mat-card-content class="member-card__content">
-//
-//</mat-card-content>
-//<mat-card-actions class="member-card__actions">
-//
-//</mat-card-actions>
-//</mat-card>

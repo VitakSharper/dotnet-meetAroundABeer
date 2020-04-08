@@ -1,10 +1,17 @@
 <mat-card class="member-card">
   <mat-card-header class="member-card__header">
     <!--    <div mat-card-avatar class="avatar-img"></div>-->
-<!--    <mat-card-title class="title">{{user.displayName}}</mat-card-title>-->
-<!--    <mat-card-subtitle>age: {{user.age}}</mat-card-subtitle>-->
+    <!--    <mat-card-title class="title">{{user.displayName}}</mat-card-title>-->
+    <!--    <mat-card-subtitle>age: {{user.age}}</mat-card-subtitle>-->
   </mat-card-header>
-  <img class="member-card__img" mat-card-image src="{{user.photoUrl}}" alt="{{user.displayName}} photo">
+  <div class="member-card__img-wrapper">
+    <img class="card-img" mat-card-image src="{{user.photoUrl}}" alt="{{user.displayName}} photo">
+    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle value="bold">Bold</mat-button-toggle>
+      <mat-button-toggle value="italic">Italic</mat-button-toggle>
+      <mat-button-toggle value="underline">Underline</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
   <mat-card-content class="member-card__content">
     <p class="city">City: {{user.city}}</p>
   </mat-card-content>

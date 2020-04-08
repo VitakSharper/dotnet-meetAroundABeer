@@ -53,9 +53,11 @@
 </mat-card>
 
 <mat-card class="member-list">
-  <mat-grid-list cols="5" rowHeight="300px">
+  <mat-grid-list cols="5" rowHeight="350px">
     <mat-grid-tile class="member-list__wrapper" colspan="1" rowspan="1" *ngFor="let user of users">
-      <mat-grid-tile-header>{{user.displayName}}</mat-grid-tile-header>
+      <mat-grid-tile-header>
+        <mat-icon class="grid-header-icon">account_circle</mat-icon>
+        {{user.displayName}} , {{user.age}}</mat-grid-tile-header>
       <app-member-card [user]="user"></app-member-card>
     </mat-grid-tile>
   </mat-grid-list>

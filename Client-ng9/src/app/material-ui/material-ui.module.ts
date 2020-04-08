@@ -13,6 +13,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 const materialComponents = [
   MatButtonModule, MatToolbarModule,
@@ -22,7 +23,8 @@ const materialComponents = [
   MatSelectModule, MatMenuModule,
   MatIconModule, MatChipsModule,
   MatDividerModule, MatGridListModule,
-  MatListModule, MatGridListModule];
+  MatListModule, MatGridListModule,
+  MatButtonToggleModule];
 
 @NgModule({
   imports: [materialComponents],

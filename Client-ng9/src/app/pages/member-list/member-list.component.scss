@@ -3,6 +3,10 @@
 
   &__wrapper {
     padding: 1rem;
+
+    .grid-header-icon {
+      height: 15px !important;
+    }
   }
 
   &__content {
