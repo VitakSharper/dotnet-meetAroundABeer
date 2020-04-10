@@ -18,7 +18,11 @@ import {NavMenuComponent} from './navigation/nav-menu/nav-menu.component';
 import {MemberListComponent} from './pages/member-list/member-list.component';
 import {ListsComponent} from './pages/lists/lists.component';
 import {MessagesComponent} from './pages/messages/messages.component';
-import { MemberCardComponent } from './components/member-card/member-card.component';
+import {MemberCardComponent} from './components/member-card/member-card.component';
+import {MemberDetailComponent} from './components/member-detail/member-detail.component';
+import {MemberDetailResolver} from './resolvers/member-detail.resolver';
+import {MemberListResolver} from './resolvers/member-list.resolver';
+import {NgxGalleryModule} from '@kolkov/ngx-gallery';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,8 @@ import { MemberCardComponent } from './components/member-card/member-card.compon
     MemberListComponent,
     ListsComponent,
     MessagesComponent,
-    MemberCardComponent
+    MemberCardComponent,
+    MemberDetailComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +48,7 @@ import { MemberCardComponent } from './components/member-card/member-card.compon
     HttpClientModule,
     FlexLayoutModule,
     MaterialUiModule,
+    NgxGalleryModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
@@ -53,7 +59,7 @@ import { MemberCardComponent } from './components/member-card/member-card.compon
       }
     })
   ],
-  providers: [httpInterceptorProviders],
+  providers: [httpInterceptorProviders, MemberDetailResolver, MemberListResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule {

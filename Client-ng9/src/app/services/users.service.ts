@@ -19,7 +19,7 @@ export class UsersService {
   }
 
   getUser(id: string): Observable<User> {
-    return this.http.get<User>(`${this.baseUrl}${id}`);
+    return this.http.get<User>(`${this.baseUrl}/${id}`);
   }
 
   currentUser(): Observable<any> {

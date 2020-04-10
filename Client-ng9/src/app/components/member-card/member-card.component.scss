@@ -29,24 +29,31 @@
       }
     }
 
+    &:hover .user-list-member-icons {
+      opacity: 1;
+      transition: all .4s ease-in-out;
+      top: 50%
+    }
+
     .user-list-member-icons {
       position: absolute;
-      top: 60%;
+      top: 80%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 100%;
       list-style: none;
       text-align: center;
+      opacity: 0;
 
       .icon-item {
         display: inline-block;
         transform: scale(1.0, 1.0);
-        transition: ease-out .4s;
-        opacity: 0.7;
+        transition: ease-out .2s;
+        opacity: 1;
 
         &:hover {
           transform: scale(1.4, 1.4);
-          transition: ease-out .4s;
+          transition: ease-out .2s;
           opacity: 1;
         }
 

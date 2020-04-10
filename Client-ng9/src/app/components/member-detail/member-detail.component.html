@@ -1,0 +1,107 @@
+<mat-card class="detail-user">
+  <mat-grid-list class="detail-user__main-grid" cols="4">
+    <mat-grid-tile class="left-grid" colspan="1" rowspan="3">
+      <mat-card class="left-grid__user-card">
+        <mat-card-header class="card-header">
+          <mat-card-title class="card-header__title">{{user?.displayName}}'s Profile</mat-card-title>
+        </mat-card-header>
+        <img class="card-image" mat-card-image src="{{user?.photoUrl||'../../../assets/user.png'}}">
+        <mat-card-content class="card-content">
+          <strong>Location: </strong>
+          <p>{{user.city}}, {{user.country}}</p>
+          <strong>Age: </strong>
+          <p>{{user.age}}</p>
+          <strong>Last Active: </strong>
+          <p>{{user.lastActive.toString()}}</p>
+          <strong>Member since: </strong>
+          <p>{{user.created|date:'mediumDate'}}</p>
+        </mat-card-content>
+        <mat-card-actions class="card-actions">
+          <button class="action-button" mat-icon-button>
+            <mat-icon class="action-button__favorite">favorite</mat-icon>
+          </button>
+          <button class="action-button" mat-icon-button (click)="selectTab(3)">
+            <mat-icon class="action-button__mail">mail</mat-icon>
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+
+    <!--    RIGHT GRID-->
+    <mat-grid-tile class="right-grid" colspan="3" rowspan="3">
+      <mat-card class="right-grid__user-info">
+        <mat-card-content>
+          <mat-tab-group #memberTabs>
+            <mat-tab label="ABOUT {{user?.displayName}}">
+              <section class="user-tab-section">
+                <div class="tab-user-content">
+
+                  <div class="tab-user-content__title">
+                    <p>
+                      <strong>{{user?.displayName}}'s Description</strong>
+                    </p>
+                  </div>
+                  <div class="tab-user-content__content">
+                    <p>{{user?.introduction}}</p>
+                  </div>
+                  <div class="tab-user-content__title">
+                    <p>
+                      <strong>{{user?.displayName}} is looking for</strong>
+                    </p>
+                  </div>
+                  <div class="tab-user-content__content">
+                    <p>{{user?.lookingFor}}</p>
+                  </div>
+                </div>
+              </section>
+            </mat-tab>
+
+            <mat-tab label="INTERESTS">
+              <section class="user-tab-section">
+                <div class="tab-user-content">
+                  <div class="tab-user-content__title">
+                    <p>
+                      <strong>{{user?.displayName}} Interests</strong>
+                    </p>
+                  </div>
+                  <p><br></p>
+                  <div class="tab-user-content__content">
+                    <p>{{user?.interests}}</p>
+                  </div>
+                </div>
+              </section>
+
+            </mat-tab>
+
+            <mat-tab label="PHOTOS">
+              <section class="user-tab-section">
+                <div class="tab-user-content">
+                  <div class="tab-user-content__title">
+                    <p>
+                      <strong>{{user?.displayName}}'s photos</strong>
+                    </p>
+                  </div>
+                  <ngx-gallery class="tab-user-content__ngx-gallery" [options]="galleryOptions"
+                               [images]="galleryImages"></ngx-gallery>
+                </div>
+              </section>
+            </mat-tab>
+
+            <mat-tab label="CHAT">
+              <section class="user-tab-section">
+                <div class="tab-user-content">
+                  <div class="tab-user-content__title">
+                    <p>
+                      <strong>{{user?.displayName}}'s chat</strong>
+                    </p>
+                  </div>
+                  <!--                <app-member-messages [user]="user"></app-member-messages>-->
+                </div>
+              </section>
+            </mat-tab>
+          </mat-tab-group>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</mat-card>
