@@ -53,7 +53,7 @@ namespace API.Controllers
         public async Task<IActionResult> CurrentUser()
         {
             var user = await _authRepository.CurrentUser();
-            if (user == null) return BadRequest();
+            if (user == null) return NotFound();
 
             var userToReturn = _mapper.Map<UserForListDto>(user);
 

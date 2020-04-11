@@ -50,4 +50,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubscription.unsubscribe();
   }
+
+  onEditProfile() {
+    this.router.navigate(['/profile']);
+  }
 }

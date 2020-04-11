@@ -28,13 +28,17 @@ export class AuthService {
   constructor(private http: HttpClient) {
   }
 
+  insertToken(token: any) {
+    this.decToken.next(this.jwtHelper.decodeToken(token));
+  }
+
   login(model: LogUser): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, model)
       .pipe(
         map((resp: any) => {
           if (resp) {
             localStorage.setItem('token', resp.token);
-            this.decToken.next(this.jwtHelper.decodeToken(resp.token));
+            this.insertToken(resp.token);
           }
         })
       );

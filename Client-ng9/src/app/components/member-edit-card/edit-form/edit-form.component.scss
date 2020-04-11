@@ -1,0 +1,13 @@
+.edit-form {
+  display: flex;
+  flex-direction: column;
+
+  &__textarea {
+  }
+}
+
+.location-container {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}

@@ -23,6 +23,12 @@ import {MemberDetailComponent} from './components/member-detail/member-detail.co
 import {MemberDetailResolver} from './resolvers/member-detail.resolver';
 import {MemberListResolver} from './resolvers/member-list.resolver';
 import {NgxGalleryModule} from '@kolkov/ngx-gallery';
+import {InlineSVGModule} from 'ng-inline-svg';
+import {ProfileComponent} from './pages/profile/profile.component';
+import {ProfileResolver} from './resolvers/profile.resolver';
+import { MemeberEditCardComponent } from './components/member-edit-card/memeber-edit-card.component';
+import { MemberEditTabsComponent } from './components/member-edit-tabs/member-edit-tabs.component';
+import { EditFormComponent } from './components/member-edit-card/edit-form/edit-form.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +42,11 @@ import {NgxGalleryModule} from '@kolkov/ngx-gallery';
     ListsComponent,
     MessagesComponent,
     MemberCardComponent,
-    MemberDetailComponent
+    MemberDetailComponent,
+    ProfileComponent,
+    MemeberEditCardComponent,
+    MemberEditTabsComponent,
+    EditFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +59,7 @@ import {NgxGalleryModule} from '@kolkov/ngx-gallery';
     FlexLayoutModule,
     MaterialUiModule,
     NgxGalleryModule,
+    InlineSVGModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {
@@ -59,7 +70,7 @@ import {NgxGalleryModule} from '@kolkov/ngx-gallery';
       }
     })
   ],
-  providers: [httpInterceptorProviders, MemberDetailResolver, MemberListResolver],
+  providers: [httpInterceptorProviders, MemberDetailResolver, MemberListResolver, ProfileResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -12,8 +12,11 @@ namespace Data.Security
         public UserAccessor(IHttpContextAccessor contextAccessor) =>
             (_contextAccessor) = (contextAccessor);
 
-        public string GetCurrentUsername() =>
-            _contextAccessor.HttpContext.User?.Claims
+        public string GetCurrentUsername()
+        {
+            var user = _contextAccessor.HttpContext.User?.Claims
                 ?.FirstOrDefault(u => u.Type == ClaimTypes.NameIdentifier)?.Value;
+            return user;
+        }
     }
 }

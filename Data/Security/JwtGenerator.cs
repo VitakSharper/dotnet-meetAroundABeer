@@ -25,7 +25,7 @@ namespace Data.Security
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId, user.DisplayName)
+                new Claim(JwtRegisteredClaimNames.NameId, user.UserName)
             };
 
             var credentials = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);

@@ -1,0 +1,22 @@
+<figure class="user-card">
+  <figcaption class="user-card__user">
+    <img class="user-card__photo" src="{{user?.photoUrl}}" alt="User photo {{user?.id}}">
+    <div class="user-card__user-box">
+      <p class="user-card__heading">Name: </p>
+      <p class="user-card__user-info">{{user?.displayName}}</p>
+      <p class="user-card__heading">City :</p>
+      <p class="user-card__user-info">{{user?.city}}</p>
+      <p class="user-card__heading">Country :</p>
+      <p class="user-card__user-info">{{user?.country}}</p>
+      <p class="user-card__heading">Age :</p>
+      <p class="user-card__user-info">{{user?.age}}</p>
+      <p class="user-card__heading">Active :</p>
+      <p class="user-card__date">{{user?.lastActive}}</p>
+      <p class="user-card__heading">Since :</p>
+      <p class="user-card__date">{{user?.created}}</p>
+    </div>
+    <div class="user-card__button">
+      <button mat-stroked-button color="primary">Save</button>
+    </div>
+  </figcaption>
+</figure>
