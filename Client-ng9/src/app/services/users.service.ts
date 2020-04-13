@@ -1,13 +1,19 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from './interfaces';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
+
+  protected currentUser: BehaviorSubject<User> = new BehaviorSubject<any>({});
+
+  public get getCurrentUserSub() {
+    return this.currentUser;
+  }
 
   baseUrl = `${environment.apiUrl}/users`;
 
@@ -22,7 +28,7 @@ export class UsersService {
     return this.http.get<User>(`${this.baseUrl}/${id}`);
   }
 
-  currentUser(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/current`);
+  getCurrentUser(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/current`);
   }
 }

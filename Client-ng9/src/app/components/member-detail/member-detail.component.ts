@@ -15,10 +15,6 @@ import {NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions} from '@kolkov/n
 export class MemberDetailComponent implements OnInit {
   user: User;
 
-  galleryOptions: NgxGalleryOptions[];
-  galleryImages: NgxGalleryImage[];
-
-  @ViewChild('memberTabs', {static: true}) memberTabs: MatTabGroup;
 
   constructor(
     private userService: UsersService,
@@ -30,31 +26,7 @@ export class MemberDetailComponent implements OnInit {
     this.route.data.subscribe(data => {
       this.user = data['user'];
     });
-
-    this.galleryOptions = [
-      {
-        width: '500px',
-        height: '500px',
-        imagePercent: 100,
-        thumbnailsColumns: 4,
-        imageAnimation: NgxGalleryAnimation.Slide,
-        preview: false
-      }
-    ];
-
-    this.galleryImages = this.getImages();
   }
 
-  getImages() {
-    return this.user.photos.map(p => ({
-      small: p.url,
-      medium: p.url,
-      big: p.url,
-      description: p.description
-    }));
-  }
 
-  selectTab(tabId: number) {
-    this.memberTabs.selectedIndex = tabId;
-  }
 }

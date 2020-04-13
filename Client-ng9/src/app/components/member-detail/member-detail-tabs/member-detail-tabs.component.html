@@ -1,0 +1,48 @@
+<figure class="user-tabs">
+  <mat-tab-group #memberTabs>
+    <mat-tab label="ABOUT">
+      <section class="detail-tab">
+        <div class="detail-tab__title">
+          <p>{{user?.displayName}}'s Description</p>
+        </div>
+        <div class="detail-tab__content">
+          <p>{{user?.introduction}}</p>
+        </div>
+        <div class="detail-tab__title">
+          <p>{{user?.displayName}} is looking for</p>
+        </div>
+        <div class="detail-tab__content">
+          <p>{{user?.lookingFor}}</p>
+        </div>
+      </section>
+    </mat-tab>
+    <mat-tab label="INTERESTS">
+      <section class="detail-tab">
+        <div class="detail-tab__title">
+          <p>{{user?.displayName}} Interests</p>
+        </div>
+        <p><br></p>
+        <div class="detail-tab__content">
+          <p>{{user?.interests}}</p>
+        </div>
+      </section>
+    </mat-tab>
+    <mat-tab label="PHOTOS">
+      <section class="detail-tab">
+        <div class="detail-tab__title">
+          <p>{{user?.displayName}}'s photos</p>
+        </div>
+        <ngx-gallery class="ngx-gallery" [options]="galleryOptions"
+                     [images]="galleryImages"></ngx-gallery>
+      </section>
+    </mat-tab>
+    <mat-tab label="CHAT">
+      <section class="detail-tab">
+        <div class="detail-tab__title">
+          <p>{{user?.displayName}}'s chat</p>
+        </div>
+        <!--                <app-member-messages [user]="user"></app-member-messages>-->
+      </section>
+    </mat-tab>
+  </mat-tab-group>
+</figure>

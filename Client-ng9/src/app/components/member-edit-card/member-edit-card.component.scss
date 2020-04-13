@@ -46,20 +46,40 @@
   }
 
 
-  &__user-info {
+  &__user-info,
+  &__date {
     font-size: 0.7rem;
+    display: block;
     transform: scale(1.0);
     transition: transform .2s;
 
     &:hover {
       border: 1px dotted gray;
       border-radius: 5px;
+      margin: 0 0 10px;
       transform: scale(1.1);
       transition: transform .2s;
     }
   }
 
-  &__button {
-    margin-top: 10px;
+  &__button-group {
+    width: 100%;
+    padding-top: 1rem;
+    display: flex;
+    align-items: flex-start;
   }
 }
+
+.action-button:not(:last-child) {
+  margin-right: .3rem;
+}
+
+.action-button__favorite {
+  color: #FF7043;
+}
+
+.action-button__mail {
+  color: #26A69A;
+}
+
+

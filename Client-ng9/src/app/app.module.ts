@@ -26,9 +26,10 @@ import {NgxGalleryModule} from '@kolkov/ngx-gallery';
 import {InlineSVGModule} from 'ng-inline-svg';
 import {ProfileComponent} from './pages/profile/profile.component';
 import {ProfileResolver} from './resolvers/profile.resolver';
-import { MemeberEditCardComponent } from './components/member-edit-card/memeber-edit-card.component';
-import { MemberEditTabsComponent } from './components/member-edit-tabs/member-edit-tabs.component';
-import { EditFormComponent } from './components/member-edit-card/edit-form/edit-form.component';
+import {MemberEditCardComponent} from './components/member-edit-card/member-edit-card.component';
+import {MemberEditTabsComponent} from './components/member-edit-tabs/member-edit-tabs.component';
+import {EditFormComponent} from './components/member-edit-card/edit-form/edit-form.component';
+import { MemberDetailTabsComponent } from './components/member-detail/member-detail-tabs/member-detail-tabs.component';
 
 @NgModule({
   declarations: [
@@ -44,9 +45,10 @@ import { EditFormComponent } from './components/member-edit-card/edit-form/edit-
     MemberCardComponent,
     MemberDetailComponent,
     ProfileComponent,
-    MemeberEditCardComponent,
+    MemberEditCardComponent,
     MemberEditTabsComponent,
     EditFormComponent,
+    MemberDetailTabsComponent,
   ],
   imports: [
     BrowserModule,

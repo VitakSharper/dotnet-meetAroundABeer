@@ -15,6 +15,13 @@
       <p class="user-card__heading">Since :</p>
       <p class="user-card__date">{{user?.created}}</p>
     </div>
-
+    <div class="user-card__button-group" *ngIf="showBtnGrp">
+      <button class="action-button" mat-icon-button>
+        <mat-icon class="action-button__favorite">favorite</mat-icon>
+      </button>
+      <button class="action-button" mat-icon-button (click)="selectTab(3)">
+        <mat-icon class="action-button__mail">mail</mat-icon>
+      </button>
+    </div>
   </figcaption>
 </figure>

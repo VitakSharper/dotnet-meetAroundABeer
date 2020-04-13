@@ -12,20 +12,22 @@
   box-sizing: inherit;
 }
 
+html {
+  height: 100%;
+  background: #ccc;
+  //font-size: 62.5%;
+}
+
 body {
   background-color: #F5F5F5 !important;
   box-sizing: border-box;
   padding: 6rem;
   margin: 0;
-  color: #1c1e21;
   direction: ltr;
   line-height: 1.34;
   unicode-bidi: embed;
 }
 
-html {
-  height: 100%;
-}
 
 .mat-select-panel {
   background: #EDE7F6;
