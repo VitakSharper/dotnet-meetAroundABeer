@@ -1,8 +1,16 @@
-<div class="profile-detail">
-  <div class="profile-left">
-    <app-member-edit-card [user]="user"></app-member-edit-card>
+<div class="profile-container">
+  <div class="profile-overview">
+    <h1 class="profile-overview__heading">{{user?.displayName}}'s profile</h1>
+    <p class="profile-overview__warning" *ngIf="showWarning"><span>Information: </span>You have made changes. Any
+      unsaved changes will be lost <span (click)="showWarning=false" class="profile-overview__close">&times;</span></p>
+
   </div>
-  <div class="profile-right">
-    <app-member-edit-tabs [user]="user"></app-member-edit-tabs>
+  <div class="profile-detail">
+    <div class="profile-left">
+      <app-member-edit-card [user]="user"></app-member-edit-card>
+    </div>
+    <div class="profile-right">
+      <app-member-edit-tabs [user]="user"></app-member-edit-tabs>
+    </div>
   </div>
 </div>

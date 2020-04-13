@@ -5,12 +5,21 @@
 
   <mat-form-field class="edit-form__textarea">
     <mat-label>Introduction</mat-label>
-    <textarea matInput formControlName="introduction" placeholder="Your introduction"></textarea>
+    <textarea matInput
+              type="text"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
+              formControlName="introduction"
+              placeholder="Your introduction"></textarea>
   </mat-form-field>
 
   <mat-form-field class="edit-form__textarea">
     <mat-label>Looking for</mat-label>
-    <textarea matInput type="text" formControlName="lookingFor" placeholder="Looking For"></textarea>
+    <textarea
+      matInput type="text"
+      cdkTextareaAutosize
+      cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
+      formControlName="lookingFor" placeholder="Looking For"></textarea>
   </mat-form-field>
 
   <mat-form-field class="edit-form__textarea">
@@ -29,6 +38,6 @@
     </mat-form-field>
   </div>
   <div class="edit-form__submit">
-    <button mat-stroked-button color="primary">Save</button>
+    <button mat-stroked-button color="primary" [disabled]="!updateForm.valid||!updateForm.dirty">Save</button>
   </div>
 </form>

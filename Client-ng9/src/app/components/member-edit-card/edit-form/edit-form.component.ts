@@ -1,8 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterContentChecked, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {User} from '../../../services/interfaces';
 import {UsersService} from '../../../services/users.service';
 import {Subscription} from 'rxjs';
+import {TabsService} from '../../../services/tabs.service';
 
 @Component({
   selector: 'app-edit-form',
@@ -11,39 +12,39 @@ import {Subscription} from 'rxjs';
 })
 export class EditFormComponent implements OnInit, OnDestroy {
   unsubscribe: Subscription;
+  unsubscribeWarning: Subscription;
   updateForm: FormGroup;
   user: User;
 
   constructor(
     private fb: FormBuilder,
-    private usersService: UsersService
+    private usersService: UsersService,
+    private tabsService: TabsService
   ) {
   }
 
   ngOnInit(): void {
+    this.unsubscribe = this.usersService.getCurrentUserSub
+      .subscribe(
+        data => this.user = data);
 
-    this.unsubscribe = this.usersService.getCurrentUserSub.subscribe(
-      data => {
-        this.user = data;
-        // this.updateForm.setValue({
-        //   introduction: this.user.introduction,
-        //   lookingFor: this.user.lookingFor,
-        //   interests: this.user.interests
-        // });
-      }
-    );
     this.createUpdateForm();
-    console.log('user: ', this.user);
 
+    this.unsubscribeWarning = this.updateForm.valueChanges
+      .subscribe(val => {
+        console.log(this.updateForm.dirty);
+        this.tabsService.getEditWarning.next(this.updateForm.dirty);
+      });
   }
+
 
   private createUpdateForm() {
     this.updateForm = this.fb.group({
       introduction: [this.user.introduction, Validators.required],
       lookingFor: [this.user.lookingFor, Validators.required],
-      interests: [this.user.interests, Validators.required],
-      city: ['', Validators.required],
-      country: ['', Validators.required]
+      interests: [this.user.interests],
+      city: [this.user.city, Validators.required],
+      country: [this.user.country, Validators.required]
     });
   }
 
@@ -53,5 +54,6 @@ export class EditFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.unsubscribe.unsubscribe();
+    this.unsubscribeWarning.unsubscribe();
   }
 }

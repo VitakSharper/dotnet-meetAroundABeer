@@ -5,6 +5,7 @@ import {AlertifyService} from '../../services/alertify.service';
 import {AuthService} from '../../services/auth.service';
 import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
+import {UsersService} from '../../services/users.service';
 
 @Component({
   selector: 'app-header',
@@ -24,6 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private domSanitizer: DomSanitizer,
     private alertify: AlertifyService,
     private auth: AuthService,
+    private usersService: UsersService,
     private router: Router
   ) {
     this.matIconRegistry.addSvgIcon(
@@ -36,6 +38,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.unsubscription = this.auth.getDecToken.subscribe(resp => {
       this.displayName = resp && resp.nameid;
     });
+
+    this.usersService.getCurrentUser().subscribe(data => this.usersService.getCurrentUserSub.next(data.userToReturn));
+
   }
 
   logOut() {
