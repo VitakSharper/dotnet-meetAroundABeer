@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from '../../services/interfaces';
+import {User} from '../../_services/interfaces';
 
 @Component({
   selector: 'app-member-edit-tabs',

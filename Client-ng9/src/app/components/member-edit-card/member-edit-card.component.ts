@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {User} from '../../services/interfaces';
-import {TabsService} from '../../services/tabs.service';
+import {User} from '../../_services/interfaces';
+import {TabsService} from '../../_services/tabs.service';
 
 @Component({
   selector: 'app-member-edit-card',

@@ -7,10 +7,11 @@ import {ListsComponent} from './pages/lists/lists.component';
 import {MemberListComponent} from './pages/member-list/member-list.component';
 import {AuthGuard} from './guards/auth.guard';
 import {MemberDetailComponent} from './components/member-detail/member-detail.component';
-import {MemberDetailResolver} from './resolvers/member-detail.resolver';
-import {MemberListResolver} from './resolvers/member-list.resolver';
+import {MemberDetailResolver} from './_resolvers/member-detail.resolver';
+import {MemberListResolver} from './_resolvers/member-list.resolver';
 import {ProfileComponent} from './pages/profile/profile.component';
-import {ProfileResolver} from './resolvers/profile.resolver';
+import {ProfileResolver} from './_resolvers/profile.resolver';
+import {PreventUnsavedChangesGuard} from './_guards/prevent-unsaved-changes.guard';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -21,7 +22,7 @@ const routes: Routes = [
     children: [
       {path: 'members', component: MemberListComponent, resolve: {users: MemberListResolver}},
       {path: 'member/:id', component: MemberDetailComponent, resolve: {user: MemberDetailResolver}},
-      {path: 'profile', component: ProfileComponent, resolve: {user: ProfileResolver}},
+      {path: 'profile', component: ProfileComponent, resolve: {user: ProfileResolver}, canDeactivate: [PreventUnsavedChangesGuard]},
       {path: 'messages', component: MessagesComponent},
       {path: 'lists', component: ListsComponent},
     ]

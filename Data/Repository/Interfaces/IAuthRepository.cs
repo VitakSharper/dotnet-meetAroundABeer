@@ -8,6 +8,7 @@ namespace Data.Repository.Interfaces
     {
         Task<AppUser> Register(UserForRegisterDto userForRegisterDto);
         Task<AppUser> Login(UserForLoginDto userForLoginDto);
+        Task<AppUser> Update(AppUser user);
         Task<AppUser> CurrentUser();
     }
 }

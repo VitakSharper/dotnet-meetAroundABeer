@@ -20,7 +20,7 @@
       width: 100% !important;
       margin: 0 !important;
       transform: scale(1.0, 1.0);
-      transition: transform ease-out .5s;
+      transition: transform ease-out 5s;
 
       &:hover {
         transform: scale(1.2, 1.2);
@@ -31,7 +31,7 @@
 
     &:hover .user-list-member-icons {
       opacity: 1;
-      transition: all .4s ease-in-out;
+      transition: all .4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
       top: 50%
     }
 
@@ -44,6 +44,7 @@
       list-style: none;
       text-align: center;
       opacity: 0;
+      transition: all .4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
 
       .icon-item {
         display: inline-block;

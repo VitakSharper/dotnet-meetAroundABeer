@@ -1,9 +1,9 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {User} from '../../../services/interfaces';
+import {User} from '../../../_services/interfaces';
 import {NgxGalleryAnimation, NgxGalleryImage, NgxGalleryOptions} from '@kolkov/ngx-gallery';
 import {MatTabGroup} from '@angular/material/tabs';
 import {BehaviorSubject, Subscription} from 'rxjs';
-import {TabsService} from '../../../services/tabs.service';
+import {TabsService} from '../../../_services/tabs.service';
 
 @Component({
   selector: 'app-member-detail-tabs',

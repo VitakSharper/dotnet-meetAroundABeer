@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
-import {AlertifyService} from '../../services/alertify.service';
-import {AuthService} from '../../services/auth.service';
+import {AlertifyService} from '../../_services/alertify.service';
+import {AuthService} from '../../_services/auth.service';
 import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
-import {UsersService} from '../../services/users.service';
+import {UsersService} from '../../_services/users.service';
 
 @Component({
   selector: 'app-header',

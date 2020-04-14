@@ -67,6 +67,13 @@ namespace Data.Repository
                 : null;
         }
 
+        public async Task<AppUser> Update(AppUser user)
+        {
+            var result = await _userManager.UpdateAsync(user);
+
+            return result.Succeeded ? user : null;
+        }
+
         public async Task<AppUser> CurrentUser() =>
             await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
     }

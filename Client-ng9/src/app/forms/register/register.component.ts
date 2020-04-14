@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {CustomValidatorsComponent} from '../custom-validators.component';
-import {AuthService} from '../../services/auth.service';
-import {AlertifyService} from '../../services/alertify.service';
+import {AuthService} from '../../_services/auth.service';
+import {AlertifyService} from '../../_services/alertify.service';
 
 @Component({
   selector: 'app-register',

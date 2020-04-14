@@ -20,16 +20,17 @@ import {ListsComponent} from './pages/lists/lists.component';
 import {MessagesComponent} from './pages/messages/messages.component';
 import {MemberCardComponent} from './components/member-card/member-card.component';
 import {MemberDetailComponent} from './components/member-detail/member-detail.component';
-import {MemberDetailResolver} from './resolvers/member-detail.resolver';
-import {MemberListResolver} from './resolvers/member-list.resolver';
+import {MemberDetailResolver} from './_resolvers/member-detail.resolver';
+import {MemberListResolver} from './_resolvers/member-list.resolver';
 import {NgxGalleryModule} from '@kolkov/ngx-gallery';
 import {InlineSVGModule} from 'ng-inline-svg';
 import {ProfileComponent} from './pages/profile/profile.component';
-import {ProfileResolver} from './resolvers/profile.resolver';
+import {ProfileResolver} from './_resolvers/profile.resolver';
 import {MemberEditCardComponent} from './components/member-edit-card/member-edit-card.component';
 import {MemberEditTabsComponent} from './components/member-edit-tabs/member-edit-tabs.component';
 import {EditFormComponent} from './components/member-edit-card/edit-form/edit-form.component';
-import { MemberDetailTabsComponent } from './components/member-detail/member-detail-tabs/member-detail-tabs.component';
+import {MemberDetailTabsComponent} from './components/member-detail/member-detail-tabs/member-detail-tabs.component';
+import {PreventUnsavedChangesGuard} from './_guards/prevent-unsaved-changes.guard';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,7 @@ import { MemberDetailTabsComponent } from './components/member-detail/member-det
       }
     })
   ],
-  providers: [httpInterceptorProviders, MemberDetailResolver, MemberListResolver, ProfileResolver],
+  providers: [httpInterceptorProviders, MemberDetailResolver, MemberListResolver, ProfileResolver, PreventUnsavedChangesGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,9 +1,9 @@
-import {Component, OnDestroy, OnInit, Output} from '@angular/core';
-import {UsersService} from '../../services/users.service';
-import {User} from '../../services/interfaces';
+import {Component, HostListener, OnDestroy, OnInit, Output} from '@angular/core';
+import {UsersService} from '../../_services/users.service';
+import {User} from '../../_services/interfaces';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
-import {TabsService} from '../../services/tabs.service';
+import {TabsService} from '../../_services/tabs.service';
 
 @Component({
   selector: 'app-profile',
@@ -13,6 +13,14 @@ import {TabsService} from '../../services/tabs.service';
 export class ProfileComponent implements OnInit, OnDestroy {
 
   @Output() user: User;
+
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    if (this.showWarning) {
+      $event.returnValue = true;
+    }
+  }
+
   unsubscribeWarning: Subscription;
   showWarning = false;
 

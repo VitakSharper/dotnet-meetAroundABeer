@@ -1,9 +1,10 @@
 import {AfterContentChecked, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {User} from '../../../services/interfaces';
-import {UsersService} from '../../../services/users.service';
+import {User} from '../../../_services/interfaces';
+import {UsersService} from '../../../_services/users.service';
 import {Subscription} from 'rxjs';
-import {TabsService} from '../../../services/tabs.service';
+import {TabsService} from '../../../_services/tabs.service';
+import {AlertifyService} from '../../../_services/alertify.service';
 
 @Component({
   selector: 'app-edit-form',
@@ -19,7 +20,8 @@ export class EditFormComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private usersService: UsersService,
-    private tabsService: TabsService
+    private tabsService: TabsService,
+    private alertifyService: AlertifyService
   ) {
   }
 
@@ -32,11 +34,9 @@ export class EditFormComponent implements OnInit, OnDestroy {
 
     this.unsubscribeWarning = this.updateForm.valueChanges
       .subscribe(val => {
-        console.log(this.updateForm.dirty);
         this.tabsService.getEditWarning.next(this.updateForm.dirty);
       });
   }
-
 
   private createUpdateForm() {
     this.updateForm = this.fb.group({
@@ -49,7 +49,11 @@ export class EditFormComponent implements OnInit, OnDestroy {
   }
 
   updateUser() {
-
+    Object.entries(this.updateForm.value).forEach(value => {
+      this.user[value[0]] = value[1];
+    });
+    this.alertifyService.successAlert('Updated successfully');
+    this.updateForm.reset(this.user);
   }
 
   ngOnDestroy(): void {

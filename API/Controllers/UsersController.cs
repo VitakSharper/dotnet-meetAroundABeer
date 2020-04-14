@@ -3,6 +3,9 @@ using Data.Dtos;
 using Data.Interfaces;
 using Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Persistence;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,6 +15,8 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
+        private readonly DataContext _context;
+        private readonly IUserAccessor _userAccessor;
         private readonly IAuthRepository _authRepository;
         private readonly IJwtGenerator _jwtGenerator;
         private readonly IDatingRepository _datingRepository;
@@ -21,10 +26,14 @@ namespace API.Controllers
             IDatingRepository datingRepository,
             IAuthRepository authRepository,
             IJwtGenerator jwtGenerator,
-            IMapper mapper)
+            IMapper mapper,
+            DataContext context,
+            IUserAccessor userAccessor
+        )
         {
-            _authRepository = authRepository;
-            _jwtGenerator = jwtGenerator;
+            _context = context;
+            _userAccessor = userAccessor;
+            (_authRepository, _jwtGenerator) = (authRepository, jwtGenerator);
             (_datingRepository, _mapper) = (datingRepository, mapper);
         }
 
@@ -62,6 +71,26 @@ namespace API.Controllers
                 userToReturn,
                 token = _jwtGenerator.CreateToken(user)
             });
+        }
+
+        [HttpPut("updateMe")]
+        public async Task<IActionResult> UpdateUser(UserForUpdateDto userForUpdate)
+        {
+            var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
+                u.UserName == _userAccessor.GetCurrentUsername());
+
+            if (currentUser == null) return Unauthorized();
+
+            _mapper.Map(userForUpdate, currentUser);
+
+            var updated = await _authRepository.Update(currentUser);
+
+            var userToReturn = _mapper.Map<UserForDetailedDto>(updated);
+
+            _ = userToReturn ??
+                throw new Exception("Updating failed");
+
+            return Ok(new { userToReturn });
         }
     }
 }
