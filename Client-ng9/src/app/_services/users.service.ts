@@ -31,4 +31,8 @@ export class UsersService {
   getCurrentUser(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/current`);
   }
+
+  updateUser(updated: User): Observable<any> {
+    return this.http.put<User>(`${this.baseUrl}/updateMe`, updated);
+  }
 }

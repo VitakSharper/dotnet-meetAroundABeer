@@ -25,6 +25,4 @@ export class MemberDetailComponent implements OnInit {
       this.user = data['user'];
     });
   }
-
-
 }

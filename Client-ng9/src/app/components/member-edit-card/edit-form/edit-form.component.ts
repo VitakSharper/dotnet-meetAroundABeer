@@ -52,6 +52,8 @@ export class EditFormComponent implements OnInit, OnDestroy {
     Object.entries(this.updateForm.value).forEach(value => {
       this.user[value[0]] = value[1];
     });
+    this.usersService.updateUser(this.user)
+      .subscribe(resp => console.log(resp));
     this.alertifyService.successAlert('Updated successfully');
     this.updateForm.reset(this.user);
   }

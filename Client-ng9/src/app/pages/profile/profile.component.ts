@@ -12,7 +12,7 @@ import {TabsService} from '../../_services/tabs.service';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
 
-  @Output() user: User;
+  user: User;
 
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {
@@ -45,5 +45,4 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubscribeWarning.unsubscribe();
   }
-
 }
