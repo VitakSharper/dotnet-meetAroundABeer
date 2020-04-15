@@ -17,10 +17,13 @@
 
   }
 }
-.mat-grid-tile-header{
-  border-radius: 5px;
-  height: 40px!important;
-  left: 18%!important;
+
+.mat-grid-tile-header {
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
+  0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  height: 40px !important;
+  left: 16% !important;
   width: 70%;
-  background: #E64A19!important;
+  background: #E64A19 !important;
 }
