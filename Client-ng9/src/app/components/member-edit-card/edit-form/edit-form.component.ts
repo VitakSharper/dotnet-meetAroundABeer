@@ -53,7 +53,7 @@ export class EditFormComponent implements OnInit, OnDestroy {
       this.user[value[0]] = value[1];
     });
     this.usersService.updateUser(this.user)
-      .subscribe(resp => console.log(resp));
+      .subscribe(resp => console.log(resp), error => this.alertifyService.errorAlert('Problem updating profile'));
     this.alertifyService.successAlert('Updated successfully');
     this.updateForm.reset(this.user);
   }
@@ -61,5 +61,9 @@ export class EditFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubscribe.unsubscribe();
     this.unsubscribeWarning.unsubscribe();
+  }
+
+  cancelChanges() {
+    this.updateForm.reset(this.user);
   }
 }

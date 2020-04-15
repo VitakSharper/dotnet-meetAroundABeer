@@ -15,6 +15,10 @@
 
   &__submit {
     margin-top: 10px;
+
+    & > *:not(:last-child) {
+      margin-right: .5rem;
+    }
   }
 }
 

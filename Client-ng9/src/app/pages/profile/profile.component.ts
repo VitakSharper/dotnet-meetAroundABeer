@@ -12,7 +12,7 @@ import {TabsService} from '../../_services/tabs.service';
 })
 export class ProfileComponent implements OnInit, OnDestroy {
 
-  user: User;
+  @Output() user: User;
 
   @HostListener('window:beforeunload', ['$event'])
   unloadNotification($event: any) {

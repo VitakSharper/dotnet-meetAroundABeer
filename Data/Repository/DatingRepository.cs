@@ -3,6 +3,7 @@ using Domain.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Data.Repository
@@ -23,8 +24,8 @@ namespace Data.Repository
         public async Task<bool> Save() =>
             await _context.SaveChangesAsync() > 0;
 
-        public async Task<IEnumerable<AppUser>> GetUsers() =>
-            await _context.Users.ToListAsync();
+        public async Task<IEnumerable<AppUser>> GetUsers(string id) =>
+            await _context.Users.Where(u => u.Id != id).ToListAsync();
 
         public async Task<AppUser> GetUser(string userId) =>
             await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);

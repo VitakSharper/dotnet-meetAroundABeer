@@ -40,7 +40,12 @@ namespace API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-            var users = await _datingRepository.GetUsers();
+            var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
+                u.UserName == _userAccessor.GetCurrentUsername());
+
+            if (currentUser == null) return Unauthorized();
+
+            var users = await _datingRepository.GetUsers(currentUser.Id);
             if (users == null) BadRequest();
 
             var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
