@@ -4,6 +4,7 @@ using Data.Interfaces;
 using Data.Repository;
 using Data.Repository.Interfaces;
 using Data.Security;
+using Data.Security.Photo;
 using Domain.Identity;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication;
@@ -100,6 +101,7 @@ namespace API
 
             // Repository services
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
 
             // JWT service
@@ -133,12 +135,17 @@ namespace API
                     var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                     opt.Filters.Add(new AuthorizeFilter(policy));
                 })
+                // Fluent Validation
                 .AddFluentValidation(opt =>
                     {
                         opt.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
                         opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
                     }
                 );
+            // Cloudinary
+            services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
+            // Cloudinary Accessor
+            services.AddScoped<IPhotoAccessor, PhotoAccessor>();
 
             services.AddAuthorization();
         }

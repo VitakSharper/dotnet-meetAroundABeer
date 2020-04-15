@@ -1,5 +1,4 @@
-﻿using Domain.Identity;
-using System.Collections.Generic;
+﻿using Domain;
 using System.Threading.Tasks;
 
 namespace Data.Repository.Interfaces
@@ -8,8 +7,8 @@ namespace Data.Repository.Interfaces
     {
         void Add<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
+
+        Task<Photo> GetPhoto(string id);
         Task<bool> Save();
-        Task<IEnumerable<AppUser>> GetUsers(string id);
-        Task<AppUser> GetUser(string userId);
     }
 }

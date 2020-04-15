@@ -15,15 +15,15 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
+        private readonly IUsersRepository _usersRepository;
         private readonly DataContext _context;
         private readonly IUserAccessor _userAccessor;
         private readonly IAuthRepository _authRepository;
         private readonly IJwtGenerator _jwtGenerator;
-        private readonly IDatingRepository _datingRepository;
         private readonly IMapper _mapper;
 
         public UsersController(
-            IDatingRepository datingRepository,
+            IUsersRepository usersRepository,
             IAuthRepository authRepository,
             IJwtGenerator jwtGenerator,
             IMapper mapper,
@@ -34,7 +34,7 @@ namespace API.Controllers
             _context = context;
             _userAccessor = userAccessor;
             (_authRepository, _jwtGenerator) = (authRepository, jwtGenerator);
-            (_datingRepository, _mapper) = (datingRepository, mapper);
+            (_usersRepository, _mapper) = (usersRepository, mapper);
         }
 
         [HttpGet]
@@ -45,7 +45,7 @@ namespace API.Controllers
 
             if (currentUser == null) return Unauthorized();
 
-            var users = await _datingRepository.GetUsers(currentUser.Id);
+            var users = await _usersRepository.GetUsers(currentUser.Id);
             if (users == null) BadRequest();
 
             var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
@@ -56,7 +56,7 @@ namespace API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(string id)
         {
-            var user = await _datingRepository.GetUser(id);
+            var user = await _usersRepository.GetUser(id);
             if (user == null) NotFound();
 
             var userToReturn = _mapper.Map<UserForDetailedDto>(user);

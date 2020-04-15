@@ -36,6 +36,8 @@ namespace Data.Helpers
                             source.DateOfBirth.CalculateAge());
                     });
             CreateMap<Photo, PhotosForDetailedDto>();
+            CreateMap<Photo, PhotoForReturnDto>();
+            CreateMap<PhotoForCreationDto, Photo>();
             CreateMap<UserForUpdateDto, AppUser>();
         }
     }
