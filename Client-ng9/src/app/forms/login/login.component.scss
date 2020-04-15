@@ -4,12 +4,14 @@
   min-width: 10rem;
   max-width: 20rem;
   width: 100%;
-  box-shadow: 0 1.5rem 4rem rgba(#000, .15);
-  transition: transform .3s;
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
+  0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 
   &:hover {
-    transform: scale(1.01);
-    box-shadow: 0 1.5rem 8rem rgba(#000, .10);
+    box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
+    transition: box-shadow .15s linear;
+    transition-delay: .05s;
   }
 
   &__submit {

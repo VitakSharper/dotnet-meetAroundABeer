@@ -6,13 +6,11 @@
   0px 1px 1px 0px rgba(0, 0, 0, 0.14),
   0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 
-
   &:hover {
     box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
     transition: box-shadow .15s linear;
     transition-delay: .05s;
   }
-
 }
 
 .app-form {
