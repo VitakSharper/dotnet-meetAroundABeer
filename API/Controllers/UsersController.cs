@@ -69,7 +69,7 @@ namespace API.Controllers
             var user = await _authRepository.CurrentUser();
             if (user == null) return NotFound();
 
-            var userToReturn = _mapper.Map<UserForListDto>(user);
+            var userToReturn = _mapper.Map<UserForDetailedDto>(user);
 
             return Ok(new
             {

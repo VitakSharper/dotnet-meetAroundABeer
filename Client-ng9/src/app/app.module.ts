@@ -31,6 +31,7 @@ import {MemberEditTabsComponent} from './components/member-edit-tabs/member-edit
 import {EditFormComponent} from './components/member-edit-card/edit-form/edit-form.component';
 import {MemberDetailTabsComponent} from './components/member-detail/member-detail-tabs/member-detail-tabs.component';
 import {PreventUnsavedChangesGuard} from './_guards/prevent-unsaved-changes.guard';
+import { MemberPhotoEditComponent } from './components/member-photo-edit/member-photo-edit.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import {PreventUnsavedChangesGuard} from './_guards/prevent-unsaved-changes.guar
     MemberEditTabsComponent,
     EditFormComponent,
     MemberDetailTabsComponent,
+    MemberPhotoEditComponent,
   ],
   imports: [
     BrowserModule,

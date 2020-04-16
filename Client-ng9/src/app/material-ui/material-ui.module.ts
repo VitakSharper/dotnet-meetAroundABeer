@@ -14,6 +14,7 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatListModule} from '@angular/material/list';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 const materialComponents = [
   MatButtonModule, MatToolbarModule,
@@ -24,7 +25,7 @@ const materialComponents = [
   MatIconModule, MatChipsModule,
   MatDividerModule, MatGridListModule,
   MatListModule, MatGridListModule,
-  MatButtonToggleModule];
+  MatButtonToggleModule, MatTooltipModule];
 
 @NgModule({
   imports: [materialComponents],
