@@ -3,6 +3,7 @@
 @import "../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import "../node_modules/alertifyjs/build/css/alertify.min.css";
 @import "../node_modules/alertifyjs/build/css/themes/semantic.min.css";
+@import "../node_modules/font-awesome/css/font-awesome.min.css";
 
 *,
 *::after,
@@ -27,7 +28,6 @@ body {
   line-height: 1.34;
   unicode-bidi: embed;
 }
-
 
 .mat-select-panel {
   background: #EDE7F6;

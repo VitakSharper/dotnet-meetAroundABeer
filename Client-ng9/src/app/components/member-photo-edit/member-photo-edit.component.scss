@@ -1,5 +1,5 @@
 .photo-container {
-  padding: 1rem;
+  padding: 3rem 1rem;
 
   &__photos-cards {
     display: flex;
@@ -13,7 +13,7 @@
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
   0px 1px 1px 0px rgba(0, 0, 0, 0.14),
   0px 1px 3px 0px rgba(0, 0, 0, 0.12);
-  margin-bottom: .7rem;
+  margin-bottom: 1rem;
 
   &:hover {
     box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
@@ -22,7 +22,7 @@
   }
 
   &:not(:last-child) {
-    margin-right: .7rem;
+    margin-right: 1rem;
   }
 
   &:after {
@@ -53,16 +53,30 @@
   }
 
   &__description {
-    padding: .3rem;
-    display: block;
-    width: 10rem;
-    font-size: .6rem;
-    text-align: center;
-    margin-bottom: 0 !important;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+    &.no-content {
+      background: url(~src/assets/sidebar-divider.png) right repeat;
+      //background-size: cover;
+
+      & > p {
+        font-size: 100% !important;
+        font-weight: 200 !important;
+        color: #757575;
+      }
+    }
+
+    & > p {
+      padding: .3rem;
+      display: block;
+      width: 10rem;
+      font-size: .6rem;
+      text-align: center;
+      margin-bottom: 0 !important;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
   }
+
 
   &__btn-group {
     display: flex;

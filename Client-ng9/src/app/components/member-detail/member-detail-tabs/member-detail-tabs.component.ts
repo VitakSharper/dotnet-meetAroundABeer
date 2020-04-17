@@ -34,7 +34,7 @@ export class MemberDetailTabsComponent implements OnInit, OnDestroy {
         width: '500px',
         height: '500px',
         imagePercent: 100,
-        thumbnailsColumns: 4,
+        thumbnailsColumns: 5,
         imageAnimation: NgxGalleryAnimation.Slide,
         preview: false
       }
@@ -43,6 +43,7 @@ export class MemberDetailTabsComponent implements OnInit, OnDestroy {
   }
 
   getImages() {
+    console.log('users photos: ', this.user.photos);
     return this.user.photos.map(p => ({
       small: p.url,
       medium: p.url,

@@ -2,7 +2,9 @@
   <div class="photo-container__photos-cards">
     <div class="photo-card" *ngFor="let photo of user.photos">
       <img class="photo-card__photo" src="{{photo.url}}" alt="{{user?.displayName}} photo">
-      <p class="photo-card__description">{{photo.description || 'no content'}}</p>
+      <div class="photo-card__description" [ngClass]="{'no-content':!photo.description}">
+        <p>{{photo.description || 'no content'}}</p>
+      </div>
       <div class="photo-card__btn-group">
         <button class="btn-item" mat-icon-button matTooltip="Make it main" matTooltipPosition="above">
           <mat-icon>account_circle</mat-icon>

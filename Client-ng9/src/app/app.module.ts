@@ -31,7 +31,9 @@ import {MemberEditTabsComponent} from './components/member-edit-tabs/member-edit
 import {EditFormComponent} from './components/member-edit-card/edit-form/edit-form.component';
 import {MemberDetailTabsComponent} from './components/member-detail/member-detail-tabs/member-detail-tabs.component';
 import {PreventUnsavedChangesGuard} from './_guards/prevent-unsaved-changes.guard';
-import { MemberPhotoEditComponent } from './components/member-photo-edit/member-photo-edit.component';
+import {MemberPhotoEditComponent} from './components/member-photo-edit/member-photo-edit.component';
+import {MemberPhotoUploadComponent} from './components/member-photo-upload/member-photo-upload.component';
+import {FileUploadModule} from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,7 @@ import { MemberPhotoEditComponent } from './components/member-photo-edit/member-
     EditFormComponent,
     MemberDetailTabsComponent,
     MemberPhotoEditComponent,
+    MemberPhotoUploadComponent,
   ],
   imports: [
     BrowserModule,
@@ -64,6 +67,7 @@ import { MemberPhotoEditComponent } from './components/member-photo-edit/member-
     FlexLayoutModule,
     MaterialUiModule,
     NgxGalleryModule,
+    FileUploadModule,
     InlineSVGModule.forRoot(),
     JwtModule.forRoot({
       config: {

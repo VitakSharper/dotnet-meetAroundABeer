@@ -1,0 +1,99 @@
+<div class="file-upload">
+
+  <!--  DROP ZONE-->
+  <div class="file-upload__drop-zone">
+    <div class="drop-zone">
+      <div ng2FileDrop
+           [ngClass]="{'nv-file-over': hasBaseDropZoneOver}"
+           (fileOver)="fileOverBase($event)"
+           [uploader]="uploader"
+           class="drop-zone__zone">
+      </div>
+      <mat-icon class="drop-zone__icon">cloud_upload</mat-icon>
+      <span class="drop-zone__title">Drag&Drop files here</span>
+
+      <div class="drop-zone__btn-group">
+        <button mat-stroked-button class="btn" (click)="multiple.click()">Multiple</button>
+        <button mat-stroked-button class="btn" (click)="single.click()">Single</button>
+      </div>
+
+      <div class="drop-zone__file-input">
+        <input type="file" ng2FileSelect [uploader]="uploader" multiple #multiple/><br/>
+        <input type="file" ng2FileSelect [uploader]="uploader" #single/>
+      </div>
+    </div>
+  </div>
+
+  <div class="file-upload__action-zone">
+    <table class="upload-table">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Size</th>
+        <th>Progress</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let item of uploader.queue">
+        <!--        NAME-->
+        <td><strong>{{ item?.file?.name }}</strong></td>
+        <!--        SIZE-->
+        <td *ngIf="uploader.options.isHTML5"
+            nowrap>{{ item?.file?.size / 1024 / 1024 | number:'.2' }} MB
+        </td>
+        <!--        PROGRESS-->
+        <td *ngIf="uploader.options.isHTML5">
+          <mat-progress-bar mode="determinate" value="{{item.progress}}"></mat-progress-bar>
+        </td>
+
+        <td class="text-center">
+          <mat-icon *ngIf="item.isSuccess">done</mat-icon>
+          <mat-icon *ngIf="item.isCancel">cancel</mat-icon>
+          <mat-icon *ngIf="item.isError">delete</mat-icon>
+        </td>
+
+        <td nowrap>
+          <button type="button" mat-icon-button color="primary"
+                  (click)="item.upload()"
+                  [disabled]="item.isReady || item.isUploading || item.isSuccess">
+            <mat-icon>cloud_upload</mat-icon>
+          </button>
+          <button type="button" mat-icon-button color="accent"
+                  (click)="item.cancel()" [disabled]="!item.isUploading">
+            <mat-icon>cancel</mat-icon>
+          </button>
+          <button type="button" mat-icon-button color="warn"
+                  (click)="item.remove()">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <!--BUTTON GROUP-->
+    <div class="btn-upload-all">
+      <div class="btn-upload-all__progress">
+        <mat-progress-bar mode="determinate" value="{{uploader.progress}}"></mat-progress-bar>
+      </div>
+      <div class="btn-upload-all__btn-group">
+        <button type="button" mat-stroked-button
+                (click)="uploader.uploadAll()"
+                [disabled]="!uploader.getNotUploadedItems().length">
+          Upload all
+        </button>
+        <button type="button" mat-stroked-button
+                (click)="uploader.cancelAll()"
+                [disabled]="!uploader.isUploading">
+          Cancel all
+        </button>
+        <button type="button" mat-stroked-button
+                (click)="uploader.clearQueue()"
+                [disabled]="!uploader.queue.length">
+          Remove all
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

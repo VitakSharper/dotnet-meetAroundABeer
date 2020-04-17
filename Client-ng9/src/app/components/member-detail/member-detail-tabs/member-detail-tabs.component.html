@@ -29,18 +29,14 @@
     </mat-tab>
     <mat-tab label="PHOTOS">
       <section class="detail-tab">
-        <div class="detail-tab__title">
-          <p>{{user?.displayName}}'s photos</p>
-        </div>
+        <p class="detail-tab__title">{{user?.displayName}}'s photos</p>
         <ngx-gallery class="ngx-gallery" [options]="galleryOptions"
                      [images]="galleryImages"></ngx-gallery>
       </section>
     </mat-tab>
     <mat-tab label="CHAT">
       <section class="detail-tab">
-        <div class="detail-tab__title">
-          <p>{{user?.displayName}}'s chat</p>
-        </div>
+        <p class="detail-tab__title">{{user?.displayName}}'s chat</p>
         <!--                <app-member-messages [user]="user"></app-member-messages>-->
       </section>
     </mat-tab>
