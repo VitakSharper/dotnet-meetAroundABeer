@@ -25,9 +25,8 @@ const materialComponents = [
   MatSelectModule, MatMenuModule,
   MatIconModule, MatChipsModule,
   MatDividerModule, MatGridListModule,
-  MatListModule, MatGridListModule,
-  MatButtonToggleModule, MatTooltipModule,
-  MatProgressBarModule];
+  MatListModule, MatButtonToggleModule,
+  MatTooltipModule, MatProgressBarModule];
 
 @NgModule({
   imports: [materialComponents],

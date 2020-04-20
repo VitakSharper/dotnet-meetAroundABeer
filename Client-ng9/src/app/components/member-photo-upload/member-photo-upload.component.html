@@ -24,15 +24,13 @@
     </div>
   </div>
 
-  <div class="file-upload__action-zone">
+  <div class="file-upload__action-zone" *ngIf="uploader?.queue?.length>0">
+    <h3>Uploading files: {{uploader?.queue?.length}}</h3>
     <table class="upload-table">
       <thead>
       <tr>
         <th>Name</th>
         <th>Size</th>
-        <th>Progress</th>
-        <th>Status</th>
-        <th>Actions</th>
       </tr>
       </thead>
       <tbody>
@@ -43,32 +41,6 @@
         <td *ngIf="uploader.options.isHTML5"
             nowrap>{{ item?.file?.size / 1024 / 1024 | number:'.2' }} MB
         </td>
-        <!--        PROGRESS-->
-        <td *ngIf="uploader.options.isHTML5">
-          <mat-progress-bar mode="determinate" value="{{item.progress}}"></mat-progress-bar>
-        </td>
-
-        <td class="text-center">
-          <mat-icon *ngIf="item.isSuccess">done</mat-icon>
-          <mat-icon *ngIf="item.isCancel">cancel</mat-icon>
-          <mat-icon *ngIf="item.isError">delete</mat-icon>
-        </td>
-
-        <td nowrap>
-          <button type="button" mat-icon-button color="primary"
-                  (click)="item.upload()"
-                  [disabled]="item.isReady || item.isUploading || item.isSuccess">
-            <mat-icon>cloud_upload</mat-icon>
-          </button>
-          <button type="button" mat-icon-button color="accent"
-                  (click)="item.cancel()" [disabled]="!item.isUploading">
-            <mat-icon>cancel</mat-icon>
-          </button>
-          <button type="button" mat-icon-button color="warn"
-                  (click)="item.remove()">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </td>
       </tr>
       </tbody>
     </table>
@@ -78,20 +50,23 @@
         <mat-progress-bar mode="determinate" value="{{uploader.progress}}"></mat-progress-bar>
       </div>
       <div class="btn-upload-all__btn-group">
-        <button type="button" mat-stroked-button
+        <button type="button" mat-icon-button color="primary"
                 (click)="uploader.uploadAll()"
                 [disabled]="!uploader.getNotUploadedItems().length">
-          Upload all
+          <mat-icon>cloud_upload</mat-icon>
         </button>
-        <button type="button" mat-stroked-button
+
+        <button type="button" mat-icon-button color="accent"
                 (click)="uploader.cancelAll()"
                 [disabled]="!uploader.isUploading">
-          Cancel all
+          <mat-icon>cancel</mat-icon>
         </button>
-        <button type="button" mat-stroked-button
+
+        <button type="button" mat-icon-button color="warn"
                 (click)="uploader.clearQueue()"
-                [disabled]="!uploader.queue.length">
-          Remove all
+                [disabled]="!uploader.queue.length"
+        >
+          <mat-icon>delete</mat-icon>
         </button>
       </div>
     </div>

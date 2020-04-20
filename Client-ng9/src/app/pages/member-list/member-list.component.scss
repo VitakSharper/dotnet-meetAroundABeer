@@ -18,6 +18,17 @@
   }
 }
 
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(200px, 1fr));
+  grid-gap: 1rem;
+
+  .person-card {
+    background: #fff;
+  }
+}
+
+
 .mat-grid-tile-header {
   box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
   0px 1px 1px 0px rgba(0, 0, 0, 0.14),
