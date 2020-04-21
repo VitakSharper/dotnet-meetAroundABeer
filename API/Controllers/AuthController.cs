@@ -45,10 +45,11 @@ namespace API.Controllers
         {
             var userToReturn = await _authRepository.Login(userForLoginDto);
             if (userToReturn == null) return Unauthorized(new { Login = "User or password is not correct." });
-            var user = _mapper.Map<UserForListDto>(userToReturn);
+            var user = _mapper.Map<UserForDetailedDto>(userToReturn);
 
             return Ok(new
             {
+                user,
                 token = _jwtGenerator.CreateToken(userToReturn)
             });
         }

@@ -38,7 +38,7 @@ export class MemberPhotoEditComponent implements OnInit, OnDestroy {
         this.user.photoUrl = p.url;
       }
     });
-    this.usersService.getCurrentUserSub.next(this.user);
+    this.usersService.pushUser(this.user);
     this.alertifyService.successAlert('Photo successfully set to main.');
   }
 
@@ -49,7 +49,7 @@ export class MemberPhotoEditComponent implements OnInit, OnDestroy {
         p.status = !p.status;
       }
     });
-    this.usersService.getCurrentUserSub.next(this.user);
+    this.usersService.pushUser(this.user);
     this.alertifyService.successAlert('Status successfully changed.');
   }
 

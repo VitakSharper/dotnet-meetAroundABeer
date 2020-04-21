@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {
     this.matIconRegistry.addSvgIcon(
       'beer',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('../../../assets/beer.svg')
+      this.domSanitizer.bypassSecurityTrustResourceUrl('/assets/beer.svg')
     );
   }
 
@@ -46,7 +46,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
       });
 
     this.unsubscriptionUser = this.usersService.getCurrentUserSub
-      .subscribe(user => this.user = user);
+      .subscribe(user => {
+        this.user = this.usersService.getUserWithPhoto(user);
+      });
   }
 
   logOut() {
@@ -55,7 +57,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.alertify.warningAlert('Logged Out.');
     }, 500);
-    this.usersService.getCurrentUserSub.next({});
+    this.usersService.pushUser(null);
     this.router.navigate(['/']);
   }
 

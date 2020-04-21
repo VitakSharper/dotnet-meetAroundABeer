@@ -20,6 +20,18 @@ export class UsersService {
   constructor(private http: HttpClient) {
   }
 
+  pushUser(user: User) {
+    user
+      ? this.currentUser.next(this.getUserWithPhoto(user))
+      : this.currentUser.next({});
+  }
+
+  getUserWithPhoto(user: User): User {
+    return user.photoUrl
+      ? user
+      : {...user, photoUrl: '/assets/original.png'};
+  }
+
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.baseUrl}`);
   }

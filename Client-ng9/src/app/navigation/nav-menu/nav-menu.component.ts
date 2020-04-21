@@ -1,6 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {AuthService} from '../../_services/auth.service';
 import {User} from '../../_services/interfaces';
 import {UsersService} from '../../_services/users.service';
 
@@ -14,12 +13,13 @@ export class NavMenuComponent implements OnInit, OnDestroy {
   user: User;
 
 
-  constructor(private usersService: UsersService) {
+  constructor(
+    private usersService: UsersService) {
   }
 
   ngOnInit(): void {
     this.subscriptionUser = this.usersService.getCurrentUserSub
-      .subscribe(user => this.user = user);
+      .subscribe(user => this.user = this.usersService.getUserWithPhoto(user));
   }
 
   ngOnDestroy(): void {

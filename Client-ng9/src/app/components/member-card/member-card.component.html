@@ -5,7 +5,8 @@
     <!--    <mat-card-subtitle>age: {{user.age}}</mat-card-subtitle>-->
   </mat-card-header>
   <div class="member-card__img-wrapper">
-    <img class="card-img" mat-card-image src="{{user.photoUrl}}" alt="{{user.displayName}} photo">
+    <img class="card-img" mat-card-image src="{{user.photoUrl||'/assets/original.png'}}"
+         alt="{{user.displayName}} photo">
 
     <ul class="user-list-member-icons">
       <li class="icon-item">

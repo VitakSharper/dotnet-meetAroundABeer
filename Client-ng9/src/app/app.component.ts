@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from './_services/auth.service';
 import {Subscription} from 'rxjs';
+import {UsersService} from './_services/users.service';
 
 @Component({
   selector: 'app-root',
@@ -8,21 +9,29 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  unsubscription: Subscription;
+  unsubscriptionToken: Subscription;
+  unsubscriptionUser: Subscription;
   isLogged = false;
 
 
-  constructor(private auth: AuthService) {
+  constructor(
+    private auth: AuthService,
+    private usersService: UsersService) {
   }
 
   ngOnInit(): void {
-    this.unsubscription = this.auth.getDecToken.subscribe(resp => {
+    this.unsubscriptionToken = this.auth.getDecToken.subscribe(resp => {
       this.isLogged = resp && !!resp.nameid;
     });
+    this.unsubscriptionUser = this.usersService.getCurrentUser()
+      .subscribe(data => this.usersService.pushUser(data.userToReturn));
   }
 
   ngOnDestroy(): void {
-    this.unsubscription.unsubscribe();
+    if (this.unsubscriptionUser) {
+      this.unsubscriptionUser.unsubscribe();
+    }
+    this.unsubscriptionToken.unsubscribe();
   }
 
 

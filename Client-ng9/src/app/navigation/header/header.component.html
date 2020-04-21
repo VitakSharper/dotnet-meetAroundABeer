@@ -22,8 +22,7 @@
     <ng-template #loggedIn>
       <div class="header-nav__user">
         <img class="user-photo" src="{{user.photoUrl}}" alt="{{user.displayName}} photo"
-             (click)="onEditProfilesPhoto()"
-        >
+             (click)="onEditProfilesPhoto()">
       </div>
       <button mat-button [matMenuTriggerFor]="afterMenu">
         Welcome {{displayName|titlecase}}

@@ -46,7 +46,7 @@ export class MemberPhotoUploadComponent implements OnInit, OnDestroy {
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       if (response) {
         this.currentUser.photos.push(JSON.parse(response));
-        this.usersService.getCurrentUserSub.next(this.currentUser);
+        this.usersService.pushUser(this.currentUser);
         this.alertify.successAlert('Images successfully uploaded.');
       }
       this.alertify.errorAlert('Problem upload photos.');

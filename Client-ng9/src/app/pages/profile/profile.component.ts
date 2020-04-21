@@ -37,10 +37,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.tabsService.getEditWarning.next(false);
     this.route.data.subscribe(data => {
       this.user = data['user'].userToReturn;
-      this.usersService.getCurrentUserSub.next(data['user'].userToReturn);
     });
     this.unsubscribeUser = this.usersService.getCurrentUserSub.subscribe(user => {
-      this.user = user;
+      this.user = this.usersService.getUserWithPhoto(user);
     });
     this.unsubscribeWarning = this.tabsService.getEditWarning
       .subscribe(data => this.showWarning = data);
