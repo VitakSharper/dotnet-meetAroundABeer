@@ -6,6 +6,8 @@ import {AuthService} from '../../_services/auth.service';
 import {Subscription} from 'rxjs';
 import {Router} from '@angular/router';
 import {UsersService} from '../../_services/users.service';
+import {User} from '../../_services/interfaces';
+import {TabsService} from '../../_services/tabs.service';
 
 @Component({
   selector: 'app-header',
@@ -13,7 +15,9 @@ import {UsersService} from '../../_services/users.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  unsubscription: Subscription;
+  unsubscriptionToken: Subscription;
+  unsubscriptionUser: Subscription;
+  user: User;
   displayName: string;
 
   get onLoggedIn(): boolean {
@@ -26,7 +30,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private alertify: AlertifyService,
     private auth: AuthService,
     private usersService: UsersService,
-    private router: Router
+    private router: Router,
+    private tabsService: TabsService
   ) {
     this.matIconRegistry.addSvgIcon(
       'beer',
@@ -35,12 +40,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.unsubscription = this.auth.getDecToken.subscribe(resp => {
-      this.displayName = resp && resp.nameid;
-    });
+    this.unsubscriptionToken = this.auth.getDecToken
+      .subscribe(resp => {
+        this.displayName = resp && resp.nameid;
+      });
 
-    this.usersService.getCurrentUser().subscribe(data => this.usersService.getCurrentUserSub.next(data.userToReturn));
-
+    this.unsubscriptionUser = this.usersService.getCurrentUserSub
+      .subscribe(user => this.user = user);
   }
 
   logOut() {
@@ -49,14 +55,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.alertify.warningAlert('Logged Out.');
     }, 500);
+    this.usersService.getCurrentUserSub.next({});
     this.router.navigate(['/']);
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscription.unsubscribe();
   }
 
   onEditProfile() {
     this.router.navigate(['/profile']);
+  }
+
+  onEditProfilesPhoto() {
+    this.router.navigate(['/profile']);
+    this.tabsService.getTabIndex.next(1);
+
+  }
+
+  ngOnDestroy(): void {
+    if (this.unsubscriptionToken) {
+      this.unsubscriptionToken.unsubscribe();
+    }
+    if (this.unsubscriptionUser) {
+      this.unsubscriptionUser.unsubscribe();
+    }
   }
 }

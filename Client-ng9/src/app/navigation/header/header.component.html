@@ -1,5 +1,6 @@
 <mat-toolbar class="mat-elevation-z6 header" color="primary" role="heading">
   <mat-toolbar-row class="header-nav" aria-label="Top Toolbar">
+
     <a class="header-nav__button" mat-button [routerLink]="['/']">
       <mat-icon class="logo" svgIcon="beer"></mat-icon>
     </a>
@@ -19,6 +20,11 @@
     </mat-chip-list>
 
     <ng-template #loggedIn>
+      <div class="header-nav__user">
+        <img class="user-photo" src="{{user.photoUrl}}" alt="{{user.displayName}} photo"
+             (click)="onEditProfilesPhoto()"
+        >
+      </div>
       <button mat-button [matMenuTriggerFor]="afterMenu">
         Welcome {{displayName|titlecase}}
         <mat-icon>arrow_drop_down</mat-icon>

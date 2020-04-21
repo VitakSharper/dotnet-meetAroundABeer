@@ -5,7 +5,7 @@
 
   &__button {
     position: fixed;
-    background-color: rgb(197, 181, 225);
+    background-color: #BDBDBD;
     height: 4.5rem;
     width: 4.5rem;
     text-align: center;
@@ -15,7 +15,19 @@
     border-radius: 50%;
     z-index: 2000;
     //    box-shadow: 0 1rem 3rem rgba(#000, .1);
-    box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+
+    .button-image {
+      position: absolute;
+      left: 0;
+      //top: 50%;
+      //left: 50%;
+      //transform: translate(-50%, -50%);
+      border-radius: 50%;
+      opacity: .4;
+      height: 4.5rem;
+      width: 4.5rem;
+    }
   }
 
   &__background {

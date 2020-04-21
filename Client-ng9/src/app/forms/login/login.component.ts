@@ -37,6 +37,8 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.value)
       .subscribe(next => {
           this.alertify.successAlert('Logged in successfully.');
+          this.usersService.getCurrentUser()
+            .subscribe(data => this.usersService.getCurrentUserSub.next(data.userToReturn));
         }, error => this.alertify.errorAlert(error),
         () => {
           this.router.navigate(['/members']);

@@ -43,13 +43,14 @@ export class MemberDetailTabsComponent implements OnInit, OnDestroy {
   }
 
   getImages() {
-    console.log('users photos: ', this.user.photos);
-    return this.user.photos.map(p => ({
-      small: p.url,
-      medium: p.url,
-      big: p.url,
-      description: p.description
-    }));
+    return this.user.photos
+      .filter(p => !p.status)
+      .map(p => ({
+        small: p.url,
+        medium: p.url,
+        big: p.url,
+        description: p.description
+      }));
   }
 
   ngOnDestroy(): void {

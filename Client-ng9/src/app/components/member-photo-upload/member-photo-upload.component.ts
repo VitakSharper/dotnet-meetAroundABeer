@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload';
 import {environment} from '../../../environments/environment';
 import {AlertifyService} from '../../_services/alertify.service';
@@ -11,7 +11,7 @@ import {UsersService} from '../../_services/users.service';
   templateUrl: './member-photo-upload.component.html',
   styleUrls: ['./member-photo-upload.component.scss']
 })
-export class MemberPhotoUploadComponent implements OnInit {
+export class MemberPhotoUploadComponent implements OnInit, OnDestroy {
   unsubscribeUser: Subscription;
   currentUser: User;
 
@@ -64,5 +64,9 @@ export class MemberPhotoUploadComponent implements OnInit {
   public getName(element) {
     console.log(element);
     return element;
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribeUser.unsubscribe();
   }
 }

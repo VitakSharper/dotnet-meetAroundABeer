@@ -9,7 +9,7 @@ import {User} from './interfaces';
 })
 export class UsersService {
 
-  protected currentUser: BehaviorSubject<User> = new BehaviorSubject<any>({});
+  protected currentUser: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
   public get getCurrentUserSub() {
     return this.currentUser;

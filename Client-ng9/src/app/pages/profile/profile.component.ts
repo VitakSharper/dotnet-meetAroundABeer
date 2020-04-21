@@ -21,6 +21,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
   }
 
+  unsubscribeUser: Subscription;
+
   unsubscribeWarning: Subscription;
   showWarning = false;
 
@@ -33,10 +35,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.tabsService.getEditWarning.next(false);
-
     this.route.data.subscribe(data => {
       this.user = data['user'].userToReturn;
       this.usersService.getCurrentUserSub.next(data['user'].userToReturn);
+    });
+    this.unsubscribeUser = this.usersService.getCurrentUserSub.subscribe(user => {
+      this.user = user;
     });
     this.unsubscribeWarning = this.tabsService.getEditWarning
       .subscribe(data => this.showWarning = data);
@@ -44,5 +48,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.unsubscribeWarning.unsubscribe();
+    if (this.unsubscribeUser) {
+      this.unsubscribeUser.unsubscribe();
+    }
   }
 }

@@ -82,5 +82,52 @@ namespace API.Controllers
 
             return BadRequest("Could not add the photo.");
         }
+
+        [HttpPost("{id}/main")]
+        public async Task<IActionResult> Main(string id)
+        {
+            var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
+                u.UserName == _userAccessor.GetCurrentUsername());
+            if (currentUser == null) return Unauthorized();
+
+            var photo = currentUser.Photos.FirstOrDefault(p => p.Id == id);
+            if (photo == null) return NotFound();
+
+            var mainPhoto = currentUser.Photos.FirstOrDefault(m => m.IsMain);
+
+            if (mainPhoto != null && mainPhoto.Id == photo.Id)
+                return BadRequest("Photo already the main photo.");
+
+            photo.IsMain = true;
+            if (mainPhoto != null) mainPhoto.IsMain = false;
+            if (_context.SaveChanges() > 0) return NoContent();
+            return BadRequest("Problem saving changes");
+        }
+
+        [HttpPost("{id}/status")]
+        public async Task<IActionResult> Status(string id)
+        {
+            var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
+                u.UserName == _userAccessor.GetCurrentUsername());
+            if (currentUser == null) return Unauthorized();
+
+            var photo = currentUser.Photos.FirstOrDefault(p => p.Id == id);
+            if (photo == null) return NotFound();
+
+            photo.Status = !photo.Status;
+            if (_context.SaveChanges() > 0) return NoContent();
+            return BadRequest("Problem saving changes");
+        }
+
+        [HttpGet("getPhotos")]
+        public async Task<IActionResult> GetPhotos()
+        {
+            var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
+                u.UserName == _userAccessor.GetCurrentUsername());
+            if (currentUser == null) return Unauthorized();
+            var photos = currentUser.Photos.ToList();
+
+            return Ok(photos);
+        }
     }
 }

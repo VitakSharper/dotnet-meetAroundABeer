@@ -1,18 +1,28 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AuthService} from '../../_services/auth.service';
+import {User} from '../../_services/interfaces';
+import {UsersService} from '../../_services/users.service';
 
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
   styleUrls: ['./nav-menu.component.scss']
 })
-export class NavMenuComponent implements OnInit {
+export class NavMenuComponent implements OnInit, OnDestroy {
+  subscriptionUser: Subscription;
+  user: User;
 
-  constructor() {
+
+  constructor(private usersService: UsersService) {
   }
 
   ngOnInit(): void {
+    this.subscriptionUser = this.usersService.getCurrentUserSub
+      .subscribe(user => this.user = user);
+  }
 
+  ngOnDestroy(): void {
+    this.subscriptionUser.unsubscribe();
   }
 }
