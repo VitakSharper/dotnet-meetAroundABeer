@@ -8,8 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Persistence;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 
 namespace API.Controllers
 {
@@ -23,6 +28,8 @@ namespace API.Controllers
         private readonly IDatingRepository _datingRepository;
         private readonly IMapper _mapper;
         private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
+        private readonly IWebHostEnvironment _env;
+        private string _dir;
 
         public PhotosController(
             DataContext context,
@@ -30,7 +37,9 @@ namespace API.Controllers
             IPhotoAccessor photoAccessor,
             IDatingRepository datingRepository,
             IMapper mapper,
-            IOptions<CloudinarySettings> cloudinaryConfig)
+            IOptions<CloudinarySettings> cloudinaryConfig,
+            IWebHostEnvironment env
+            )
         {
             _context = context;
             _userAccessor = userAccessor;
@@ -39,6 +48,8 @@ namespace API.Controllers
             _userAccessor = userAccessor;
             _mapper = mapper;
             _cloudinaryConfig = cloudinaryConfig;
+            _env = env;
+            _dir = _env.ContentRootPath;
         }
 
         [HttpGet("{id}/", Name = "GetPhoto")]
@@ -77,10 +88,29 @@ namespace API.Controllers
 
             if (await _datingRepository.Save())
             {
-                return CreatedAtRoute("GetPhoto", new { userId = currentUser.Id, id = photo.Id }, photoToReturn);
+                return CreatedAtRoute("GetPhoto", new { id = photo.Id }, photoToReturn);
             }
 
             return BadRequest("Could not add the photo.");
+        }
+
+        [HttpPost("single")]
+        public async Task<IActionResult> UploadSingleLocal( [FromForm(Name = "file")]IFormFile file)
+        {
+            await using var fileStream=new FileStream(Path.Combine($"{_dir}\\images",$"{Guid.NewGuid()} {file.FileName}"),FileMode.Create,FileAccess.Write);
+            await file.CopyToAsync(fileStream);
+            return Ok();
+        }
+        
+        [HttpPost("multiple")]
+        public async Task<IActionResult> UploadMultipleLocal( [FromForm(Name = "file")] IEnumerable<IFormFile> files)
+        {
+            foreach (var file in files)
+            {
+                await using var fileStream=new FileStream(Path.Combine($"{_dir}\\images",$"{Guid.NewGuid()} {file.FileName}"),FileMode.Create,FileAccess.Write);
+                await file.CopyToAsync(fileStream);
+            }
+            return Ok();
         }
 
         [HttpPost("{id}/main")]
@@ -117,6 +147,30 @@ namespace API.Controllers
             photo.Status = !photo.Status;
             if (_context.SaveChanges() > 0) return NoContent();
             return BadRequest("Problem saving changes");
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
+                u.UserName == _userAccessor.GetCurrentUsername());
+            if (currentUser == null) return Unauthorized();
+
+            var photo = currentUser.Photos.FirstOrDefault(p => p.Id == id);
+            if (photo == null) return NotFound();
+            if (photo.IsMain) return BadRequest("You cannot delete your main photo.");
+
+            if (photo.Id.Length < 21)
+            {
+                var result = _photoAccessor.DeletePhoto(id);
+                if (result == null) throw new Exception("Problem delete the photo.");
+            }
+
+            currentUser.Photos.Remove(photo);
+
+            if (_context.SaveChanges() > 0) return Ok();
+
+            return BadRequest("Problem deleting photo.");
         }
 
         [HttpGet("getPhotos")]

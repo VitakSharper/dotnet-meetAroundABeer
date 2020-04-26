@@ -53,6 +53,15 @@ export class MemberPhotoEditComponent implements OnInit, OnDestroy {
     this.alertifyService.successAlert('Status successfully changed.');
   }
 
+  deletePhoto(id: string) {
+    this.alertifyService.confirmAlert('Are you sure you want to delete this photo?', () => {
+      this.photosService.deletePhoto(id).subscribe(() => {
+        this.user.photos = this.user.photos.filter(p => p.id !== id);
+        this.usersService.pushUser(this.user);
+      }, error => this.alertifyService.errorAlert(error));
+    });
+  }
+
   ngOnDestroy(): void {
     if (this.unsubscribeCurrentUser) {
       this.unsubscribeCurrentUser.unsubscribe();

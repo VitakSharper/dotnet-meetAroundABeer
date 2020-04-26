@@ -90,7 +90,7 @@ namespace API
                             "origin",
                             "x-requested-with")
                         .WithExposedHeaders("WWW-Authenticate")
-                        .WithMethods("GET", "POST", "UPDATE", "PUT")
+                        .WithMethods("GET", "POST", "UPDATE", "PUT", "DELETE")
                         .WithOrigins("http://localhost:4200")
                         .AllowCredentials();
                 });

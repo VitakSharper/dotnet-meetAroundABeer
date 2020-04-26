@@ -1,0 +1,44 @@
+<div class="uploader">
+  <form class="uploader-form"
+        [formGroup]="uploadForm" (ngSubmit)="onUpload()">
+    <mat-form-field appearance="outline" class="uploader-form__single">
+      <mat-label>Single File Upload</mat-label>
+      <ngx-mat-file-input
+        #removableInput
+        formControlName="single"
+        [accept]="'image/*'"
+        placeholder="You file here"></ngx-mat-file-input>
+      <mat-icon matSuffix>folder</mat-icon>
+      <button mat-icon-button matSuffix
+              *ngIf="!removableInput.empty"
+              (click)="removableInput.clear($event)">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="uploader-form__multiple">
+      <mat-label>Multiple File Upload</mat-label>
+      <ngx-mat-file-input
+        #removableInput
+        multiple
+        formControlName="multiple"
+        [accept]="'image/*'"
+        placeholder="You files here"></ngx-mat-file-input>
+      <mat-icon matSuffix>folder</mat-icon>
+      <button mat-icon-button matSuffix
+              *ngIf="!removableInput.empty"
+              (click)="removableInput.clear($event)">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button
+      type="submit"
+      mat-stroked-button
+      color="primary"
+      class="uploader-form__submit"
+      [disabled]="!uploadForm.valid"
+    >Upload
+    </button>
+  </form>
+</div>

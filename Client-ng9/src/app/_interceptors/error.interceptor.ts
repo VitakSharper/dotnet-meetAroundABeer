@@ -29,7 +29,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             }
           }
 
-          let serverError = error.error;
+          let serverError: any = error.error;
           let modalStateErrors = null;
 
           if (serverError.errors && typeof serverError.errors === 'object') {
@@ -39,7 +39,10 @@ export class ErrorInterceptor implements HttpInterceptor {
                 return acc;
               }, []);
           }
-          return throwError(modalStateErrors || (typeof serverError === 'object' ? Object.values(serverError) : serverError) || '💥 Something went wrong!');
+          console.log('in error: ', modalStateErrors, serverError);
+          return throwError(modalStateErrors || (typeof serverError === 'object'
+            ? (serverError.title || serverError.error)
+            : serverError) || '💥 Something went wrong!');
         })
       );
   }

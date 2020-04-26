@@ -25,6 +25,7 @@
                 color="warn"
                 matTooltipPosition="above"
                 [disabled]="photo.isMain"
+                (click)="deletePhoto(photo.id)"
         >
           <mat-icon>delete</mat-icon>
         </button>
@@ -50,7 +51,9 @@
           </button>
 
           <mat-divider></mat-divider>
-          <button mat-menu-item [disabled]="photo.isMain">
+          <button mat-menu-item
+                  [disabled]="photo.isMain"
+                  (click)="deletePhoto(photo.id)">
             <mat-icon>delete</mat-icon>
             <span>Delete photo</span>
           </button>

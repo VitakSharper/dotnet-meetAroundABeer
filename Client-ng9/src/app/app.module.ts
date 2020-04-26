@@ -12,7 +12,7 @@ import {RegisterComponent} from './forms/register/register.component';
 import {LoginComponent} from './forms/login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {httpInterceptorProviders} from './interceptors/error.interceptor';
+import {httpInterceptorProviders} from './_interceptors/error.interceptor';
 import {JwtModule} from '@auth0/angular-jwt';
 import {NavMenuComponent} from './navigation/nav-menu/nav-menu.component';
 import {MemberListComponent} from './pages/member-list/member-list.component';
@@ -34,6 +34,9 @@ import {PreventUnsavedChangesGuard} from './_guards/prevent-unsaved-changes.guar
 import {MemberPhotoEditComponent} from './components/member-photo-edit/member-photo-edit.component';
 import {MemberPhotoUploadComponent} from './components/member-photo-upload/member-photo-upload.component';
 import {FileUploadModule} from 'ng2-file-upload';
+import {UploadLocalFilesComponent} from './components/upload-local-files/upload-local-files.component';
+import {MatIconModule} from '@angular/material/icon';
+import {MaterialFileInputModule} from 'ngx-material-file-input';
 
 @NgModule({
   declarations: [
@@ -55,6 +58,7 @@ import {FileUploadModule} from 'ng2-file-upload';
     MemberDetailTabsComponent,
     MemberPhotoEditComponent,
     MemberPhotoUploadComponent,
+    UploadLocalFilesComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +72,8 @@ import {FileUploadModule} from 'ng2-file-upload';
     MaterialUiModule,
     NgxGalleryModule,
     FileUploadModule,
+    MaterialFileInputModule,
+    MatIconModule,
     InlineSVGModule.forRoot(),
     JwtModule.forRoot({
       config: {

@@ -14,7 +14,7 @@
 .idea/**/contentModel.xml
 
 node_modules/
-
+images/
 # Sensitive or high-churn files
 .idea/**/dataSources/
 .idea/**/dataSources.ids
@@ -434,3 +434,4 @@ MigrationBackup/
 .ionide/
 
 API/appsettings.json
+/API/images/

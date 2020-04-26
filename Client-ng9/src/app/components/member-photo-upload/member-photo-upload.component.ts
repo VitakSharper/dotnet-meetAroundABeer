@@ -57,15 +57,6 @@ export class MemberPhotoUploadComponent implements OnInit, OnDestroy {
     this.hasBaseDropZoneOver = e;
   }
 
-  public fileOverAnother(e: any): void {
-    this.hasAnotherDropZoneOver = e;
-  }
-
-  public getName(element) {
-    console.log(element);
-    return element;
-  }
-
   ngOnDestroy(): void {
     this.unsubscribeUser.unsubscribe();
   }
