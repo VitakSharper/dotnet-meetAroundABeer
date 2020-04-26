@@ -44,6 +44,8 @@ export class UploadLocalFilesComponent implements OnInit {
     type._files.forEach(f => {
       this.formData.append('file', f, f.name);
     });
-    this.uploadForm.reset();
+    setTimeout(() => {
+      this.uploadForm.reset();
+    }, 500);
   }
 }

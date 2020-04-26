@@ -97,6 +97,7 @@ namespace API.Controllers
         [HttpPost("single")]
         public async Task<IActionResult> UploadSingleLocal( [FromForm(Name = "file")]IFormFile file)
         {
+            _ = file ?? throw new ArgumentException("Something went wrong.");
             await using var fileStream=new FileStream(Path.Combine($"{_dir}\\images",$"{Guid.NewGuid()} {file.FileName}"),FileMode.Create,FileAccess.Write);
             await file.CopyToAsync(fileStream);
             return Ok();
@@ -105,6 +106,7 @@ namespace API.Controllers
         [HttpPost("multiple")]
         public async Task<IActionResult> UploadMultipleLocal( [FromForm(Name = "file")] IEnumerable<IFormFile> files)
         {
+            _ = files ?? throw new ArgumentException("Something went wrong.");
             foreach (var file in files)
             {
                 await using var fileStream=new FileStream(Path.Combine($"{_dir}\\images",$"{Guid.NewGuid()} {file.FileName}"),FileMode.Create,FileAccess.Write);

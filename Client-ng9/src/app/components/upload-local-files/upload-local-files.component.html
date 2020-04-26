@@ -34,11 +34,11 @@
 
     <button
       type="submit"
-      mat-stroked-button
+      mat-icon-button
       color="primary"
       class="uploader-form__submit"
-      [disabled]="!uploadForm.valid"
-    >Upload
+      [disabled]="!uploadForm.dirty">
+      <mat-icon>cloud_upload</mat-icon>
     </button>
   </form>
 </div>
