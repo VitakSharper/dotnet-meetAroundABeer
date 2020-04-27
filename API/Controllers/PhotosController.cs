@@ -13,8 +13,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 
 namespace API.Controllers
 {
@@ -29,6 +31,7 @@ namespace API.Controllers
         private readonly IMapper _mapper;
         private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
         private readonly IWebHostEnvironment _env;
+        private readonly FileManager _fileManager;
         private string _dir;
 
         public PhotosController(
@@ -38,8 +41,9 @@ namespace API.Controllers
             IDatingRepository datingRepository,
             IMapper mapper,
             IOptions<CloudinarySettings> cloudinaryConfig,
-            IWebHostEnvironment env
-            )
+            IWebHostEnvironment env,
+            FileManager fileManager
+        )
         {
             _context = context;
             _userAccessor = userAccessor;
@@ -49,6 +53,7 @@ namespace API.Controllers
             _mapper = mapper;
             _cloudinaryConfig = cloudinaryConfig;
             _env = env;
+            _fileManager = fileManager;
             _dir = _env.ContentRootPath;
         }
 
@@ -88,30 +93,36 @@ namespace API.Controllers
 
             if (await _datingRepository.Save())
             {
-                return CreatedAtRoute("GetPhoto", new { id = photo.Id }, photoToReturn);
+                return CreatedAtRoute("GetPhoto", new {id = photo.Id}, photoToReturn);
             }
 
             return BadRequest("Could not add the photo.");
         }
 
         [HttpPost("single")]
-        public async Task<IActionResult> UploadSingleLocal( [FromForm(Name = "file")]IFormFile file)
+        public async Task<IActionResult> UploadSingleLocal([FromForm(Name = "file")] IFormFile file)
         {
             _ = file ?? throw new ArgumentException("Something went wrong.");
-            await using var fileStream=new FileStream(Path.Combine($"{_dir}\\images",$"{Guid.NewGuid()} {file.FileName}"),FileMode.Create,FileAccess.Write);
-            await file.CopyToAsync(fileStream);
+            //_fileManager.SaveFile(file);
+            var fileToReturn = await _fileManager.SaveFile(file);
+            // await using var fileStream=new FileStream(Path.Combine($"{_dir}\\images",$"{Guid.NewGuid()} {file.FileName}"),FileMode.Create,FileAccess.Write);
+            // await file.CopyToAsync(fileStream);
+
             return Ok();
         }
-        
+
         [HttpPost("multiple")]
-        public async Task<IActionResult> UploadMultipleLocal( [FromForm(Name = "file")] IEnumerable<IFormFile> files)
+        public async Task<IActionResult> UploadMultipleLocal([FromForm(Name = "file")] IEnumerable<IFormFile> files)
         {
             _ = files ?? throw new ArgumentException("Something went wrong.");
             foreach (var file in files)
             {
-                await using var fileStream=new FileStream(Path.Combine($"{_dir}\\images",$"{Guid.NewGuid()} {file.FileName}"),FileMode.Create,FileAccess.Write);
+                await using var fileStream =
+                    new FileStream(Path.Combine($"{_dir}\\images", $"{Guid.NewGuid()} {file.FileName}"),
+                        FileMode.Create, FileAccess.Write);
                 await file.CopyToAsync(fileStream);
             }
+
             return Ok();
         }
 

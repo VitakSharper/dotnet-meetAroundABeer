@@ -37,6 +37,7 @@ import {FileUploadModule} from 'ng2-file-upload';
 import {UploadLocalFilesComponent} from './components/upload-local-files/upload-local-files.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
+import { SafeHtmlPipe } from './components/upload-local-files/safe-html.pipe';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import {MaterialFileInputModule} from 'ngx-material-file-input';
     MemberPhotoEditComponent,
     MemberPhotoUploadComponent,
     UploadLocalFilesComponent,
+    SafeHtmlPipe,
   ],
   imports: [
     BrowserModule,

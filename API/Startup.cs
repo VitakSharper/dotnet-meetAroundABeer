@@ -26,6 +26,7 @@ using Persistence;
 using System.Net;
 using System.Reflection;
 using System.Text;
+using API.Services;
 
 namespace API
 {
@@ -96,6 +97,8 @@ namespace API
                 });
             });
 
+            services.AddSingleton<FileManager>();
+
             // AutoMapper
             services.AddAutoMapper(typeof(AuthRepository).Assembly);
 
@@ -165,7 +168,7 @@ namespace API
                     builder.Run(async context =>
                     {
                         // add some headers
-                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
 
                         var error = context.Features.Get<IExceptionHandlerFeature>();
                         if (error != null)
@@ -178,7 +181,7 @@ namespace API
                 });
             }
 
-
+            app.UseStaticFiles();
             //app.UseHttpsRedirection();
 
             app.UseRouting();

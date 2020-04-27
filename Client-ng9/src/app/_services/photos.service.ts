@@ -34,10 +34,8 @@ export class PhotosService {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
 
-  uploadSingle(file: any) {
-    this.http.post(`${this.baseUrl}/single`, file)
-      .subscribe(data => {
-      }, error => this.alertifyService.errorAlert(error));
+  uploadSingle(file: any):Observable<any> {
+    return this.http.post(`${this.baseUrl}/single`, file);
   }
   uploadMultiple(file: any) {
     this.http.post(`${this.baseUrl}/multiple`, file)

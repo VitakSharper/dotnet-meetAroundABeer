@@ -41,4 +41,22 @@
       <mat-icon>cloud_upload</mat-icon>
     </button>
   </form>
+  <div class="uploader-preview">
+    <img [src]="fullPath | safeHtml" alt="photos">
+
+    <div class="photo-card">
+      <img class="photo-card__photo" src="{{'/assets/original.png'}}" alt="photo">
+      <div class="photo-card__btn-group">
+        <button class="btn-item" mat-icon-button
+                color="primary">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+
+        <button class="btn-item" mat-icon-button
+                color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
