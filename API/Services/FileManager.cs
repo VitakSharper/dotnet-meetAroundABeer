@@ -30,7 +30,7 @@ namespace API.Services
 
         public File GetFile(string id) => _files.FirstOrDefault(f => f.Id == id);
 
-        public File GetFile(string id, int width) => _files.FirstOrDefault(f => f.Id == id && f.Width == width);
+        private File GetFile(string id, int width) => _files.FirstOrDefault(f => f.Id == id && f.Width == width);
 
         public IEnumerable<File> GetFiles() => _files;
 
@@ -56,7 +56,7 @@ namespace API.Services
             return newFile;
         }
 
-        public void SaveFileOptimize(IFormFile file)
+        public async Task<File> SaveFileOptimize(IFormFile file)
         {
             var settings = new ProcessImageSettings
             {
@@ -65,7 +65,7 @@ namespace API.Services
                 JpegQuality = 100,
                 JpegSubsampleMode = ChromaSubsampleMode.Subsample420
             };
-
+            var files = new List<File>();
             foreach (var (width, height) in _imgSizes)
             {
                 settings.Width = width;
@@ -74,25 +74,29 @@ namespace API.Services
                 var saveFileName = $"{Guid.NewGuid()} {file.FileName}";
                 var savePath = Path.Combine($"{_environment.WebRootPath}\\images", saveFileName);
 
-                using (var fileStream = new FileStream(savePath, FileMode.Create))
-                {
-                    MagicImageProcessor.ProcessImage(file.OpenReadStream(), fileStream, settings);
-                }
+                await using var fileStream = new FileStream(savePath, FileMode.Create);
+                MagicImageProcessor.ProcessImage(file.OpenReadStream(), fileStream, settings);
 
-                _files.Add(new File
+                var fileToList = new File
                 {
                     Id = saveFileName.Split(" ")[0],
                     RelativePath = $"/{saveFileName}",
                     GlobalPath = $"{savePath}",
                     Width = width,
-                });
+                };
+                // TO DO - Write to Db
+                files.Add(fileToList);
             }
+
+            if (files.Count <= 0) return null;
+            _files.AddRange(files);
+            var fileToReturn = files.FirstOrDefault(f => f.Width == 480);
+            return fileToReturn;
         }
 
         public FileStream GetImageStream(string id, int width)
         {
             var path = GetFile(id, GetBestWidth(width)).GlobalPath;
-
             return new FileStream(path, FileMode.Open, FileAccess.Read);
         }
 
@@ -102,7 +106,7 @@ namespace API.Services
                 if (width >= imgWidth)
                     return width;
 
-            return _imgSizes[_imgSizes.Count - 1].Width;
+            return _imgSizes[^1].Width;
         }
     }
 }

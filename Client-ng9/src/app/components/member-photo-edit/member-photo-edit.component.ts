@@ -54,11 +54,15 @@ export class MemberPhotoEditComponent implements OnInit, OnDestroy {
   }
 
   deletePhoto(id: string) {
-    this.alertifyService.confirmAlert('Are you sure you want to delete this photo?', () => {
+    this.alertifyService.confirmAlert('Delete photo!', 'Are you sure you want to delete this photo?', () => {
       this.photosService.deletePhoto(id).subscribe(() => {
-        this.user.photos = this.user.photos.filter(p => p.id !== id);
+        //this.user.photos = this.user.photos.filter(p => p.id !== id);
+        this.user.photos.splice(this.user.photos.findIndex(p => p.id == id), 1);
         this.usersService.pushUser(this.user);
-      }, error => this.alertifyService.errorAlert(error));
+        this.alertifyService.successAlert('Photo has been deleted.');
+      }, error => this.alertifyService.errorAlert('Failed to delete the photo.'));
+    }, () => {
+      this.alertifyService.warningAlert('Cancel delete.');
     });
   }
 

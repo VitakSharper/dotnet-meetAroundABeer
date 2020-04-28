@@ -27,6 +27,12 @@
       align-self: start;
       grid-row: 3/4;
     }
+    &__test{
+      justify-self: start;
+      align-self: start;
+      grid-row: 3/4;
+      grid-column: 2/3;
+    }
   }
 
   .uploader-preview {

@@ -40,10 +40,16 @@
       [disabled]="!uploadForm.dirty">
       <mat-icon>cloud_upload</mat-icon>
     </button>
+    <button class="uploader-form__test" mat-icon-button
+            color="primary">
+      <mat-icon>account_circle</mat-icon>
+    </button>
   </form>
-  <div class="uploader-preview">
-    <img [src]="fullPath | safeHtml" alt="photos">
 
+  <div class="uploader-preview">
+    <img src="{{baseUrl}}/Photos/{{response?.id}}/480" alt="photos">
+
+    <!--    http://localhost:5000/api/Photos/9c4fe8a1-e897-4f01-a64c-47cd4d8e0c02/480-->
     <div class="photo-card">
       <img class="photo-card__photo" src="{{'/assets/original.png'}}" alt="photo">
       <div class="photo-card__btn-group">

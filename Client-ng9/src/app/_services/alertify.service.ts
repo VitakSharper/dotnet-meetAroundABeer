@@ -11,12 +11,11 @@ export class AlertifyService {
     alertify.set('notifier', 'position', 'top-right');
   }
 
-  confirmAlert(message: string, ok: () => void) {
-    alertify.confirm(message, (e: any) => {
-      if (e) {
-        ok();
-      } else {
-      }
+  confirmAlert(title: string, message: string, ok: () => void, nok: () => void) {
+    alertify.confirm(title, message, (e: any) => {
+      ok();
+    }, (e: any) => {
+      nok();
     });
   }
 

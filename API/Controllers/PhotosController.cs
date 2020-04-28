@@ -103,12 +103,15 @@ namespace API.Controllers
         public async Task<IActionResult> UploadSingleLocal([FromForm(Name = "file")] IFormFile file)
         {
             _ = file ?? throw new ArgumentException("Something went wrong.");
-            //_fileManager.SaveFile(file);
-            var fileToReturn = await _fileManager.SaveFile(file);
-            // await using var fileStream=new FileStream(Path.Combine($"{_dir}\\images",$"{Guid.NewGuid()} {file.FileName}"),FileMode.Create,FileAccess.Write);
-            // await file.CopyToAsync(fileStream);
+            var fileToReturn = await _fileManager.SaveFileOptimize(file);
+            return CreatedAtRoute("GetImage",
+                new {id = fileToReturn.Id, width = "480"}, fileToReturn);
+        }
 
-            return Ok();
+        [HttpGet("{id}/{width}", Name = "GetImage")]
+        public IActionResult GetImage(string id, int width)
+        {
+            return new FileStreamResult(_fileManager.GetImageStream(id, width), "image/*");
         }
 
         [HttpPost("multiple")]

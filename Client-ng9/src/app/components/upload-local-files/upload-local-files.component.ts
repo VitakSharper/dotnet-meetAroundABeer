@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {PhotosService} from '../../_services/photos.service';
 import {AlertifyService} from '../../_services/alertify.service';
 import {DomSanitizer} from '@angular/platform-browser';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-upload-local-files',
@@ -12,8 +13,9 @@ import {DomSanitizer} from '@angular/platform-browser';
 export class UploadLocalFilesComponent implements OnInit {
   uploadForm: FormGroup;
   formData: FormData = new FormData();
-  imgPath = '';
   fullPath = null;
+  baseUrl = environment.apiUrl;
+  response: any;
 
   constructor(
     private fb: FormBuilder,
@@ -43,6 +45,8 @@ export class UploadLocalFilesComponent implements OnInit {
     if (this.uploadForm.value.single?._files.length > 0) {
       this.transformUpload(this.uploadForm.value.single);
       this.photosService.uploadSingle(this.formData).subscribe(data => {
+        console.log('location: ', data);
+        this.response = data;
       }, error => this.alertifyService.errorAlert(error));
       this.formData = new FormData();
     }
