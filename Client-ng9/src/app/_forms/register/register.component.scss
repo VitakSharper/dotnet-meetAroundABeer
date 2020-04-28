@@ -1,0 +1,123 @@
+.register {
+  padding: 1rem;
+  margin: 0 auto;
+}
+
+.form-register {
+  padding: 2rem;
+}
+
+.form-card {
+  border: 1px solid #000;
+  padding: 1rem;
+
+  box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
+  0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+  0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+
+  background-color: rgba(255, 255, 255, 0.5);
+  transition: all .15s linear .05s;
+
+  &:hover {
+    background-color: #fff;
+    box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
+  }
+
+
+  &__border {
+    padding: 1rem;
+    border: 1px dotted transparent;
+    border-radius: 5px;
+    transition: border .2s;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    justify-items: start;
+
+    &:hover {
+      border: 1px dotted #000000;
+    }
+  }
+
+  &__title {
+    align-self: center;
+    justify-self: center;
+  }
+
+  &__content {
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5, min-content);
+
+    grid-column-gap: 1rem;
+
+    align-items: start;
+  }
+
+  &__select {
+    width: 15vw;
+    align-self: center;
+  }
+
+  &__date {
+    padding-top: 11px;
+    align-self: center;
+    width: 15vw;
+  }
+
+  &__email {
+    grid-row: 2/3;
+    grid-column: 1/2;
+  }
+
+  &__username {
+    grid-row: 3/4;
+    grid-column: 1/2;
+  }
+
+  &__display-name {
+    grid-row: 3/4;
+    grid-column: 2/3;
+  }
+
+  &__city {
+    grid-row: 5/6;
+    grid-column: 2/3;
+  }
+
+  &__country {
+    grid-row: 5/6;
+  }
+
+  &__password {
+    grid-row: 6/7;
+  }
+
+  &__password-confirm {
+    grid-column: 2/3;
+    grid-row: 6/7;
+  }
+
+  &__actions {
+    padding: 0;
+    margin: 0;
+
+    align-self: center;
+    justify-self: center;
+
+    .btn-submit {
+      flex-basis: 25%;
+    }
+
+    .btn-cancel {
+      flex-basis: 25%;
+    }
+  }
+}
+
+.mat-list-item {
+  color: #c0341d;
+  background-color: #fbe5e1;
+}
