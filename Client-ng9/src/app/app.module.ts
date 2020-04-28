@@ -38,6 +38,7 @@ import {UploadLocalFilesComponent} from './components/upload-local-files/upload-
 import {MatIconModule} from '@angular/material/icon';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import { SafeHtmlPipe } from './components/upload-local-files/safe-html.pipe';
+import { HamburgerComponent } from './navigation/hamburger/hamburger.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +62,7 @@ import { SafeHtmlPipe } from './components/upload-local-files/safe-html.pipe';
     MemberPhotoUploadComponent,
     UploadLocalFilesComponent,
     SafeHtmlPipe,
+    HamburgerComponent,
   ],
   imports: [
     BrowserModule,

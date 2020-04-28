@@ -1,0 +1,118 @@
+.sidebar {
+
+  .row {
+    display: flex;
+    flex-flow: row nowrap;
+
+
+  }
+
+  &__toggle {
+
+    &:link,
+    &:visited {
+      color: #333;
+      margin-right: 1rem;
+      transition: color .2s;
+      cursor: pointer;
+    }
+
+
+    &:hover,
+    &:focus {
+      color: #c85028;
+    }
+
+    & {
+      position: relative;
+
+      &:before {
+        position: absolute;
+        content: "";
+        top: -2px;
+        left: -7px;
+        height: 23px;
+        width: 26px;
+        border-radius: 50%;
+        border: 1px solid #000;
+
+        box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
+        0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+        0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+      }
+    }
+
+  }
+
+  .main-menu {
+    position: fixed;
+    display: none;
+    left: -200px;
+    top: 0;
+    height: 100%;
+    overflow-x: visible;
+    overflow-y: auto;
+    transition: left .3s ease;
+    z-index: 999;
+
+    & ul {
+      list-style: none;
+      margin: 0;
+      padding-top: 2.5em;
+      min-height: 100%;
+      width: 200px;
+      background-color: #1a1a1a;
+    }
+
+    & a {
+      display: block;
+      padding: 0.75em;
+      color: #fff;
+      text-decoration: none;
+      border-bottom: 1px solid #383838;
+    }
+
+    & li:first-child a {
+      border-top: 1px solid #383838;
+    }
+
+    & a:hover,
+    & a:focus {
+      background: #333;
+      text-decoration: underline;
+    }
+
+    .menu-close {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    &:target {
+      display: block;
+      left: 0;
+      outline: none;
+    }
+
+    &:target .menu-close {
+      z-index: 1001;
+    }
+
+    &:target ul {
+      position: relative;
+      z-index: 1000;
+    }
+
+    &:target + .backdrop {
+      position: fixed;
+      display: block;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 998;
+      background-color: rgba(0, 0, 0, 0.50);
+      cursor: default;
+    }
+  }
+}
