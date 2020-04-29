@@ -39,10 +39,11 @@ export class ErrorInterceptor implements HttpInterceptor {
                 return acc;
               }, []);
           }
-          console.log('in error: ', modalStateErrors, serverError);
+          console.log('modalStateErrors: ', modalStateErrors);
+          console.log('serverError: ', serverError, Object.keys(serverError).length);
           return throwError(modalStateErrors || (typeof serverError === 'object'
-            ? (serverError.title || serverError.error)
-            : serverError) || '💥 Something went wrong!');
+            ? Object.values(serverError)
+            : [{0: serverError}]) || [{0: '💥 Something went wrong!'}]);
         })
       );
   }

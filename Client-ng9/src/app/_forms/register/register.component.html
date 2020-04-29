@@ -4,124 +4,124 @@
     [formGroup]="reactForm"
     (ngSubmit)="onRegister()">
 
-    <mat-card class="form-card">
-
-      <div class="form-card__border">
-        <!--        Gender Select-->
-        <mat-card-title class="form-card__title">
-          <mat-icon>create</mat-icon>
-        </mat-card-title>
-
-        <mat-card-content class="form-card__content">
-
-          <mat-form-field class="form-card__select" appearance="standard">
-            <mat-select placeholder="Please select" formControlName="gender">
-              <mat-option value="female">Female</mat-option>
-              <mat-option value="male">Male</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <!--          User Name-->
-          <mat-form-field class="form-card__username">
-            <input matInput type="text" formControlName="username" placeholder="Username">
-            <mat-error
-              *ngIf="reactForm.get('username').hasError('required')&&reactForm.get('username').touched">
-              Please choose a username.
-            </mat-error>
-          </mat-form-field>
-          <!--          E-Mail-->
-          <mat-form-field class="form-card__email">
-            <input matInput type="email" formControlName="email" placeholder="Email">
-            <mat-error
-              *ngIf="reactForm.get('email').hasError('required')&&reactForm.get('email').touched">
-              Please provide you email.
-            </mat-error>
-          </mat-form-field>
-          <!--          Display Name-->
-          <mat-form-field class="form-card__display-name">
-            <input type="text" matInput placeholder="Display Name" formControlName="displayName">
-            <mat-error
-              *ngIf="reactForm.get('displayName').touched && reactForm.get('displayName').hasError('required')">
-              Display name is required.
-            </mat-error>
-          </mat-form-field>
-          <!--          Birth Data-->
-          <mat-form-field class="form-card__date">
-            <mat-label>Choose a birth date</mat-label>
-            <input matInput [matDatepicker]="dp3" formControlName="dateOfBirth">
-            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-            <mat-datepicker #dp3></mat-datepicker>
-            <mat-error
-              *ngIf="reactForm.get('dateOfBirth').touched && reactForm.get('dateOfBirth').hasError('required')">Date of
-              Birth is required!
-            </mat-error>
-          </mat-form-field>
-          <!--          City-->
-          <mat-form-field class="form-card__city">
-            <input type="text" matInput placeholder="City" formControlName="city">
-            <mat-error
-              *ngIf="reactForm.get('city').touched && reactForm.get('city').hasError('required')"
-            >City is Required.
-            </mat-error>
-          </mat-form-field>
-          <!--            Country-->
-          <mat-form-field class="form-card__country">
-            <input type="text" matInput formControlName="country" placeholder="Country">
-            <mat-error
-              *ngIf="reactForm.get('country').touched && reactForm.get('country').hasError('required')">
-              Country is Required.
-            </mat-error>
-          </mat-form-field>
-          <!--          Password-->
-          <mat-form-field class="form-card__password" appearance="outline">
-            <input matInput type="password" formControlName="password" placeholder="Password">
-            <mat-error
-              *ngIf="reactForm.get('password').hasError('required')&&reactForm.get('password').touched">
-              Password is required.
-            </mat-error>
-            <mat-error
-              *ngIf="reactForm.get('password').hasError('minlength')&&reactForm.get('password').touched">
-              Password must at least 4 characters.
-            </mat-error>
-            <mat-error
-              *ngIf="reactForm.get('password').hasError('maxlength')&&reactForm.get('password').touched">
-              Password cannot exceed 8 characters.
-            </mat-error>
-          </mat-form-field>
-          <!--          Confirm Password-->
-          <mat-form-field class="form-card__password-confirm" appearance="outline">
-            <input matInput type="password" formControlName="confirmPassword" placeholder="Confirm Password">
-            <mat-error
-              *ngIf="reactForm.get('confirmPassword').hasError('required')&&reactForm.get('confirmPassword').touched"
-            >Password is Required.
-            </mat-error>
-            <mat-error
-              *ngIf="reactForm.hasError('mismatch')&&reactForm.get('confirmPassword').touched"
-            >Password must match.
-            </mat-error>
-          </mat-form-field>
-
-          <mat-list *ngIf="errors.length>0">
-            <mat-list-item *ngFor="let error of errors; let i=index;" class="mat-list-item">{{error}}</mat-list-item>
-          </mat-list>
-
-        </mat-card-content>
-
-        <mat-card-actions class="form-card__actions">
-          <button mat-stroked-button
-                  class="btn-submit"
-                  color="primary" type="submit"
-                  [disabled]="!reactForm.valid">
-            Register
-          </button>
-          <button mat-stroked-button color="warn" type="button"
-                  class="btn-cancel"
-                  (click)="onCancel()"
-                  [disabled]="!reactForm.dirty"
-          >Cancel
-          </button>
-        </mat-card-actions>
+    <div class="form-card">
+      <!--        Gender Select-->
+      <div class="form-card__title">
+        <mat-icon>create</mat-icon>
       </div>
-    </mat-card>
+
+      <div class="form-card__content">
+
+        <mat-form-field class="form-card__select" appearance="standard">
+          <mat-select placeholder="Please select" formControlName="gender">
+            <mat-option value="female">Female</mat-option>
+            <mat-option value="male">Male</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <!--          User Name-->
+        <mat-form-field class="form-card__username">
+          <input matInput type="text" formControlName="username" placeholder="Username">
+          <mat-error
+            *ngIf="reactForm.get('username').hasError('required')&&reactForm.get('username').touched">
+            Please choose a username.
+          </mat-error>
+        </mat-form-field>
+        <!--          E-Mail-->
+        <mat-form-field class="form-card__email">
+          <input matInput type="email" formControlName="email" placeholder="Email">
+          <mat-error
+            *ngIf="reactForm.get('email').hasError('required')&&reactForm.get('email').touched">
+            Please provide you email.
+          </mat-error>
+        </mat-form-field>
+        <!--          Display Name-->
+        <mat-form-field class="form-card__display-name">
+          <input type="text" matInput placeholder="Display Name" formControlName="displayName">
+          <mat-error
+            *ngIf="reactForm.get('displayName').touched && reactForm.get('displayName').hasError('required')">
+            Display name is required.
+          </mat-error>
+        </mat-form-field>
+        <!--          Birth Data-->
+        <mat-form-field class="form-card__date">
+          <mat-label>Choose a birth date</mat-label>
+          <input matInput [matDatepicker]="dp3" formControlName="dateOfBirth">
+          <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+          <mat-datepicker #dp3></mat-datepicker>
+          <mat-error
+            *ngIf="reactForm.get('dateOfBirth').touched && reactForm.get('dateOfBirth').hasError('required')">Date of
+            Birth is required!
+          </mat-error>
+        </mat-form-field>
+        <!--          City-->
+        <mat-form-field class="form-card__city">
+          <input type="text" matInput placeholder="City" formControlName="city">
+          <mat-error
+            *ngIf="reactForm.get('city').touched && reactForm.get('city').hasError('required')"
+          >City is Required.
+          </mat-error>
+        </mat-form-field>
+        <!--            Country-->
+        <mat-form-field class="form-card__country">
+          <input type="text" matInput formControlName="country" placeholder="Country">
+          <mat-error
+            *ngIf="reactForm.get('country').touched && reactForm.get('country').hasError('required')">
+            Country is Required.
+          </mat-error>
+        </mat-form-field>
+        <!--          Password-->
+        <mat-form-field class="form-card__password" appearance="outline">
+          <input matInput type="password" formControlName="password" placeholder="Password">
+          <mat-error
+            *ngIf="reactForm.get('password').hasError('required')&&reactForm.get('password').touched">
+            Password is required.
+          </mat-error>
+          <mat-error
+            *ngIf="reactForm.get('password').hasError('minlength')&&reactForm.get('password').touched">
+            Password must at least 4 characters.
+          </mat-error>
+          <mat-error
+            *ngIf="reactForm.get('password').hasError('maxlength')&&reactForm.get('password').touched">
+            Password cannot exceed 8 characters.
+          </mat-error>
+        </mat-form-field>
+        <!--          Confirm Password-->
+        <mat-form-field class="form-card__password-confirm" appearance="outline">
+          <input matInput type="password" formControlName="confirmPassword" placeholder="Confirm Password">
+          <mat-error
+            *ngIf="reactForm.get('confirmPassword').hasError('required')&&reactForm.get('confirmPassword').touched"
+          >Password is Required.
+          </mat-error>
+          <mat-error
+            *ngIf="reactForm.hasError('mismatch')&&reactForm.get('confirmPassword').touched"
+          >Password must match.
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="form-card__actions">
+        <button mat-stroked-button
+                class="btn-submit"
+                color="primary" type="submit"
+                [disabled]="!reactForm.valid">
+          Register
+        </button>
+        <button mat-stroked-button color="warn" type="button"
+                class="btn-cancel"
+                (click)="onCancel()"
+                [disabled]="!reactForm.dirty"
+        >Cancel
+        </button>
+      </div>
+
+      <div class="form-card__errors">
+        <mat-list class="mat-error" *ngIf="errors.length>0">
+          <mat-list-item *ngFor="let error of errors; let i=index;" class="error-item">{{error}}</mat-list-item>
+        </mat-list>
+      </div>
+
+    </div>
 
   </form>
 </section>
