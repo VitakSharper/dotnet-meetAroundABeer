@@ -31,12 +31,12 @@ namespace API.Controllers
         public async Task<IActionResult> Register(UserForRegisterDto userForRegisterDto)
         {
             var user = await _authRepository.Register(userForRegisterDto);
-            if (user == null) return BadRequest(new { Register = "User already exists or problem creating user." });
+            if (user == null) return BadRequest(new {Register = "User already exists or problem creating user."});
 
-            return Ok(new
-            {
-                token = _jwtGenerator.CreateToken(user)
-            });
+            var userToReturn = _mapper.Map<UserForDetailedDto>(user);
+
+            return CreatedAtRoute("GetUser", new {Controller = "Users", id = user.Id},
+                new {userToReturn, token = _jwtGenerator.CreateToken(user)});
         }
 
         [AllowAnonymous]
@@ -44,7 +44,7 @@ namespace API.Controllers
         public async Task<IActionResult> Login(UserForLoginDto userForLoginDto)
         {
             var userToReturn = await _authRepository.Login(userForLoginDto);
-            if (userToReturn == null) return Unauthorized(new { Login = "User or password is not correct." });
+            if (userToReturn == null) return Unauthorized(new {Login = "User or password is not correct."});
             var user = _mapper.Map<UserForDetailedDto>(userToReturn);
 
             return Ok(new

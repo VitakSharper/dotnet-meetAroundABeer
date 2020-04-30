@@ -39,6 +39,7 @@ namespace Data.Helpers
             CreateMap<Photo, PhotoForReturnDto>();
             CreateMap<PhotoForCreationDto, Photo>();
             CreateMap<UserForUpdateDto, AppUser>();
+            CreateMap<UserForRegisterDto, AppUser>();
         }
     }
 }

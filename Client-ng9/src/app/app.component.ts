@@ -23,15 +23,18 @@ export class AppComponent implements OnInit, OnDestroy {
     this.unsubscriptionToken = this.auth.getDecToken.subscribe(resp => {
       this.isLogged = resp && !!resp.nameid;
     });
+
     this.unsubscriptionUser = this.usersService.getCurrentUser()
-      .subscribe(data => this.usersService.pushUser(data.userToReturn));
+      .subscribe(user => this.usersService.pushUser(user.userToReturn));
   }
 
   ngOnDestroy(): void {
     if (this.unsubscriptionUser) {
       this.unsubscriptionUser.unsubscribe();
     }
-    this.unsubscriptionToken.unsubscribe();
+    if (this.unsubscriptionToken) {
+      this.unsubscriptionToken.unsubscribe();
+    }
   }
 
 

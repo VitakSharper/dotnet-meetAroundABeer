@@ -39,8 +39,8 @@ export class ErrorInterceptor implements HttpInterceptor {
                 return acc;
               }, []);
           }
-          console.log('modalStateErrors: ', modalStateErrors);
-          console.log('serverError: ', serverError, Object.keys(serverError).length);
+          // console.log('modalStateErrors: ', modalStateErrors);
+          // console.log('serverError: ', serverError, Object.keys(serverError).length);
           return throwError(modalStateErrors || (typeof serverError === 'object'
             ? Object.values(serverError)
             : [{0: serverError}]) || [{0: '💥 Something went wrong!'}]);

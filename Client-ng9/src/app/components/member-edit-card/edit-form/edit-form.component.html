@@ -8,7 +8,7 @@
     <textarea matInput
               type="text"
               cdkTextareaAutosize
-              cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
+              cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5"
               formControlName="introduction"
               placeholder="Your introduction"></textarea>
   </mat-form-field>
@@ -18,14 +18,20 @@
     <textarea
       matInput type="text"
       cdkTextareaAutosize
-      cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"
-      formControlName="lookingFor" placeholder="Looking For"></textarea>
+      cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5"
+      formControlName="lookingFor"
+      placeholder="Looking For"></textarea>
   </mat-form-field>
 
   <mat-form-field class="edit-form__textarea">
     <mat-label>Interests</mat-label>
-    <textarea matInput type="text" formControlName="interests" placeholder="Tell us about you"></textarea>
+    <textarea matInput type="text"
+              cdkTextareaAutosize
+              cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5"
+              formControlName="interests"
+              placeholder="Tell us about you"></textarea>
   </mat-form-field>
+
   <div class="location-container">
     <mat-form-field class="edit-form__input">
       <mat-label>City</mat-label>

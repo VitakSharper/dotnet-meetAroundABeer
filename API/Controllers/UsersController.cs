@@ -53,7 +53,7 @@ namespace API.Controllers
             return Ok(usersToReturn);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetUser")]
         public async Task<IActionResult> GetUser(string id)
         {
             var user = await _usersRepository.GetUser(id);
@@ -73,8 +73,7 @@ namespace API.Controllers
 
             return Ok(new
             {
-                userToReturn,
-                token = _jwtGenerator.CreateToken(user)
+                userToReturn
             });
         }
 
@@ -95,7 +94,7 @@ namespace API.Controllers
             _ = userToReturn ??
                 throw new Exception("Updating failed");
 
-            return Ok(new { userToReturn });
+            return Ok(new {userToReturn});
         }
     }
 }

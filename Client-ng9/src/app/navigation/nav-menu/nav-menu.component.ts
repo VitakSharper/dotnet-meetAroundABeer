@@ -19,7 +19,9 @@ export class NavMenuComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptionUser = this.usersService.getCurrentUserSub
-      .subscribe(user => this.user = this.usersService.getUserWithPhoto(user));
+      .subscribe(user => {
+        this.user = this.usersService.getUserWithPhoto(user);
+      });
   }
 
   ngOnDestroy(): void {

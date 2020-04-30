@@ -35,12 +35,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.tabsService.getEditWarning.next(false);
+
     this.route.data.subscribe(data => {
       this.user = data['user'].userToReturn;
+      this.usersService.getCurrentUserSub.next(this.user);
     });
+
     this.unsubscribeUser = this.usersService.getCurrentUserSub.subscribe(user => {
       this.user = this.usersService.getUserWithPhoto(user);
     });
+
     this.unsubscribeWarning = this.tabsService.getEditWarning
       .subscribe(data => this.showWarning = data);
   }

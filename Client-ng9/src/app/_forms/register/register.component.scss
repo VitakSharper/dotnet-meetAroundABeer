@@ -1,3 +1,13 @@
+@mixin required {
+  &::before {
+    position: absolute;
+    top: 18px;
+    left: -14px;
+    content: "*";
+    color: #e3342f;
+  }
+}
+
 .register {
   padding: 1rem;
   margin: 0 auto;
@@ -46,47 +56,65 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(5, min-content);
 
-    grid-column-gap: 1rem;
+    grid-column-gap: 2rem;
 
     align-items: start;
+    border: 1px dotted transparent;
+    border-radius: 5px;
+    transition: border .2s;
+
+    &:hover {
+      border: 1px dotted #1a1a1a;
+      border-radius: 5px;
+    }
   }
 
   &__select {
+    @include required;
     width: 15vw;
     align-self: center;
   }
 
   &__date {
+    @include required;
     padding-top: 11px;
     align-self: center;
     width: 15vw;
   }
 
   &__email {
+    @include required;
+
     grid-row: 2/3;
     grid-column: 1/2;
   }
 
   &__username {
+    @include required;
+
     grid-row: 3/4;
     grid-column: 1/2;
   }
 
   &__display-name {
+    @include required;
     grid-row: 3/4;
     grid-column: 2/3;
   }
 
   &__city {
+    @include required;
     grid-row: 5/6;
     grid-column: 2/3;
   }
 
   &__country {
+    @include required;
     grid-row: 5/6;
   }
 
   &__password {
+    @include required;
     grid-row: 6/7;
   }
 
@@ -104,6 +132,7 @@
 
     .btn-submit {
       flex-basis: 25%;
+      margin-right: 2rem;
     }
 
     .btn-cancel {

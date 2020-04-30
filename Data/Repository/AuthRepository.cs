@@ -4,6 +4,7 @@ using Data.Repository.Interfaces;
 using Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
+using AutoMapper;
 
 namespace Data.Repository
 {
@@ -12,16 +13,19 @@ namespace Data.Repository
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
         private readonly IUserAccessor _userAccessor;
+        private readonly IMapper _mapper;
 
         public AuthRepository(
             UserManager<AppUser> userManager,
             SignInManager<AppUser> signInManager,
-            IUserAccessor userAccessor
+            IUserAccessor userAccessor,
+            IMapper mapper
         )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _userAccessor = userAccessor;
+            _mapper = mapper;
         }
 
         public async Task<AppUser> Register(UserForRegisterDto userForRegisterDto)
@@ -30,28 +34,11 @@ namespace Data.Repository
 
             if (await _userManager.FindByNameAsync(userForRegisterDto.Username) != null) return null;
 
-            var user = new AppUser
-            {
-                DisplayName = userForRegisterDto.DisplayName,
-                Email = userForRegisterDto.Email,
-                UserName = userForRegisterDto.Username,
-                City = userForRegisterDto.City,
-                Country = userForRegisterDto.Country,
-                Gender = userForRegisterDto.Gender
-            };
+            var user = _mapper.Map<AppUser>(userForRegisterDto);
 
             var result = await _userManager.CreateAsync(user, userForRegisterDto.Password);
 
-            if (result.Succeeded)
-            {
-                return new AppUser
-                {
-                    DisplayName = userForRegisterDto.DisplayName,
-                    UserName = userForRegisterDto.Username
-                };
-            }
-
-            return null;
+            return result.Succeeded ? user : null;
         }
 
         public async Task<AppUser> Login(UserForLoginDto userForLoginDto)
