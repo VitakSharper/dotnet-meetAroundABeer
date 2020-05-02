@@ -6,7 +6,6 @@ import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MaterialUiModule} from './_material-ui/material-ui.module';
 import {HeaderComponent} from './navigation/header/header.component';
-import {FlexLayoutModule} from '@angular/flex-layout';
 import {HomeComponent} from './pages/home/home.component';
 import {RegisterComponent} from './_forms/register/register.component';
 import {LoginComponent} from './_forms/login/login.component';
@@ -23,7 +22,6 @@ import {MemberDetailComponent} from './components/member-detail/member-detail.co
 import {MemberDetailResolver} from './_resolvers/member-detail.resolver';
 import {MemberListResolver} from './_resolvers/member-list.resolver';
 import {NgxGalleryModule} from '@kolkov/ngx-gallery';
-import {InlineSVGModule} from 'ng-inline-svg';
 import {ProfileComponent} from './pages/profile/profile.component';
 import {ProfileResolver} from './_resolvers/profile.resolver';
 import {MemberEditCardComponent} from './components/member-edit-card/member-edit-card.component';
@@ -37,8 +35,9 @@ import {FileUploadModule} from 'ng2-file-upload';
 import {UploadLocalFilesComponent} from './components/upload-local-files/upload-local-files.component';
 import {MatIconModule} from '@angular/material/icon';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
-import { SafeHtmlPipe } from './components/upload-local-files/safe-html.pipe';
-import { HamburgerComponent } from './navigation/hamburger/hamburger.component';
+import {SafeHtmlPipe} from './_pipes/safe-html.pipe';
+import {HamburgerComponent} from './navigation/hamburger/hamburger.component';
+import {TimeagoModule} from 'ngx-timeago';
 
 @NgModule({
   declarations: [
@@ -72,13 +71,12 @@ import { HamburgerComponent } from './navigation/hamburger/hamburger.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FlexLayoutModule,
     MaterialUiModule,
     NgxGalleryModule,
     FileUploadModule,
     MaterialFileInputModule,
     MatIconModule,
-    InlineSVGModule.forRoot(),
+    TimeagoModule.forRoot(),
     JwtModule.forRoot({
       config: {
         tokenGetter: () => {

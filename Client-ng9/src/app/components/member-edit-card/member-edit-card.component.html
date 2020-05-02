@@ -11,9 +11,9 @@
       <p class="user-card__heading">Age :</p>
       <p class="user-card__user-info">{{user?.age}}</p>
       <p class="user-card__heading">Active :</p>
-      <p class="user-card__date">{{user?.lastActive}}</p>
+      <p class="user-card__date">{{user?.lastActive |timeago}}</p>
       <p class="user-card__heading">Since :</p>
-      <p class="user-card__date">{{user?.created}}</p>
+      <p class="user-card__date">{{user?.created | date: 'mediumDate'}}</p>
     </div>
     <div class="user-card__button-group" *ngIf="showBtnGrp">
       <button class="action-button" mat-icon-button>

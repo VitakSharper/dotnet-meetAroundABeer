@@ -8,6 +8,7 @@ using Persistence;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using API.Helpers;
 
 namespace API.Controllers
 {
@@ -38,6 +39,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(LogUserActivity))]
         public async Task<IActionResult> GetUsers()
         {
             var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
@@ -54,6 +56,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}", Name = "GetUser")]
+        [ServiceFilter(typeof(LogUserActivity))]
         public async Task<IActionResult> GetUser(string id)
         {
             var user = await _usersRepository.GetUser(id);
@@ -78,6 +81,7 @@ namespace API.Controllers
         }
 
         [HttpPut("updateMe")]
+        [ServiceFilter(typeof(LogUserActivity))]
         public async Task<IActionResult> UpdateUser(UserForUpdateDto userForUpdate)
         {
             var currentUser = await _context.Users.SingleOrDefaultAsync(u =>

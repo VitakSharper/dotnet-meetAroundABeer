@@ -17,7 +17,6 @@ export class MemberPhotoUploadComponent implements OnInit, OnDestroy {
 
   uploader: FileUploader;
   hasBaseDropZoneOver = false;
-  hasAnotherDropZoneOver = false;
   baseUrl = environment.apiUrl;
 
   constructor(
@@ -37,7 +36,9 @@ export class MemberPhotoUploadComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.unsubscribeUser = this.usersService.getCurrentUserSub
-      .subscribe(user => this.currentUser = user);
+      .subscribe(user => {
+        this.currentUser = user;
+      });
 
     this.uploader.onAfterAddingFile = file => {
       file.withCredentials = false;
@@ -46,6 +47,9 @@ export class MemberPhotoUploadComponent implements OnInit, OnDestroy {
     this.uploader.onSuccessItem = (item, response, status, headers) => {
       if (response) {
         this.currentUser.photos.push(JSON.parse(response));
+        if (this.currentUser.photoUrl === null || this.currentUser.photoUrl === '/assets/original.png') {
+          this.currentUser.photoUrl = JSON.parse(response).url;
+        }
         this.usersService.pushUser(this.currentUser);
         this.alertify.successAlert('Images successfully uploaded.');
       }

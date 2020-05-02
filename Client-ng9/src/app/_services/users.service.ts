@@ -21,7 +21,6 @@ export class UsersService {
   }
 
   pushUser(user: User) {
-
     user
       ? this.currentUser.next(this.getUserWithPhoto(user))
       : this.currentUser.next({});

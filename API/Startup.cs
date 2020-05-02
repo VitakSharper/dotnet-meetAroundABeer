@@ -107,6 +107,9 @@ namespace API
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
 
+            // Log User Activity service
+            services.AddScoped<LogUserActivity>();
+
             // JWT service
             services.AddScoped<IJwtGenerator, JwtGenerator>();
 

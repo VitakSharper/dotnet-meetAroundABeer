@@ -5,7 +5,7 @@ import {HomeComponent} from './pages/home/home.component';
 import {MessagesComponent} from './pages/messages/messages.component';
 import {ListsComponent} from './pages/lists/lists.component';
 import {MemberListComponent} from './pages/member-list/member-list.component';
-import {AuthGuard} from './guards/auth.guard';
+import {AuthGuard} from './_guards/auth.guard';
 import {MemberDetailComponent} from './components/member-detail/member-detail.component';
 import {MemberDetailResolver} from './_resolvers/member-detail.resolver';
 import {MemberListResolver} from './_resolvers/member-list.resolver';

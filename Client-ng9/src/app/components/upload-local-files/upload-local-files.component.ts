@@ -45,7 +45,6 @@ export class UploadLocalFilesComponent implements OnInit {
     if (this.uploadForm.value.single?._files.length > 0) {
       this.transformUpload(this.uploadForm.value.single);
       this.photosService.uploadSingle(this.formData).subscribe(data => {
-        console.log('location: ', data);
         this.response = data;
       }, error => this.alertifyService.errorAlert(error));
       this.formData = new FormData();

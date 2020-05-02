@@ -1,6 +1,6 @@
 <div class="photo-container">
   <div class="photo-container__photos-cards">
-    <div class="photo-card" *ngFor="let photo of user.photos">
+    <figure class="photo-card" *ngFor="let photo of user.photos">
       <img class="photo-card__photo" src="{{photo.url}}" alt="{{user?.displayName}} photo">
       <div class="photo-card__description" [ngClass]="{'no-content':!photo.description}">
         <p>{{photo.description || 'no content'}}</p>
@@ -59,6 +59,6 @@
           </button>
         </mat-menu>
       </div>
-    </div>
+    </figure>
   </div>
 </div>

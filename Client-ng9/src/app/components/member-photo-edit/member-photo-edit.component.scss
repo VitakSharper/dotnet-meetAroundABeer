@@ -5,7 +5,7 @@
 
   &__photos-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 12rem));
     grid-gap: 1rem;
   }
 }

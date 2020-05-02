@@ -6,7 +6,7 @@
     </a>
     <span class="header-nav__spacer"></span>
 
-    <mat-nav-list class="header-nav__links" fxLayout *ngIf="onLoggedIn">
+    <mat-nav-list class="header-nav__links"  *ngIf="onLoggedIn">
       <a class="link-item" mat-list-item routerLinkActive="active" [routerLink]="['/members']">Matches</a>
       <a class="link-item" mat-list-item routerLinkActive="active" [routerLink]="['/lists']">Lists</a>
       <a class="link-item" mat-list-item routerLinkActive="active" [routerLink]="['/messages']">Messages</a>
