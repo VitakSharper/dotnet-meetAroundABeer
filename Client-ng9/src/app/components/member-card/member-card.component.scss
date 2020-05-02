@@ -1,85 +1,100 @@
 .member-card {
   width: 100%;
   border-radius: unset;
-  transition: box-shadow .15s;
+  //transition: box-shadow .15s;
+  position: relative;
+  overflow: hidden;
+  transition: transform .2s;
 
   &:hover {
-    box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
-    transition: box-shadow .15s linear;
-    transition-delay: .05s;
+    //box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
+    transform: translateY(-4px);
+    //transition: box-shadow .15s linear .05s;
   }
 
-  &__header {
-    .title {
+  .card-img {
+    transform: scale(1);
+    transition: transform ease-out 5s;
+
+    &:hover {
+      transform: scale(1.2);
+      transition: ease-out .5s;
+      opacity: 0.7;
     }
   }
 
-  &__img-wrapper {
-    position: relative;
-    overflow: hidden;
+  &:hover .user-list-member-icons {
+    opacity: 1;
+    transition: all .4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    top: 30%
+  }
 
-    .card-img {
-      width: 100% !important;
-      margin: 0 !important;
-      transform: scale(1);
-      transition: transform ease-out 5s;
+  .user-list-member-icons {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 100%;
+    list-style: none;
+    text-align: center;
+    opacity: 0;
+    transition: all .4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+
+    .icon-item {
+      display: inline-block;
+      transform: scale(1.0, 1.0);
+      transition: ease-out .2s;
+      opacity: 1;
 
       &:hover {
-        transform: scale(1.2);
-        transition: ease-out .5s;
-        opacity: 0.7;
-      }
-    }
-
-    &:hover .user-list-member-icons {
-      opacity: 1;
-      transition: all .4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
-      top: 50%
-    }
-
-    .user-list-member-icons {
-      position: absolute;
-      top: 80%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      list-style: none;
-      text-align: center;
-      opacity: 0;
-      transition: all .4s cubic-bezier(0.68, -0.6, 0.32, 1.6);
-
-      .icon-item {
-        display: inline-block;
-        transform: scale(1.0, 1.0);
+        transform: scale(1.4, 1.4);
         transition: ease-out .2s;
-        opacity: 1;
+        opacity: .8;
+      }
 
-        &:hover {
-          transform: scale(1.4, 1.4);
-          transition: ease-out .2s;
-          opacity: 1;
+      &__button {
+        .icon-button1 {
+          color: #7E57C2;
         }
 
-        &__button {
-          .icon-button1 {
-            color: #7E57C2;
-          }
+        .icon-button2 {
+          color: #FF7043;
+        }
 
-          .icon-button2 {
-            color: #FF7043;
-          }
-
-          .icon-button3 {
-            color: #26A69A;
-          }
+        .icon-button3 {
+          color: #26A69A;
         }
       }
     }
   }
 
   &__content {
-    .city {
-      margin-left: 1rem;
+    padding: 1rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+
+
+    .item {
+      display: flex;
+      align-items: end;
+
+      &:not(:last-child) {
+        margin-bottom: 5px;
+      }
+
+      &__icon {
+        margin-right: auto;
+      }
+
+      &__text {
+        font-weight: 500;
+        font-size: 1.2rem;
+        color: #3276B0;
+      }
+
     }
   }
 

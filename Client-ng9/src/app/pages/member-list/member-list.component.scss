@@ -20,12 +20,8 @@
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit,minmax(12rem, 14rem));
   grid-gap: 1rem;
-
-  .person-card {
-    background: #fff;
-  }
 }
 
 

@@ -64,7 +64,7 @@
   <!--  </mat-grid-list>-->
 
   <div class="grid-container">
-    <div class="person-card" *ngFor="let user of users">
+    <div *ngFor="let user of users">
       <app-member-card [user]="user"></app-member-card>
     </div>
   </div>

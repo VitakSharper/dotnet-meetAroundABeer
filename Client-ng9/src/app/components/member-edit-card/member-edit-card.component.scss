@@ -6,7 +6,6 @@
   0px 1px 1px 0px rgba(0, 0, 0, 0.14),
   0px 1px 3px 0px rgba(0, 0, 0, 0.12);
 
-
   &:hover {
     box-shadow: 0 4px 5px rgba(0, 0, 0, .3);
     transition: box-shadow .15s linear;
@@ -24,7 +23,7 @@
     width: 100%;
     margin-bottom: 1rem;
     border-radius: 50%;
-    box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
   }
 
   &__user-box {
@@ -35,8 +34,9 @@
   }
 
   &__heading,
-  &__user-info {
-    flex: 0 0 40%;
+  &__user-info,
+  &__date {
+    flex: 0 0 41%;
   }
 
   &__heading {
@@ -44,20 +44,18 @@
     font-size: 0.9rem;
   }
 
-
   &__user-info,
   &__date {
     font-size: 0.7rem;
-    display: block;
+    display: inline-block;
     transform: scale(1.0);
-    transition: transform .2s;
+    border: 1px dotted transparent;
+    transition: all .2s;
 
     &:hover {
       border: 1px dotted gray;
       border-radius: 5px;
-      margin: 0 0 10px;
       transform: scale(1.1);
-      transition: transform .2s;
     }
   }
 
@@ -80,5 +78,3 @@
 .action-button__mail {
   color: #26A69A;
 }
-
-

@@ -1,12 +1,10 @@
 <mat-card class="member-card">
-  <mat-card-header class="member-card__header">
-    <!--    <div mat-card-avatar class="avatar-img"></div>-->
-    <!--    <mat-card-title class="title">{{user.displayName}}</mat-card-title>-->
-    <!--    <mat-card-subtitle>age: {{user.age}}</mat-card-subtitle>-->
-  </mat-card-header>
+
+
   <div class="member-card__img-wrapper">
     <img class="card-img" mat-card-image src="{{user.photoUrl||'/assets/original.png'}}"
          alt="{{user.displayName}} photo">
+
 
     <ul class="user-list-member-icons">
       <li class="icon-item">
@@ -29,7 +27,16 @@
 
 
   <mat-card-content class="member-card__content">
-    <p class="city">City: {{user.city}}</p>
+
+    <span class="item">
+      <mat-icon class="item__icon">contacts</mat-icon>
+      <span class="item__text">{{user.displayName}}</span></span>
+    <span class="item">
+      <mat-icon class="item__icon">perm_identity</mat-icon>
+      <span class="item__text">{{user.age}}</span></span>
+    <span class="item">
+      <mat-icon class="item__icon">location_city</mat-icon>
+      <span class="item__text">{{user.city}}</span></span>
   </mat-card-content>
   <mat-card-actions class="member-card__actions">
 
