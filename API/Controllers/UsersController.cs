@@ -1,5 +1,8 @@
-﻿using AutoMapper;
+﻿using API.Helpers;
+using AutoMapper;
+using Data;
 using Data.Dtos;
+using Data.Helpers.Pagination;
 using Data.Interfaces;
 using Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -8,7 +11,6 @@ using Persistence;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using API.Helpers;
 
 namespace API.Controllers
 {
@@ -40,17 +42,19 @@ namespace API.Controllers
 
         [HttpGet]
         [ServiceFilter(typeof(LogUserActivity))]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetUsers([FromQuery] UserParams userParams)
         {
             var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
                 u.UserName == _userAccessor.GetCurrentUsername());
 
             if (currentUser == null) return Unauthorized();
 
-            var users = await _usersRepository.GetUsers(currentUser.Id);
-            if (users == null) BadRequest();
+            var users = await _usersRepository.GetUsers(userParams);
+            if (users == null) return BadRequest();
 
             var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);
+
+            Response.AddPagination(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages);
 
             return Ok(usersToReturn);
         }
@@ -98,7 +102,7 @@ namespace API.Controllers
             _ = userToReturn ??
                 throw new Exception("Updating failed");
 
-            return Ok(new {userToReturn});
+            return Ok(new { userToReturn });
         }
     }
 }

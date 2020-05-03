@@ -1,4 +1,5 @@
 using API.Helpers;
+using API.Services;
 using AutoMapper;
 using Data.Interfaces;
 using Data.Repository;
@@ -26,7 +27,7 @@ using Persistence;
 using System.Net;
 using System.Reflection;
 using System.Text;
-using API.Services;
+using System.Text.Json;
 
 namespace API
 {
@@ -91,7 +92,7 @@ namespace API
                             "origin",
                             "x-requested-with")
                         .WithExposedHeaders("WWW-Authenticate")
-                        .WithMethods("GET", "POST", "UPDATE", "PUT", "DELETE")
+                        .WithMethods("GET", "POST", "UPDATE", "DELETE")
                         .WithOrigins("http://localhost:4200")
                         .AllowCredentials();
                 });
@@ -141,6 +142,12 @@ namespace API
                     var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
                     opt.Filters.Add(new AuthorizeFilter(policy));
                 })
+                .AddJsonOptions(opt =>
+                {
+                    opt.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                    //opt.JsonSerializerOptions.PropertyNamingPolicy = null;
+                    //opt.JsonSerializerOptions.DictionaryKeyPolicy = null;
+                })
                 // Fluent Validation
                 .AddFluentValidation(opt =>
                     {
@@ -148,6 +155,7 @@ namespace API
                         opt.RegisterValidatorsFromAssembly(Assembly.GetExecutingAssembly());
                     }
                 );
+
             // Cloudinary
             services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
             // Cloudinary Accessor
@@ -171,7 +179,7 @@ namespace API
                     builder.Run(async context =>
                     {
                         // add some headers
-                        context.Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                        context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
                         var error = context.Features.Get<IExceptionHandlerFeature>();
                         if (error != null)
