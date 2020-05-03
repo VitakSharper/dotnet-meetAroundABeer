@@ -49,7 +49,7 @@ namespace API.Controllers
 
             if (currentUser == null) return Unauthorized();
 
-            var users = await _usersRepository.GetUsers(userParams);
+            var users = await _usersRepository.GetUsers(userParams, currentUser.Id);
             if (users == null) return BadRequest();
 
             var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);

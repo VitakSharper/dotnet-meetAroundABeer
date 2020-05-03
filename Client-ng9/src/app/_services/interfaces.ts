@@ -24,16 +24,6 @@ export interface Photo {
   status: boolean;
 }
 
-export interface RegUser {
-  gender: string,
-  username: string,
-  email: string,
-  displayName: string,
-  //dateOfBirth: [null,Validators.required],
-  city: string,
-  country: string,
-  password: string,
-}
 
 export interface LogUser {
   email: string,

@@ -1,27 +1,27 @@
 .member-list {
-  background: #FFEBEE;
+  background-color: #FFEBEE;
 
-  &__wrapper {
-    padding: 1rem;
-
-    .grid-header-icon {
-      height: 15px !important;
-    }
-  }
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: max-content min-content;
 
   &__content {
+    margin: 0;
 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 14rem));
+    grid-template-rows: auto;
+    grid-gap: 1rem;
   }
 
   &__actions {
+    justify-self: center;
+    grid-row: 2/3;
 
+    .paginator {
+      background-color: #FFEBEE;
+    }
   }
-}
-
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(12rem, 14rem));
-  grid-gap: 1rem;
 }
 
 

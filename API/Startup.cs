@@ -91,7 +91,7 @@ namespace API
                             "content-type",
                             "origin",
                             "x-requested-with")
-                        .WithExposedHeaders("WWW-Authenticate")
+                        .WithExposedHeaders("WWW-Authenticate", "Pagination")
                         .WithMethods("GET", "POST", "UPDATE", "DELETE")
                         .WithOrigins("http://localhost:4200")
                         .AllowCredentials();

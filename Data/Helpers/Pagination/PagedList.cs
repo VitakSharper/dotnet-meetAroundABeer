@@ -18,7 +18,7 @@ namespace Data.Helpers.Pagination
             TotalCount = count;
             PageSize = pageSize;
             CurrentPage = pageNumber;
-            TotalCount = (int)Math.Ceiling(count / (double)pageSize);
+            TotalPages = (int)Math.Ceiling(count / (double)pageSize);
             this.AddRange(items);
         }
 

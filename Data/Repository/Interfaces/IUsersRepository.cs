@@ -6,7 +6,7 @@ namespace Data.Repository.Interfaces
 {
     public interface IUsersRepository
     {
-        Task<PagedList<AppUser>> GetUsers(UserParams userParams);
+        Task<PagedList<AppUser>> GetUsers(UserParams userParams, string id);
 
         Task<AppUser> GetUser(string userId);
     }

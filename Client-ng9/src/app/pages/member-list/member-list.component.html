@@ -54,33 +54,21 @@
 
 <mat-card class="member-list">
 
-  <!--  <mat-grid-list cols="5" rowHeight="20rem">-->
-  <!--    <mat-grid-tile class="member-list__wrapper" colspan="1" rowspan="1" *ngFor="let user of users">-->
-  <!--      <mat-grid-tile-header>-->
-  <!--        <mat-icon class="grid-header-icon">account_circle</mat-icon>-->
-  <!--        {{user.displayName}} , {{user.age}}</mat-grid-tile-header>-->
-  <!--      <app-member-card [user]="user"></app-member-card>-->
-  <!--    </mat-grid-tile>-->
-  <!--  </mat-grid-list>-->
-
-  <div class="grid-container">
+  <mat-card-content class="member-list__content">
     <div *ngFor="let user of users">
       <app-member-card [user]="user"></app-member-card>
     </div>
-  </div>
+  </mat-card-content>
 
-
-  <mat-card-content class="member-list__content"></mat-card-content>
   <mat-card-actions class="member-list__actions">
     <!--                MATERIAL PAGINATOR-->
-    <!--    <div class="d-flex justify-content-center">-->
-    <!--      <mat-paginator-->
-    <!--        style="background-color: #FFEBEE"-->
-    <!--        [length]="pagination.totalItems"-->
-    <!--        [pageSize]="pagination.itemsPerPage"-->
-    <!--        (page)="mdPageChanged($event)"-->
-    <!--      >-->
-    <!--      </mat-paginator>-->
-    <!--    </div>-->
+    <mat-paginator
+      class="paginator"
+      [length]="pagination.totalItems"
+      [pageSize]="pagination.itemsPerPage"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="mdPageChanged($event)"
+    >
+    </mat-paginator>
   </mat-card-actions>
 </mat-card>

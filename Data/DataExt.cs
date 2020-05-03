@@ -18,13 +18,12 @@ namespace Data
             int currentPage,
             int itemsPerPage,
             int totalItems,
-            int totalPages)
-        {
+            int totalPages) =>
             response.Headers.Add("Pagination",
                 JsonSerializer.Serialize(
                     new PaginationHeader(currentPage, itemsPerPage, totalItems, totalPages),
                     new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
-            response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
-        }
+
+        //response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
     }
 }

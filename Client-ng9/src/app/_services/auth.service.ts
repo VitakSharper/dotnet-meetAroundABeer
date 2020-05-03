@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {LogUser, RegUser, User} from './interfaces';
+import {LogUser, User} from './interfaces';
 import {environment} from '../../environments/environment';
 import {UsersService} from './users.service';
 import {AlertifyService} from './alertify.service';
