@@ -1,41 +1,48 @@
-<mat-card>
-  <mat-card-header>
-    <!--    <mat-card-title><h2>Your matches  {{pagination.totalItems}} found</h2></mat-card-title>-->
-  </mat-card-header>
+<div class="member-filter">
+  <div class="member-filter__title">
+    <span>Your matches</span>
+    <mat-chip-list aria-label="Fish selection">
+      <mat-chip color="primary" selected>{{pagination.totalItems}}</mat-chip>
+    </mat-chip-list>
+    <span>found</span>
+  </div>
   <!--  FORM-->
-  <mat-card-content>
-    <!--    <mat-card style="background-color: #FBE9E7">-->
-    <!--      <form #filterForm="ngForm" (ngSubmit)="onFormSubmit()">-->
+  <div class="member-filter__form">
+    <mat-card class="filter-form-card">
+      <form [formGroup]="filterForm" (ngSubmit)="onFormSubmit()">
 
-    <!--        <div fxLayout="row inline">-->
-    <!--          <mat-card-content>-->
-    <!--            <mat-form-field class="mr-2">-->
-    <!--              <mat-label>Age From</mat-label>-->
-    <!--              <input type="number" matInput name="minAge" [(ngModel)]="userParams.minAge">-->
-    <!--            </mat-form-field>-->
+        <mat-card-content class="form-fields">
 
-    <!--            <mat-form-field class="mr-2">-->
-    <!--              <mat-label>Age To</mat-label>-->
-    <!--              <input type="number" matInput class="ml-1" name="maxAge" [(ngModel)]="userParams.maxAge">-->
-    <!--            </mat-form-field>-->
-    <!--            <div>-->
-    <!--              <mat-label class="mr-2">Show:</mat-label>-->
-    <!--              <mat-radio-group name="gender" [(ngModel)]="userParams.gender">-->
-    <!--                <mat-radio-button class="mr-2" value="female">Female</mat-radio-button>-->
-    <!--                <mat-radio-button class="mr-2" value="male">Male</mat-radio-button>-->
-    <!--              </mat-radio-group>-->
-    <!--            </div>        -->
+          <mat-form-field appearance="standard" class="form-fields__min">
+            <mat-label>Age</mat-label>
+            <input matInput type="number" placeholder="From" formControlName="minAge" min="16" max="99">
+          </mat-form-field>
 
-    <!--          </mat-card-content>-->
+          <mat-form-field appearance="standard" class="form-fields__max">
+            <mat-label>Age</mat-label>
+            <input matInput type="number" placeholder="To" formControlName="maxAge" min="16" max="99">
+          </mat-form-field>
 
-    <!--          <mat-card-actions>-->
-    <!--            <button mat-stroked-button color="primary" class="ml-2" type="submit">Apply Filters</button>-->
-    <!--            <button mat-stroked-button color="warn" type="button" (click)="resetFilters()">Reset Filter</button>-->
-    <!--          </mat-card-actions>-->
-    <!--        </div>-->
-    <!--      </form>-->
-    <!--    </mat-card>-->
-  </mat-card-content>
+          <mat-radio-group class="form-fields__gender" formControlName="gender">
+            <mat-radio-button class="female" value="female">Females</mat-radio-button>
+            <mat-radio-button class="male" value="male">Males</mat-radio-button>
+          </mat-radio-group>
+
+          <div class="form-fields__btn-group">
+            <button mat-icon-button color="primary" type="submit"
+                    [disabled]="!filterForm.valid">
+              <mat-icon>done</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" type="button"
+                    [disabled]="!filterForm.dirty"
+                    (click)="resetFilters()">
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </div>
+        </mat-card-content>
+      </form>
+    </mat-card>
+  </div>
   <!--  FILTERS-->
   <!--  <mat-card-actions>-->
   <!--    <mat-label class="mr-4">Order By:</mat-label>-->
@@ -50,17 +57,10 @@
   <!--      </mat-radio-button>-->
   <!--    </mat-radio-group>-->
   <!--  </mat-card-actions>-->
-</mat-card>
+</div>
 
 <mat-card class="member-list">
-
-  <mat-card-content class="member-list__content">
-    <div *ngFor="let user of users">
-      <app-member-card [user]="user"></app-member-card>
-    </div>
-  </mat-card-content>
-
-  <mat-card-actions class="member-list__actions">
+  <div class="member-list__actions">
     <!--                MATERIAL PAGINATOR-->
     <mat-paginator
       class="paginator"
@@ -70,5 +70,13 @@
       (page)="mdPageChanged($event)"
     >
     </mat-paginator>
-  </mat-card-actions>
+  </div>
+
+  <mat-card-content class="member-list__content">
+    <div *ngFor="let user of users">
+      <app-member-card [user]="user"></app-member-card>
+    </div>
+  </mat-card-content>
+
+
 </mat-card>

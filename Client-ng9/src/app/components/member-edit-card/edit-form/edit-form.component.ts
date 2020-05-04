@@ -43,6 +43,7 @@ export class EditFormComponent implements OnInit, OnDestroy {
       introduction: [this.user.introduction, Validators.required],
       lookingFor: [this.user.lookingFor, Validators.required],
       interests: [this.user.interests],
+      dateOfBirth: [this.user.dateOfBirth],
       city: [this.user.city, Validators.required],
       country: [this.user.country, Validators.required]
     });
@@ -58,17 +59,17 @@ export class EditFormComponent implements OnInit, OnDestroy {
         error => this.alertifyService.errorAlert('Problem updating profile'),
         () => {
           this.alertifyService.successAlert('Updated successfully');
+          this.user.age = (new Date().getFullYear() - new Date(this.user.dateOfBirth).getFullYear());
           this.updateForm.reset(this.user);
         });
+  }
 
+  cancelChanges() {
+    this.updateForm.reset(this.user);
   }
 
   ngOnDestroy(): void {
     this.unsubscribe.unsubscribe();
     this.unsubscribeWarning.unsubscribe();
-  }
-
-  cancelChanges() {
-    this.updateForm.reset(this.user);
   }
 }

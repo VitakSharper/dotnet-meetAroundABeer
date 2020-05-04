@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {User} from './interfaces';
+import {RequestQueryUserParams, User} from './interfaces';
 import {PaginationResult} from '../_pagination/paginationResult';
 import {map} from 'rxjs/operators';
 
@@ -34,13 +34,18 @@ export class UsersService {
       : {...user, photoUrl: '/assets/original.png'};
   }
 
-  getUsers(page?, itemsPerPage?): Observable<PaginationResult<User[]>> {
+  getUsers(userParams: RequestQueryUserParams): Observable<PaginationResult<User[]>> {
     const paginatedResult: PaginationResult<User[]> = new PaginationResult<User[]>();
     let params = new HttpParams();
 
-    if (page && itemsPerPage) {
-      params = params.append('pageNumber', page);
-      params = params.append('pageSize', itemsPerPage);
+    if (userParams.page && userParams.itemsPerPage) {
+      params = params.append('pageNumber', userParams.page.toString());
+      params = params.append('pageSize', userParams.itemsPerPage.toString());
+    }
+    if (userParams.maxAge && userParams.maxAge && userParams.gender) {
+      params = params.append('minAge', userParams.minAge.toString());
+      params = params.append('maxAge', userParams.maxAge.toString());
+      params = params.append('gender', userParams.gender.toString());
     }
 
     return this.http.get<User[]>(`${this.baseUrl}`, {observe: 'response', params})

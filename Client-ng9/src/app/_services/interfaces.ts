@@ -6,6 +6,7 @@ export interface User {
   gender: string;
   created: Date;
   lastActive: Date;
+  dateOfBirth: Date;
   photoUrl: string;
   city: string;
   country: string;
@@ -24,6 +25,13 @@ export interface Photo {
   status: boolean;
 }
 
+export interface RequestQueryUserParams {
+  gender?: string
+  page?: number
+  itemsPerPage?: number
+  minAge?: number
+  maxAge?: number
+}
 
 export interface LogUser {
   email: string,

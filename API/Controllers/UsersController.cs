@@ -2,7 +2,7 @@
 using AutoMapper;
 using Data;
 using Data.Dtos;
-using Data.Helpers.Pagination;
+using Data.Helpers;
 using Data.Interfaces;
 using Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -42,14 +42,20 @@ namespace API.Controllers
 
         [HttpGet]
         [ServiceFilter(typeof(LogUserActivity))]
-        public async Task<IActionResult> GetUsers([FromQuery] UserParams userParams)
+        public async Task<IActionResult> GetUsers([FromQuery] RequestQueryUserParams userParams)
         {
             var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
                 u.UserName == _userAccessor.GetCurrentUsername());
 
             if (currentUser == null) return Unauthorized();
+            userParams.UserId = currentUser.Id;
 
-            var users = await _usersRepository.GetUsers(userParams, currentUser.Id);
+            if (string.IsNullOrEmpty(userParams.Gender))
+            {
+                userParams.Gender = currentUser.Gender == "male" ? "female" : "male";
+            }
+
+            var users = await _usersRepository.GetUsers(userParams);
             if (users == null) return BadRequest();
 
             var usersToReturn = _mapper.Map<IEnumerable<UserForListDto>>(users);

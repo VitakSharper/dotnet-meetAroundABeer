@@ -32,6 +32,13 @@
               placeholder="Tell us about you"></textarea>
   </mat-form-field>
 
+  <mat-form-field class="edit-form__date">
+    <mat-label>Birth Date</mat-label>
+    <input matInput [matDatepicker]="dp3" formControlName="dateOfBirth">
+    <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+    <mat-datepicker #dp3></mat-datepicker>
+  </mat-form-field>
+
   <div class="location-container">
     <mat-form-field class="edit-form__input">
       <mat-label>City</mat-label>

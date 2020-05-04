@@ -4,6 +4,7 @@
 
   display: grid;
   grid-template-columns: 1fr;
+  grid-template-rows: repeat(6, min-content);
   grid-row-gap: 1rem;
 
   padding: 1rem;
@@ -17,6 +18,10 @@
   }
 
   &__textarea {
+  }
+
+  &__date {
+    justify-self: start;
   }
 
   &__submit {

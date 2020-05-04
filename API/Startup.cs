@@ -92,7 +92,7 @@ namespace API
                             "origin",
                             "x-requested-with")
                         .WithExposedHeaders("WWW-Authenticate", "Pagination")
-                        .WithMethods("GET", "POST", "UPDATE", "DELETE")
+                        .WithMethods("GET", "POST", "UPDATE", "PUT", "DELETE")
                         .WithOrigins("http://localhost:4200")
                         .AllowCredentials();
                 });
