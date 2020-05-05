@@ -47,6 +47,9 @@ export class UsersService {
       params = params.append('maxAge', userParams.maxAge.toString());
       params = params.append('gender', userParams.gender.toString());
     }
+    if (userParams.orderBy) {
+      params = params.append('orderBy', userParams.orderBy.toString());
+    }
 
     return this.http.get<User[]>(`${this.baseUrl}`, {observe: 'response', params})
       .pipe(

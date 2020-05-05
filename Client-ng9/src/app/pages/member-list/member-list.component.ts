@@ -31,10 +31,6 @@ export class MemberListComponent implements OnInit, OnDestroy {
   ) {
   }
 
-  ngOnDestroy(): void {
-    this.unsubscribeUser.unsubscribe();
-  }
-
   ngOnInit(): void {
     this.route.data.subscribe(data => {
       this.users = data['users'].result;
@@ -81,13 +77,14 @@ export class MemberListComponent implements OnInit, OnDestroy {
       this.filterForm.get('gender').value));
   }
 
-  setUserParams(minAge?: number, maxAge?: number, gender?: string): RequestQueryUserParams {
+  setUserParams(minAge?: number, maxAge?: number, gender?: string, orderBy?: string): RequestQueryUserParams {
     return {
       gender: gender || this.filterForm.get('gender').value || (this.user.gender === 'male' ? 'female' : 'male'),
       itemsPerPage: this.pagination.itemsPerPage || 5,
       page: this.pagination.currentPage || 1,
       maxAge: maxAge || this.filterForm.get('maxAge').value || 99,
-      minAge: minAge || this.filterForm.get('minAge').value || 18
+      minAge: minAge || this.filterForm.get('minAge').value || 18,
+      orderBy: orderBy || ''
     };
   }
 
@@ -100,5 +97,22 @@ export class MemberListComponent implements OnInit, OnDestroy {
     this.initPagination();
     this.filterForm.reset();
     this.loadUsers(this.setUserParams());
+  }
+
+  orderBy(orderBy: string) {
+    switch (orderBy) {
+      case 'lastActive':
+        this.loadUsers(this.setUserParams(null, null, null, orderBy));
+        break;
+      case 'created':
+        this.loadUsers(this.setUserParams(null, null, null, orderBy));
+        break;
+      default:
+        break;
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribeUser.unsubscribe();
   }
 }

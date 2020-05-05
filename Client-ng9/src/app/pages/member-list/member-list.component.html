@@ -1,82 +1,85 @@
-<div class="member-filter">
-  <div class="member-filter__title">
-    <span>Your matches</span>
-    <mat-chip-list aria-label="Fish selection">
-      <mat-chip color="primary" selected>{{pagination.totalItems}}</mat-chip>
-    </mat-chip-list>
-    <span>found</span>
+<div class="member-list-component">
+  <div class="member-filter">
+    <div class="member-filter__title">
+      <span>Your matches</span>
+      <mat-chip-list aria-label="Fish selection">
+        <mat-chip color="primary" selected>{{pagination.totalItems}}</mat-chip>
+      </mat-chip-list>
+      <span>found</span>
+    </div>
+    <!--  FORM-->
+    <div class="member-filter__form">
+      <mat-card class="filter-form-card">
+        <mat-chip-list>
+          <mat-chip color="primary">Filter members by</mat-chip>
+        </mat-chip-list>
+        <form [formGroup]="filterForm" (ngSubmit)="onFormSubmit()">
+
+          <mat-card-content class="form-fields">
+
+            <mat-form-field appearance="standard" class="form-fields__min">
+              <mat-label>Age</mat-label>
+              <input matInput type="number" placeholder="From" formControlName="minAge" min="16" max="99">
+            </mat-form-field>
+
+            <mat-form-field appearance="standard" class="form-fields__max">
+              <mat-label>Age</mat-label>
+              <input matInput type="number" placeholder="To" formControlName="maxAge" min="16" max="99">
+            </mat-form-field>
+
+            <mat-radio-group class="form-fields__gender" color="primary" formControlName="gender">
+              <mat-radio-button class="female" value="female">Females</mat-radio-button>
+              <mat-radio-button class="male" value="male">Males</mat-radio-button>
+            </mat-radio-group>
+
+            <div class="form-fields__btn-group">
+              <button mat-icon-button color="primary" type="submit"
+                      [disabled]="!filterForm.valid">
+                <mat-icon>done</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" type="button"
+                      [disabled]="!filterForm.dirty"
+                      (click)="resetFilters()">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </div>
+          </mat-card-content>
+        </form>
+      </mat-card>
+    </div>
   </div>
-  <!--  FORM-->
-  <div class="member-filter__form">
-    <mat-card class="filter-form-card">
-      <form [formGroup]="filterForm" (ngSubmit)="onFormSubmit()">
 
-        <mat-card-content class="form-fields">
-
-          <mat-form-field appearance="standard" class="form-fields__min">
-            <mat-label>Age</mat-label>
-            <input matInput type="number" placeholder="From" formControlName="minAge" min="16" max="99">
-          </mat-form-field>
-
-          <mat-form-field appearance="standard" class="form-fields__max">
-            <mat-label>Age</mat-label>
-            <input matInput type="number" placeholder="To" formControlName="maxAge" min="16" max="99">
-          </mat-form-field>
-
-          <mat-radio-group class="form-fields__gender" formControlName="gender">
-            <mat-radio-button class="female" value="female">Females</mat-radio-button>
-            <mat-radio-button class="male" value="male">Males</mat-radio-button>
-          </mat-radio-group>
-
-          <div class="form-fields__btn-group">
-            <button mat-icon-button color="primary" type="submit"
-                    [disabled]="!filterForm.valid">
-              <mat-icon>done</mat-icon>
-            </button>
-            <button mat-icon-button color="warn" type="button"
-                    [disabled]="!filterForm.dirty"
-                    (click)="resetFilters()">
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </div>
-        </mat-card-content>
-      </form>
+  <div class="order-by">
+    <mat-card class="order-by__card">
+      <mat-chip-list>
+        <mat-chip color="primary">Order by</mat-chip>
+      </mat-chip-list>
+      <mat-button-toggle-group class="order-by__toggle">
+        <mat-button-toggle value="bold" class="btn-toggle" (click)="orderBy('lastActive')">Last Active
+        </mat-button-toggle>
+        <mat-button-toggle value="underline" class="btn-toggle" (click)="orderBy('created')">Newest Members
+        </mat-button-toggle>
+      </mat-button-toggle-group>
     </mat-card>
   </div>
-  <!--  FILTERS-->
-  <!--  <mat-card-actions>-->
-  <!--    <mat-label class="mr-4">Order By:</mat-label>-->
-  <!--    <mat-radio-group [(ngModel)]="userParams.orderBy">-->
-  <!--      <mat-radio-button-->
-  <!--        class="mr-2"-->
-  <!--        *ngFor="let item of radioItems"-->
-  <!--        [value]="item.value"-->
-  <!--        (click)="onSortBy(item.value)"-->
-  <!--      >-->
-  <!--        {{item.display}}-->
-  <!--      </mat-radio-button>-->
-  <!--    </mat-radio-group>-->
-  <!--  </mat-card-actions>-->
-</div>
 
-<mat-card class="member-list">
-  <div class="member-list__actions">
-    <!--                MATERIAL PAGINATOR-->
-    <mat-paginator
-      class="paginator"
-      [length]="pagination.totalItems"
-      [pageSize]="pagination.itemsPerPage"
-      [pageSizeOptions]="pageSizeOptions"
-      (page)="mdPageChanged($event)"
-    >
-    </mat-paginator>
-  </div>
-
-  <mat-card-content class="member-list__content">
-    <div *ngFor="let user of users">
-      <app-member-card [user]="user"></app-member-card>
+  <mat-card class="member-list">
+    <div class="member-list__actions">
+      <!--                MATERIAL PAGINATOR-->
+      <mat-paginator
+        class="paginator"
+        [length]="pagination.totalItems"
+        [pageSize]="pagination.itemsPerPage"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="mdPageChanged($event)"
+      >
+      </mat-paginator>
     </div>
-  </mat-card-content>
 
-
-</mat-card>
+    <mat-card-content class="member-list__content">
+      <div *ngFor="let user of users">
+        <app-member-card [user]="user"></app-member-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

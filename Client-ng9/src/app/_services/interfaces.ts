@@ -31,6 +31,7 @@ export interface RequestQueryUserParams {
   itemsPerPage?: number
   minAge?: number
   maxAge?: number
+  orderBy?: string
 }
 
 export interface LogUser {
