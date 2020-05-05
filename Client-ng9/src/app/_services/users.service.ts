@@ -10,8 +10,9 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UsersService {
-
   protected currentUser: BehaviorSubject<any> = new BehaviorSubject<any>({});
+
+  paginatedResult: PaginationResult<User[]> = new PaginationResult<User[]>();
 
   public get getCurrentUserSub() {
     return this.currentUser;
@@ -34,10 +35,8 @@ export class UsersService {
       : {...user, photoUrl: '/assets/original.png'};
   }
 
-  getUsers(userParams: RequestQueryUserParams): Observable<PaginationResult<User[]>> {
-    const paginatedResult: PaginationResult<User[]> = new PaginationResult<User[]>();
+  queryParams(userParams: RequestQueryUserParams): HttpParams {
     let params = new HttpParams();
-
     if (userParams.page && userParams.itemsPerPage) {
       params = params.append('pageNumber', userParams.page.toString());
       params = params.append('pageSize', userParams.itemsPerPage.toString());
@@ -50,15 +49,18 @@ export class UsersService {
     if (userParams.orderBy) {
       params = params.append('orderBy', userParams.orderBy.toString());
     }
+    return params;
+  }
 
-    return this.http.get<User[]>(`${this.baseUrl}`, {observe: 'response', params})
+  getUsers(userParams: RequestQueryUserParams): Observable<PaginationResult<User[]>> {
+    return this.http.get<User[]>(`${this.baseUrl}`, {observe: 'response', params: this.queryParams(userParams)})
       .pipe(
         map(response => {
-          paginatedResult.result = response.body;
+          this.paginatedResult.result = response.body;
           if (!!response.headers.get('Pagination')) {
-            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
+            this.paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'));
           }
-          return paginatedResult;
+          return this.paginatedResult;
         })
       );
   }

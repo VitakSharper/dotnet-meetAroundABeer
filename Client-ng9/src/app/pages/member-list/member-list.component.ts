@@ -51,7 +51,6 @@ export class MemberListComponent implements OnInit, OnDestroy {
   }
 
   loadUsers(userParams: RequestQueryUserParams) {
-    console.log('load users: ', userParams);
     this.usersService.getUsers(userParams)
       .subscribe((res: PaginationResult<User[]>) => {
         this.users = res.result;
