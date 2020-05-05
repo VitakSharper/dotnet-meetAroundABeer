@@ -25,7 +25,7 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.unsubscriptionUser = this.usersService.getCurrentUser()
-      .subscribe(user => this.usersService.pushUser(user.userToReturn));
+      .subscribe(user => this.usersService.pushUser(user));
   }
 
   ngOnDestroy(): void {
@@ -36,6 +36,4 @@ export class AppComponent implements OnInit, OnDestroy {
       this.unsubscriptionToken.unsubscribe();
     }
   }
-
-
 }

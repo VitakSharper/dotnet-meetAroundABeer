@@ -5,24 +5,37 @@ using Domain.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Data.Interfaces;
 
 namespace Data.Repository
 {
     public class UsersRepository : IUsersRepository
     {
+        private readonly IUserAccessor _userAccessor;
         private readonly DataContext _context;
 
-        public UsersRepository(DataContext context) =>
+        public UsersRepository(DataContext context, IUserAccessor userAccessor)
+        {
+            _userAccessor = userAccessor;
             (_context) = (context);
+        }
 
         public async Task<PagedList<AppUser>> GetUsers(RequestQueryUserParams userParams)
         {
             var users = _context.Users
                 .Where(u => u.Id != userParams.UserId)
                 .Where(u => u.Gender == userParams.Gender);
-              
+
+            if (userParams.Likers || userParams.Likees)
+            {
+                var currentUser = await GetCurrentUser();
+                users = users.Where(u => currentUser
+                    .GetUserLikesExt(userParams.Likers)
+                    .Contains(u.Id));
+            }
 
             if (userParams.MinAge != 18 || userParams.MaxAge != 99)
             {
@@ -38,8 +51,10 @@ namespace Data.Repository
                     case "created":
                         users = users.OrderByDescending(u => u.Created);
                         break;
-                    default:
+                    case "lastActive":
                         users = users.OrderByDescending(u => u.LastActive);
+                        break;
+                    default:
                         break;
                 }
             }
@@ -49,5 +64,9 @@ namespace Data.Repository
 
         public async Task<AppUser> GetUser(string userId) =>
             await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+        public async Task<AppUser> GetCurrentUser() =>
+            await _context.Users.SingleOrDefaultAsync(u =>
+                u.UserName == _userAccessor.GetCurrentUsername());
     }
 }

@@ -1,7 +1,10 @@
 ﻿using Data.Helpers.Pagination;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
+using Domain.Identity;
 
 namespace Data
 {
@@ -22,8 +25,16 @@ namespace Data
             response.Headers.Add("Pagination",
                 JsonSerializer.Serialize(
                     new PaginationHeader(currentPage, itemsPerPage, totalItems, totalPages),
-                    new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+                    new JsonSerializerOptions {PropertyNamingPolicy = JsonNamingPolicy.CamelCase}));
 
         //response.Headers.Add("Access-Control-Expose-Headers", "Pagination");
+        public static IEnumerable<string> GetUserLikesExt(this AppUser user, bool likers) =>
+            likers
+                ? user.Likers
+                    .Where(u => u.LikeeId == user.Id)
+                    .Select(u => u.LikerId)
+                : user.Likees
+                    .Where(u => u.LikerId == user.Id)
+                    .Select(u => u.LikeeId);
     }
 }

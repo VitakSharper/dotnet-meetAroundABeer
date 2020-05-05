@@ -10,5 +10,6 @@ namespace Data.Repository.Interfaces
         Task<PagedList<AppUser>> GetUsers(RequestQueryUserParams userParams);
 
         Task<AppUser> GetUser(string userId);
+        Task<AppUser> GetCurrentUser();
     }
 }

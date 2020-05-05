@@ -76,4 +76,8 @@ export class UsersService {
   updateUser(updated: User): Observable<any> {
     return this.http.put<User>(`${this.baseUrl}/updateMe`, updated);
   }
+
+  sendLike(recipiendId: string) {
+    return this.http.post(`${this.baseUrl}/like/${recipiendId}`, {});
+  }
 }

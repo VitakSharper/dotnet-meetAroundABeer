@@ -6,11 +6,11 @@ using Data.Helpers;
 using Data.Interfaces;
 using Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Persistence;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Domain;
 
 namespace API.Controllers
 {
@@ -21,6 +21,7 @@ namespace API.Controllers
         private readonly IUsersRepository _usersRepository;
         private readonly DataContext _context;
         private readonly IUserAccessor _userAccessor;
+        private readonly IDatingRepository _datingRepository;
         private readonly IAuthRepository _authRepository;
         private readonly IJwtGenerator _jwtGenerator;
         private readonly IMapper _mapper;
@@ -31,11 +32,13 @@ namespace API.Controllers
             IJwtGenerator jwtGenerator,
             IMapper mapper,
             DataContext context,
-            IUserAccessor userAccessor
+            IUserAccessor userAccessor,
+            IDatingRepository datingRepository
         )
         {
             _context = context;
             _userAccessor = userAccessor;
+            _datingRepository = datingRepository;
             (_authRepository, _jwtGenerator) = (authRepository, jwtGenerator);
             (_usersRepository, _mapper) = (usersRepository, mapper);
         }
@@ -44,10 +47,9 @@ namespace API.Controllers
         [ServiceFilter(typeof(LogUserActivity))]
         public async Task<IActionResult> GetUsers([FromQuery] RequestQueryUserParams userParams)
         {
-            var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
-                u.UserName == _userAccessor.GetCurrentUsername());
-
+            var currentUser = await _usersRepository.GetCurrentUser();
             if (currentUser == null) return Unauthorized();
+
             userParams.UserId = currentUser.Id;
 
             if (string.IsNullOrEmpty(userParams.Gender))
@@ -69,6 +71,9 @@ namespace API.Controllers
         [ServiceFilter(typeof(LogUserActivity))]
         public async Task<IActionResult> GetUser(string id)
         {
+            var currentUser = await _usersRepository.GetCurrentUser();
+            if (currentUser == null) return Unauthorized();
+
             var user = await _usersRepository.GetUser(id);
             if (user == null) NotFound();
 
@@ -79,24 +84,18 @@ namespace API.Controllers
         [HttpGet("current")]
         public async Task<IActionResult> CurrentUser()
         {
-            var user = await _authRepository.CurrentUser();
-            if (user == null) return NotFound();
+            var currentUser = await _usersRepository.GetCurrentUser();
+            if (currentUser == null) return Unauthorized();
 
-            var userToReturn = _mapper.Map<UserForDetailedDto>(user);
-
-            return Ok(new
-            {
-                userToReturn
-            });
+            var userToReturn = _mapper.Map<UserForDetailedDto>(currentUser);
+            return Ok(userToReturn);
         }
 
         [HttpPut("updateMe")]
         [ServiceFilter(typeof(LogUserActivity))]
         public async Task<IActionResult> UpdateUser(UserForUpdateDto userForUpdate)
         {
-            var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
-                u.UserName == _userAccessor.GetCurrentUsername());
-
+            var currentUser = await _usersRepository.GetCurrentUser();
             if (currentUser == null) return Unauthorized();
 
             _mapper.Map(userForUpdate, currentUser);
@@ -108,7 +107,29 @@ namespace API.Controllers
             _ = userToReturn ??
                 throw new Exception("Updating failed");
 
-            return Ok(new { userToReturn });
+            return Ok(new {userToReturn});
+        }
+
+        [HttpPost("like/{recipientId}")]
+        public async Task<IActionResult> LikeUser(string recipientId)
+        {
+            var currentUser = await _usersRepository.GetCurrentUser();
+            if (currentUser == null) return Unauthorized();
+
+            var like = await _datingRepository.GetLike(currentUser.Id, recipientId);
+            if (like != null) return BadRequest("You already like this member.");
+            if (await _usersRepository.GetUser(recipientId) == null) return NotFound();
+
+            like = new Like
+            {
+                LikerId = currentUser.Id,
+                LikeeId = recipientId
+            };
+            _datingRepository.Add<Like>(like);
+            if (await _datingRepository.Save())
+                return Ok();
+
+            return BadRequest("Something went wrong.");
         }
     }
 }

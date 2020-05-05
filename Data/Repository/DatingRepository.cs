@@ -1,4 +1,5 @@
-﻿using Data.Repository.Interfaces;
+﻿using System.Linq;
+using Data.Repository.Interfaces;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -22,6 +23,8 @@ namespace Data.Repository
         public async Task<Photo> GetPhoto(string id) =>
             await _context.Photos.FirstOrDefaultAsync(p => p.Id == id);
 
+        public async Task<Like> GetLike(string userId, string recipientId) =>
+            await _context.Likes.FirstOrDefaultAsync(u => u.LikerId == userId && u.LikeeId == recipientId);
 
         public async Task<bool> Save() =>
             await _context.SaveChangesAsync() > 0;

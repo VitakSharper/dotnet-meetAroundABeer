@@ -1,30 +1,37 @@
 <mat-card class="member-card">
-
-
   <div class="member-card__img-wrapper">
     <img class="card-img" mat-card-image src="{{user.photoUrl||'/assets/original.png'}}"
          alt="{{user.displayName}} photo">
 
-
     <ul class="user-list-member-icons">
       <li class="icon-item">
-        <button class="icon-item__button" mat-icon-button [routerLink]="['/member/',user.id]">
+        <button class="icon-item__button" mat-icon-button
+                [routerLink]="['/member/',user.id]"
+                matTooltip="View member"
+                matTooltipPosition="above"
+        >
           <mat-icon class="icon-button1">account_circle</mat-icon>
         </button>
       </li>
       <li class="icon-item">
-        <button class="icon-item__button" mat-icon-button>
+        <button class="icon-item__button" mat-icon-button
+                matTooltip="Like member"
+                matTooltipPosition="above"
+                (click)="likeMember(user.id)"
+        >
           <mat-icon class="icon-button2">favorite</mat-icon>
         </button>
       </li>
       <li class="icon-item">
-        <button class="icon-item__button" mat-icon-button>
+        <button class="icon-item__button" mat-icon-button
+                matTooltip="Send message"
+                matTooltipPosition="above"
+        >
           <mat-icon class="icon-button3">mail</mat-icon>
         </button>
       </li>
     </ul>
   </div>
-
 
   <mat-card-content class="member-card__content">
 

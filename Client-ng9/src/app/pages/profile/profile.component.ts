@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.tabsService.getEditWarning.next(false);
 
     this.route.data.subscribe(data => {
-      this.user = data['user'].userToReturn;
+      this.user = data['user'];
       this.usersService.getCurrentUserSub.next(this.user);
     });
 

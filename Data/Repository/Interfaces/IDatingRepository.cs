@@ -9,6 +9,7 @@ namespace Data.Repository.Interfaces
         void Delete<T>(T entity) where T : class;
 
         Task<Photo> GetPhoto(string id);
+        Task<Like> GetLike(string userId, string recipientId);
         Task<bool> Save();
     }
 }
