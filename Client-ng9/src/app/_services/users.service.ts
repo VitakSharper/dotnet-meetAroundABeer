@@ -11,11 +11,16 @@ import {map} from 'rxjs/operators';
 })
 export class UsersService {
   protected currentUser: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  protected removeLikeUserId: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   paginatedResult: PaginationResult<User[]> = new PaginationResult<User[]>();
 
   public get getCurrentUserSub() {
     return this.currentUser;
+  }
+
+  public get getRemoveLikeUserIdSub() {
+    return this.removeLikeUserId;
   }
 
   baseUrl = `${environment.apiUrl}/users`;
@@ -37,11 +42,14 @@ export class UsersService {
 
   queryParams(userParams: RequestQueryUserParams): HttpParams {
     let params = new HttpParams();
+    if (userParams.gender) {
+      params = params.append('gender', userParams.gender);
+    }
     if (userParams.page && userParams.itemsPerPage) {
       params = params.append('pageNumber', userParams.page.toString());
       params = params.append('pageSize', userParams.itemsPerPage.toString());
     }
-    if (userParams.maxAge && userParams.maxAge && userParams.gender) {
+    if (userParams.minAge && userParams.maxAge && userParams.gender) {
       params = params.append('minAge', userParams.minAge.toString());
       params = params.append('maxAge', userParams.maxAge.toString());
       params = params.append('gender', userParams.gender.toString());
@@ -49,11 +57,20 @@ export class UsersService {
     if (userParams.orderBy) {
       params = params.append('orderBy', userParams.orderBy.toString());
     }
+    if (userParams.like === 'Likers') {
+      params = params.append('likers', 'true');
+    }
+    if (userParams.like === 'Likees') {
+      params = params.append('likees', 'true');
+    }
     return params;
   }
 
   getUsers(userParams: RequestQueryUserParams): Observable<PaginationResult<User[]>> {
-    return this.http.get<User[]>(`${this.baseUrl}`, {observe: 'response', params: this.queryParams(userParams)})
+    return this.http.get<User[]>(`${this.baseUrl}`, {
+      observe: 'response',
+      params: this.queryParams(userParams)
+    })
       .pipe(
         map(response => {
           this.paginatedResult.result = response.body;

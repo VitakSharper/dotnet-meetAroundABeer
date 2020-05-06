@@ -26,4 +26,8 @@ export class MemberCardComponent implements OnInit {
       () =>
         this.alertifyService.successAlert(`You liked ${this.user.displayName.toUpperCase()}`));
   }
+
+  removeLike(id: string) {
+    this.usersService.getRemoveLikeUserIdSub.next(id);
+  }
 }

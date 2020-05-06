@@ -17,7 +17,10 @@ namespace Data.Repository
         private readonly IUserAccessor _userAccessor;
         private readonly DataContext _context;
 
-        public UsersRepository(DataContext context, IUserAccessor userAccessor)
+        public UsersRepository(
+            DataContext context,
+            IUserAccessor userAccessor
+        )
         {
             _userAccessor = userAccessor;
             (_context) = (context);
@@ -26,8 +29,12 @@ namespace Data.Repository
         public async Task<PagedList<AppUser>> GetUsers(RequestQueryUserParams userParams)
         {
             var users = _context.Users
-                .Where(u => u.Id != userParams.UserId)
-                .Where(u => u.Gender == userParams.Gender);
+                .Where(u => u.Id != userParams.UserId);
+
+            if (!string.IsNullOrEmpty(userParams.Gender))
+            {
+                users = users.Where(u => u.Gender == userParams.Gender);
+            }
 
             if (userParams.Likers || userParams.Likees)
             {
@@ -35,6 +42,7 @@ namespace Data.Repository
                 users = users.Where(u => currentUser
                     .GetUserLikesExt(userParams.Likers)
                     .Contains(u.Id));
+                // .Select(x => )
             }
 
             if (userParams.MinAge != 18 || userParams.MaxAge != 99)
@@ -59,7 +67,8 @@ namespace Data.Repository
                 }
             }
 
-            return await PagedList<AppUser>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
+            return await PagedList<AppUser>
+                .CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         }
 
         public async Task<AppUser> GetUser(string userId) =>

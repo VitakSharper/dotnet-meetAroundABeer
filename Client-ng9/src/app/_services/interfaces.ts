@@ -13,6 +13,7 @@ export interface User {
   interests?: string;
   introduction?: string;
   lookingFor?: string;
+  like?: string
   photos?: Photo[];
 }
 
@@ -32,6 +33,7 @@ export interface RequestQueryUserParams {
   minAge?: number
   maxAge?: number
   orderBy?: string
+  like?: string
 }
 
 export interface LogUser {

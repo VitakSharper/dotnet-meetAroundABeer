@@ -52,11 +52,6 @@ namespace API.Controllers
 
             userParams.UserId = currentUser.Id;
 
-            if (string.IsNullOrEmpty(userParams.Gender))
-            {
-                userParams.Gender = currentUser.Gender == "male" ? "female" : "male";
-            }
-
             var users = await _usersRepository.GetUsers(userParams);
             if (users == null) return BadRequest();
 

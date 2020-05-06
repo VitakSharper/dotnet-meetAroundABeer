@@ -12,6 +12,7 @@ import {MemberListResolver} from './_resolvers/member-list.resolver';
 import {ProfileComponent} from './pages/profile/profile.component';
 import {ProfileResolver} from './_resolvers/profile.resolver';
 import {PreventUnsavedChangesGuard} from './_guards/prevent-unsaved-changes.guard';
+import {LikeResolver} from './_resolvers/like.resolver';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -24,7 +25,7 @@ const routes: Routes = [
       {path: 'member/:id', component: MemberDetailComponent, resolve: {user: MemberDetailResolver}},
       {path: 'profile', component: ProfileComponent, resolve: {user: ProfileResolver}, canDeactivate: [PreventUnsavedChangesGuard]},
       {path: 'messages', component: MessagesComponent},
-      {path: 'lists', component: ListsComponent},
+      {path: 'lists', component: ListsComponent, resolve: {users: LikeResolver}},
     ]
   },
   {path: '**', redirectTo: '/'}

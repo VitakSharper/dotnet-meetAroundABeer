@@ -101,8 +101,6 @@ export class MemberListComponent implements OnInit, OnDestroy {
   orderBy(orderBy: string) {
     switch (orderBy) {
       case 'lastActive':
-        this.loadUsers(this.setUserParams(null, null, null, orderBy));
-        break;
       case 'created':
         this.loadUsers(this.setUserParams(null, null, null, orderBy));
         break;

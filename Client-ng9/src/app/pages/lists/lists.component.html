@@ -1,1 +1,43 @@
-<p>lists works!</p>
+<div class="member-like-list-title">
+  <span>
+  {{likeParams === 'Likers' ? 'Members who like me' : 'Memebers I\'ve Liked'}}
+    </span>
+  <mat-chip-list aria-label="Fish selection">
+    <mat-chip color="primary" selected>{{pagination.totalItems}}</mat-chip>
+  </mat-chip-list>
+</div>
+
+<div class="member-like-list">
+  <div class="like-toggle">
+    <mat-card class="like-toggle__card">
+      <mat-chip-list>
+        <mat-chip color="primary">My members lists</mat-chip>
+      </mat-chip-list>
+      <mat-button-toggle-group class="like-toggle__btn-group">
+        <mat-button-toggle class="btn-toggle" (click)="onShowMembers('Likers')">Members who like me
+        </mat-button-toggle>
+        <mat-button-toggle class="btn-toggle" (click)="onShowMembers('Likees')">Members who i like
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    </mat-card>
+  </div>
+
+  <mat-card class="member-like-list__cards">
+    <div class="cards-actions">
+      <mat-paginator
+        class="paginator"
+        [length]="pagination.totalItems"
+        [pageSize]="pagination.itemsPerPage"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="mdPageChanged($event)"
+      >
+      </mat-paginator>
+    </div>
+    <!--                    MEMBERS LIST CARDS-->
+    <mat-card-content class="cards-content">
+      <div *ngFor="let user of users">
+        <app-member-card [user]="user"></app-member-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

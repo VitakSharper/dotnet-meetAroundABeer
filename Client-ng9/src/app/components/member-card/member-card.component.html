@@ -17,10 +17,19 @@
         <button class="icon-item__button" mat-icon-button
                 matTooltip="Like member"
                 matTooltipPosition="above"
-                (click)="likeMember(user.id)"
-        >
+                *ngIf="!user.like"
+                (click)="likeMember(user.id)">
           <mat-icon class="icon-button2">favorite</mat-icon>
         </button>
+        <button class="icon-item__button" mat-icon-button
+                matTooltip="Remove like"
+                matTooltipPosition="above"
+                *ngIf="user.like==='Likees'"
+                (click)="removeLike(user.id)">
+          <mat-icon class="icon-button2">not_interested</mat-icon>
+        </button>
+
+
       </li>
       <li class="icon-item">
         <button class="icon-item__button" mat-icon-button

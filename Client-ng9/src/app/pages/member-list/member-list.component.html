@@ -1,6 +1,6 @@
 <div class="member-list-component">
   <div class="member-filter">
-
+<!--            MATCH TITLE-->
     <div class="member-filter__title">
       <span>Your matches</span>
       <mat-chip-list aria-label="Fish selection">
@@ -8,7 +8,7 @@
       </mat-chip-list>
       <span>found</span>
     </div>
-    <!--  FORM-->
+    <!--  FILTER MEMBERS FORM-->
     <div class="member-filter__form">
       <mat-card class="filter-form-card">
         <mat-chip-list>
@@ -17,22 +17,22 @@
         <form [formGroup]="filterForm" (ngSubmit)="onFormSubmit()">
 
           <mat-card-content class="form-fields">
-
+<!--                      AGE FROM-->
             <mat-form-field appearance="standard" class="form-fields__min">
               <mat-label>Age</mat-label>
               <input matInput type="number" placeholder="From" formControlName="minAge" min="16" max="99">
             </mat-form-field>
-
+<!--                        AGE TO-->
             <mat-form-field appearance="standard" class="form-fields__max">
               <mat-label>Age</mat-label>
               <input matInput type="number" placeholder="To" formControlName="maxAge" min="16" max="99">
             </mat-form-field>
-
+<!--                          GENDER SELECT RADIO-->
             <mat-radio-group class="form-fields__gender" color="primary" formControlName="gender">
               <mat-radio-button class="female" value="female">Females</mat-radio-button>
               <mat-radio-button class="male" value="male">Males</mat-radio-button>
             </mat-radio-group>
-
+<!--                              BTN GROUP-->
             <div class="form-fields__btn-group">
               <button mat-icon-button color="primary" type="submit"
                       [disabled]="!filterForm.valid">
@@ -49,7 +49,7 @@
       </mat-card>
     </div>
   </div>
-
+  <!--                  ORDER BY-->
   <div class="order-by">
     <mat-card class="order-by__card">
       <mat-chip-list>
@@ -64,9 +64,9 @@
     </mat-card>
   </div>
 
+  <!--                MATERIAL PAGINATOR-->
   <mat-card class="member-list">
     <div class="member-list__actions">
-      <!--                MATERIAL PAGINATOR-->
       <mat-paginator
         class="paginator"
         [length]="pagination.totalItems"
@@ -76,7 +76,7 @@
       >
       </mat-paginator>
     </div>
-
+    <!--                    MEMBERS LIST CARDS-->
     <mat-card-content class="member-list__content">
       <div *ngFor="let user of users">
         <app-member-card [user]="user"></app-member-card>

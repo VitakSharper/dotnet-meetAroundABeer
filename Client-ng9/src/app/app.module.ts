@@ -38,6 +38,7 @@ import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {SafeHtmlPipe} from './_pipes/safe-html.pipe';
 import {HamburgerComponent} from './navigation/hamburger/hamburger.component';
 import {TimeagoModule} from 'ngx-timeago';
+import {LikeResolver} from './_resolvers/like.resolver';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,9 @@ import {TimeagoModule} from 'ngx-timeago';
       }
     })
   ],
-  providers: [httpInterceptorProviders, MemberDetailResolver, MemberListResolver, ProfileResolver, PreventUnsavedChangesGuard],
+  providers: [httpInterceptorProviders, MemberDetailResolver,
+    MemberListResolver, ProfileResolver, LikeResolver,
+    PreventUnsavedChangesGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule {
