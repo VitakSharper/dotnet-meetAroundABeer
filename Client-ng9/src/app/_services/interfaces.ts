@@ -17,6 +17,20 @@ export interface User {
   photos?: Photo[];
 }
 
+export interface Message {
+  id: string
+  senderId: string
+  senderDisplayName: string
+  senderPhotoUrl: string
+  recipientId: string
+  recipientDisplayName: string
+  recipientPhotoUrl: string
+  content: string
+  isRead: boolean
+  dateRead: Date
+  messageSent: Date
+}
+
 export interface Photo {
   id: string;
   url: string;

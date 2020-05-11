@@ -1,0 +1,37 @@
+.messages {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: auto;
+  grid-gap: 1rem;
+
+  &__switch {
+    .switch-card {
+      background-color: rgba(255, 235, 238, .5);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      transition: background-color .2s;
+
+      &:hover {
+        background-color: rgba(255, 235, 238, 1);
+      }
+
+      &__chip {
+        margin-bottom: 1rem;
+      }
+
+      &__messages-toggle {
+        border: 1px solid #5A33A1;
+        border-radius: 50px;
+      }
+    }
+  }
+
+  &__table {
+    grid-column: 1/-1;
+
+    .table-card {
+      background-color: #FFEBEE;
+    }
+  }
+}

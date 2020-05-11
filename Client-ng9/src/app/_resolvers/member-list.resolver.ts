@@ -29,7 +29,7 @@ export class MemberListResolver implements Resolve<User[]>, OnDestroy {
       gender: this.user.gender === 'male' ? 'female' : 'male'
     }).pipe(
       catchError(err => {
-        this.alertify.errorAlert('Problem retrieving data.');
+        this.alertify.errorAlert('Problem resolve users.');
         this.router.navigate(['/']);
         return of(null); // return type of observable
       })

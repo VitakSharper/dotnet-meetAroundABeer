@@ -26,12 +26,12 @@ const materialComponents = [
   MatFormFieldModule, MatTabsModule,
   MatCardModule, MatRadioModule,
   MatSelectModule, MatMenuModule,
-  MatIconModule, MatChipsModule,
+  MatChipsModule, MatPaginatorModule,
   MatDividerModule, MatGridListModule,
   MatListModule, MatButtonToggleModule,
   MatTooltipModule, MatProgressBarModule,
   MatDatepickerModule, MatNativeDateModule,
-  MatPaginatorModule];
+];
 
 @NgModule({
   imports: [materialComponents],

@@ -24,7 +24,7 @@ const routes: Routes = [
       {path: 'members', component: MemberListComponent, resolve: {users: MemberListResolver}},
       {path: 'member/:id', component: MemberDetailComponent, resolve: {user: MemberDetailResolver}},
       {path: 'profile', component: ProfileComponent, resolve: {user: ProfileResolver}, canDeactivate: [PreventUnsavedChangesGuard]},
-      {path: 'messages', component: MessagesComponent},
+      {path: 'messages', loadChildren: () => import('./_modules/message/message.module').then(mod => mod.MessageModule)},
       {path: 'lists', component: ListsComponent, resolve: {users: LikeResolver}},
     ]
   },

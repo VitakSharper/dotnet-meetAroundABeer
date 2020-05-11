@@ -4,7 +4,7 @@ import {NgModule} from '@angular/core';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MaterialUiModule} from './_material-ui/material-ui.module';
+import {MaterialUiModule} from './_modules/material-ui/material-ui.module';
 import {HeaderComponent} from './navigation/header/header.component';
 import {HomeComponent} from './pages/home/home.component';
 import {RegisterComponent} from './_forms/register/register.component';
@@ -16,7 +16,6 @@ import {JwtModule} from '@auth0/angular-jwt';
 import {NavMenuComponent} from './navigation/nav-menu/nav-menu.component';
 import {MemberListComponent} from './pages/member-list/member-list.component';
 import {ListsComponent} from './pages/lists/lists.component';
-import {MessagesComponent} from './pages/messages/messages.component';
 import {MemberCardComponent} from './components/member-card/member-card.component';
 import {MemberDetailComponent} from './components/member-detail/member-detail.component';
 import {MemberDetailResolver} from './_resolvers/member-detail.resolver';
@@ -33,7 +32,6 @@ import {MemberPhotoEditComponent} from './components/member-photo-edit/member-ph
 import {MemberPhotoUploadComponent} from './components/member-photo-upload/member-photo-upload.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import {UploadLocalFilesComponent} from './components/upload-local-files/upload-local-files.component';
-import {MatIconModule} from '@angular/material/icon';
 import {MaterialFileInputModule} from 'ngx-material-file-input';
 import {SafeHtmlPipe} from './_pipes/safe-html.pipe';
 import {HamburgerComponent} from './navigation/hamburger/hamburger.component';
@@ -50,7 +48,6 @@ import {LikeResolver} from './_resolvers/like.resolver';
     NavMenuComponent,
     MemberListComponent,
     ListsComponent,
-    MessagesComponent,
     MemberCardComponent,
     MemberDetailComponent,
     ProfileComponent,
@@ -76,7 +73,6 @@ import {LikeResolver} from './_resolvers/like.resolver';
     NgxGalleryModule,
     FileUploadModule,
     MaterialFileInputModule,
-    MatIconModule,
     TimeagoModule.forRoot(),
     JwtModule.forRoot({
       config: {
@@ -86,7 +82,8 @@ import {LikeResolver} from './_resolvers/like.resolver';
         whitelistedDomains: ['localhost:5000'],
         blacklistedRoutes: ['localhost:5000/api/auth']
       }
-    })
+    }),
+
   ],
   providers: [httpInterceptorProviders, MemberDetailResolver,
     MemberListResolver, ProfileResolver, LikeResolver,

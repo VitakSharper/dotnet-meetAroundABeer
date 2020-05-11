@@ -12,7 +12,7 @@ import {map} from 'rxjs/operators';
 export class UsersService {
   protected currentUser: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
-  paginatedResult: PaginationResult<User[]> = new PaginationResult<User[]>();
+  paginatedResult: PaginationResult<User[]>;
 
   public get getCurrentUserSub() {
     return this.currentUser;
@@ -21,6 +21,7 @@ export class UsersService {
   baseUrl = `${environment.apiUrl}/users`;
 
   constructor(private http: HttpClient) {
+    this.paginatedResult = new PaginationResult<User[]>();
   }
 
   pushUser(user: User) {
