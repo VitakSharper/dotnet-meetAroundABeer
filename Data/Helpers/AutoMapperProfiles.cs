@@ -40,6 +40,20 @@ namespace Data.Helpers
             CreateMap<PhotoForCreationDto, Photo>();
             CreateMap<UserForUpdateDto, AppUser>();
             CreateMap<UserForRegisterDto, AppUser>();
+            CreateMap<MessageForCreationDto, Message>().ReverseMap();
+            CreateMap<Message, MessageToReturnDto>()
+                .ForMember(destination => destination.SenderPhotoUrl,
+                    opt =>
+                    {
+                        opt.MapFrom(source =>
+                            source.Sender.Photos.FirstOrDefault(p => p.IsMain).Url);
+                    })
+                .ForMember(destination => destination.RecipientPhotoUrl,
+                    opt =>
+                    {
+                        opt.MapFrom(source =>
+                            source.Recipient.Photos.FirstOrDefault(p => p.IsMain).Url);
+                    });
         }
     }
 }

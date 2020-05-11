@@ -1,9 +1,12 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Data.Repository.Interfaces;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 using System.Threading.Tasks;
+using Data.Helpers;
+using Data.Helpers.Pagination;
 
 namespace Data.Repository
 {
@@ -25,6 +28,38 @@ namespace Data.Repository
 
         public async Task<Like> GetLike(string userId, string recipientId) =>
             await _context.Likes.FirstOrDefaultAsync(u => u.LikerId == userId && u.LikeeId == recipientId);
+
+        public async Task<Message> GetMessage(string id) =>
+            await _context.Messages.FirstOrDefaultAsync(m => m.Id == id);
+
+        public async Task<PagedList<Message>> GetMessagesForUser(RequestQueryMessageParams requestQueryMessageParams)
+        {
+            var messages = _context.Messages.AsQueryable();
+            switch (requestQueryMessageParams.MessageContainer)
+            {
+                case "Inbox":
+                    messages = messages.Where(u => u.RecipientId == requestQueryMessageParams.UserId);
+                    break;
+                case "Outbox":
+                    messages = messages.Where(u => u.SenderId == requestQueryMessageParams.UserId);
+                    break;
+                default:
+                    messages = messages.Where(u =>
+                        u.RecipientId == requestQueryMessageParams.UserId && u.IsRead == false);
+                    break;
+            }
+
+            messages = messages.OrderByDescending(d => d.MessageSend);
+            return await PagedList<Message>.CreateAsync(messages, requestQueryMessageParams.PageNumber,
+                requestQueryMessageParams.PageSize);
+        }
+
+        public async Task<IEnumerable<Message>> GetMessageThread(string recipientId, string currentUserId) =>
+            await _context.Messages
+                .Where(m => m.RecipientId == currentUserId && m.SenderId == recipientId ||
+                            m.RecipientId == recipientId && m.SenderId == currentUserId)
+                .OrderByDescending(m => m.MessageSend)
+                .ToListAsync();
 
         public async Task<bool> Save() =>
             await _context.SaveChangesAsync() > 0;
