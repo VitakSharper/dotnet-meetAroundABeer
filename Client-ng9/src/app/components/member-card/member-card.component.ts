@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '../../_services/interfaces';
 import {UsersService} from '../../_services/users.service';
 import {AlertifyService} from '../../_services/alertify.service';
@@ -10,6 +10,7 @@ import {AlertifyService} from '../../_services/alertify.service';
 })
 export class MemberCardComponent implements OnInit {
   @Input() user: User;
+  @Output() onUserIdDel: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
     private usersService: UsersService,
@@ -28,6 +29,6 @@ export class MemberCardComponent implements OnInit {
   }
 
   removeLike(id: string) {
-    this.usersService.getRemoveLikeUserIdSub.next(id);
+    this.onUserIdDel.emit(id);
   }
 }

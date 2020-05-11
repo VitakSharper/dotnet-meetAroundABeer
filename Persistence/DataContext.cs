@@ -10,6 +10,7 @@ namespace Persistence
     {
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Like> Likes { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         public DataContext(DbContextOptions options) : base(options)
         {
@@ -20,6 +21,7 @@ namespace Persistence
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new LikeConfiguration());
+            builder.ApplyConfiguration(new MessageConfiguration());
         }
     }
 }

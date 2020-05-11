@@ -126,5 +126,21 @@ namespace API.Controllers
 
             return BadRequest("Something went wrong.");
         }
+
+        [HttpPost("rmLike/{recipientId}")]
+        public async Task<IActionResult> RemoveLike(string recipientId)
+        {
+            var currentUser = await _usersRepository.GetCurrentUser();
+            if (currentUser == null) return Unauthorized();
+
+            var like = await _datingRepository.GetLike(currentUser.Id, recipientId);
+            if (like == null) return NotFound("Something went wrong.");
+
+            _datingRepository.Delete<Like>(like);
+            if (await _datingRepository.Save())
+                return Ok();
+
+            return BadRequest("Something went wrong.");
+        }
     }
 }

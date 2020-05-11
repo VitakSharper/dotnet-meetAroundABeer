@@ -36,10 +36,12 @@ export class ListsComponent implements OnInit {
       this.users = data['users'].result;
       this.pagination = data['users'].pagination;
     });
-    this.unsubscribeRemLikeId = this.usersService.getRemoveLikeUserIdSub
-      .subscribe(userId => {
-        ListsComponent.removeLike(userId);
-      });
+    // this.unsubscribeRemLikeId = this.usersService.getRemoveLikeUserIdSub
+    //   .subscribe(userId => {
+    //     if (userId !== '') {
+    //       this.removeLike(userId);
+    //     }
+    //   });
   }
 
   loadUsers(userParams: RequestQueryUserParams) {
@@ -99,7 +101,19 @@ export class ListsComponent implements OnInit {
     this.pagination.itemsPerPage = 5;
   }
 
-  private static removeLike(userId: string) {
-    console.log('like to remove: ', userId);
+  public removeLike(userId: string) {
+    this.usersService.removeLike(userId)
+      .subscribe(() => {
+        }, error =>
+          this.alertify.errorAlert(`${error}`),
+        () => {
+          {
+            this.users.splice(this.users.findIndex(u => u.id === userId), 1);
+            //this.users = this.users.filter(u => u.id !== userId);
+            this.pagination.totalItems--;
+            this.alertify.successAlert(`Successfully removed`);
+          }
+        }
+      );
   }
 }

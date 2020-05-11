@@ -36,7 +36,7 @@
     <!--                    MEMBERS LIST CARDS-->
     <mat-card-content class="cards-content">
       <div *ngFor="let user of users">
-        <app-member-card [user]="user"></app-member-card>
+        <app-member-card [user]="user" (onUserIdDel)="removeLike($event)"></app-member-card>
       </div>
     </mat-card-content>
   </mat-card>

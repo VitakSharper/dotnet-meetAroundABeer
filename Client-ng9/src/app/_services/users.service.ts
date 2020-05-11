@@ -11,16 +11,11 @@ import {map} from 'rxjs/operators';
 })
 export class UsersService {
   protected currentUser: BehaviorSubject<any> = new BehaviorSubject<any>({});
-  protected removeLikeUserId: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   paginatedResult: PaginationResult<User[]> = new PaginationResult<User[]>();
 
   public get getCurrentUserSub() {
     return this.currentUser;
-  }
-
-  public get getRemoveLikeUserIdSub() {
-    return this.removeLikeUserId;
   }
 
   baseUrl = `${environment.apiUrl}/users`;
@@ -96,5 +91,9 @@ export class UsersService {
 
   sendLike(recipiendId: string) {
     return this.http.post(`${this.baseUrl}/like/${recipiendId}`, {});
+  }
+
+  removeLike(recipientId: string) {
+    return this.http.post(`${this.baseUrl}/rmLike/${recipientId}`, {});
   }
 }
