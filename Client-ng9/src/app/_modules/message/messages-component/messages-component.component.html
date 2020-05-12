@@ -5,22 +5,75 @@
         <mat-chip color="primary">My messages</mat-chip>
       </mat-chip-list>
       <mat-button-toggle-group class="switch-card__messages-toggle">
-        <mat-button-toggle class="btn-toggle">Unread
+        <mat-button-toggle class="btn-toggle" (click)="loadMessagesBy('Unread')">Unread
         </mat-button-toggle>
-        <mat-button-toggle class="btn-toggle">Inbox
+        <mat-button-toggle class="btn-toggle" (click)="loadMessagesBy('Inbox')">Inbox
         </mat-button-toggle>
-        <mat-button-toggle class="btn-toggle">Outbox
+        <mat-button-toggle class="btn-toggle" (click)="loadMessagesBy('Outbox')">Outbox
         </mat-button-toggle>
       </mat-button-toggle-group>
     </mat-card>
   </figure>
 
-  <div class="messages__table">
-
-    <mat-card class="table-card">
-
-    </mat-card>
-
+  <div class="message-box">
+    <span>My {{messageContainer}} messages</span>
+    <mat-chip-list>
+      <mat-chip color="primary" selected>{{pagination.totalItems}}</mat-chip>
+    </mat-chip-list>
   </div>
+
+  <mat-card class="messages-card">
+
+    <mat-paginator
+      class="paginator"
+      [length]="pagination.totalItems"
+      [pageSize]="pagination.itemsPerPage"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="mdPageChanged($event)"
+    >
+    </mat-paginator>
+
+    <mat-accordion class="accordion">
+
+      <mat-expansion-panel matTooltip="{{!message.isRead&&messageContainer!=='Outbox'?'Unread':''}}"
+                           matTooltipPosition="before"
+                           *ngFor="let message of messages; index as i"
+                           [expanded]="step===i"
+                           (opened)="setStep(i)" hideToggle
+                           class="message-expansion-panel">
+        <mat-expansion-panel-header class="expansion-header">
+
+          <mat-panel-title class="expansion-header__title">
+            <div class="title-avatar">
+              <img class="sender-photo"
+                   src="{{messageContainer==='Outbox'? message.recipientPhotoUrl:message.senderPhotoUrl}}"
+                   alt="sender photo">
+            </div>
+            <span>{{messageContainer === 'Outbox' ? 'To: ' : 'From: '}}</span>
+            <span>{{messageContainer === 'Outbox' ? message.recipientDisplayName : message.senderDisplayName}}</span>
+            <span class="title-date">{{message.messageSent|date}}</span>
+
+            <span class="content-prev">{{message.content}}</span>
+          </mat-panel-title>
+
+          <mat-panel-description class="expansion-header__description">
+
+            <mat-icon>keyboard_arrow_down</mat-icon>
+
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <p class="message-content">{{message.content}}</p>
+
+        <mat-action-row class="message-footer">
+          <button mat-button color="warn" *ngIf="i!==0" (click)="prevStep()">Previous</button>
+          <button mat-button color="primary"
+                  (click)="nextStep()"> {{i + 1 === pagination.itemsPerPage ? 'End' : 'Next'}}</button>
+        </mat-action-row>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+
 </section>
 

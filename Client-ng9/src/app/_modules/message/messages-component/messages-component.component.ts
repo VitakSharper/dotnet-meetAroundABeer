@@ -17,6 +17,8 @@ export class MessagesComponentComponent implements OnInit {
   messages: Message[];
   pagination: Pagination;
   messageContainer = 'Unread';
+  step = 0;
+  pageSizeOptions = [5, 10, 15, 20];
 
   constructor(
     private messageService: MessageService,
@@ -46,6 +48,23 @@ export class MessagesComponentComponent implements OnInit {
     if (!!$event.pageSize) {
       this.pagination.itemsPerPage = $event.pageSize;
     }
+    this.loadMessages();
+  }
+
+  setStep(index: number) {
+    this.step = index;
+  }
+
+  nextStep() {
+    this.step++;
+  }
+
+  prevStep() {
+    this.step--;
+  }
+
+  loadMessagesBy(type: string) {
+    this.messageContainer = type;
     this.loadMessages();
   }
 }

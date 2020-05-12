@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: min-content 1fr;
   grid-template-rows: auto;
-  grid-gap: 1rem;
+  grid-row-gap: 1rem;
 
   &__switch {
     .switch-card {
@@ -27,11 +27,105 @@
     }
   }
 
-  &__table {
-    grid-column: 1/-1;
+  .message-box {
+    position: absolute;
+    top: 248px;
+    left: 104px;
+    z-index: 2;
+    padding: .5rem;
+    border-radius: 45px;
+    margin-bottom: 1rem;
+    width: 14rem;
+    background-color: rgba(255, 235, 238, .5);
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2),
+    0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    transition: background-color .2s;
 
-    .table-card {
-      background-color: #FFEBEE;
+    &:hover {
+      background-color: rgba(255, 235, 238, 1);
+    }
+
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+
+    *:not(:last-child) {
+      margin-right: 5px;
     }
   }
+
+  .paginator {
+    background: #FFEBEE !important;
+    margin-bottom: 1rem;
+  }
+
+  .messages-card {
+    position: relative;
+    background-color: #FFEBEE;
+    grid-column: 1/-1;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .accordion {
+      display: block;
+      width: 35rem;
+    }
+
+    .message-expansion-panel {
+
+    }
+
+    .expansion-header {
+      background: linear-gradient(83deg, rgba(225, 245, 254, 1) 40%, rgba(250, 250, 250, 1) 100%);
+
+      &__title {
+        align-items: center;
+        margin-right: 0;
+
+        *:not(:last-child) {
+          margin-right: 1rem;
+
+        }
+
+        .title-avatar {
+          .sender-photo {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+          }
+        }
+
+        .title-date {
+          font-size: .8rem;
+        }
+
+        .content-prev {
+          font-size: .8rem;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          width: 228px;
+        }
+      }
+
+      &__description {
+        margin: 0;
+      }
+    }
+
+    .message-content {
+      margin-top: 1.5rem;
+    }
+
+    .message-footer {
+      background: linear-gradient(225deg, rgba(225, 245, 254, 1) 40%, rgba(250, 250, 250, 1) 100%);
+    }
+  }
+}
+
+.mat-chip-list-wrapper {
+  flex-wrap: nowrap !important;
 }
