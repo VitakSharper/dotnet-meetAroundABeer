@@ -1,14 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map} from 'rxjs/operators';
+import {map, share} from 'rxjs/operators';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {LogUser, User} from './interfaces';
 import {environment} from '../../environments/environment';
 import {UsersService} from './users.service';
 import {AlertifyService} from './alertify.service';
 import {Router} from '@angular/router';
-
 
 @Injectable({
   providedIn: 'root'
@@ -16,18 +15,8 @@ import {Router} from '@angular/router';
 
 export class AuthService {
 
-  jwtHelper = new JwtHelperService();
-  protected decToken: BehaviorSubject<any> = new BehaviorSubject<any>(this.loadToken);
+  jwtHelper: JwtHelperService;
   baseUrl = `${environment.apiUrl}/auth`;
-
-
-  get loadToken() {
-    return localStorage.getItem('token') && this.jwtHelper.decodeToken(localStorage.getItem('token'));
-  }
-
-  public get getDecToken() {
-    return this.decToken;
-  }
 
   constructor(
     private http: HttpClient,
@@ -35,23 +24,20 @@ export class AuthService {
     private alertifyService: AlertifyService,
     private router: Router
   ) {
-  }
-
-  insertToken(token: any) {
-    this.decToken.next(this.jwtHelper.decodeToken(token));
+    this.jwtHelper = new JwtHelperService();
   }
 
   login(model: LogUser) {
     this.http.post(`${this.baseUrl}/login`, model)
       .pipe(
-        map((resp: any) => {
+        share(),
+        map((resp: LogUser) => {
           if (resp) {
             localStorage.setItem('token', resp.token);
-            this.insertToken(resp.token);
             this.usersService.getCurrentUserSub.next(this.usersService.getUserWithPhoto(resp.user));
           }
         })
-      ).subscribe(next => {
+      ).subscribe(() => {
         this.alertifyService.successAlert('Logged in successfully.');
       }, error => this.alertifyService.errorAlert(error),
       () => {
@@ -65,6 +51,13 @@ export class AuthService {
   }
 
   register(user: User): Observable<any> {
-    return this.http.post(`${this.baseUrl}/register`, user);
+    return this.http.post(`${this.baseUrl}/register`, user).pipe(
+      share(),
+      map((resp: LogUser) => {
+        if (resp) {
+          localStorage.setItem('token', resp.token);
+          this.usersService.getCurrentUserSub.next(this.usersService.getUserWithPhoto(resp.user));
+        }
+      }));
   }
 }

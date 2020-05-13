@@ -1,0 +1,5 @@
+<kendo-chat
+  [user]="user|async"
+  [messages]="feed|async"
+  (sendMessage)="sendMessage($event)"
+></kendo-chat>

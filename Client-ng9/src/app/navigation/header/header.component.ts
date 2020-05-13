@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 import {UsersService} from '../../_services/users.service';
 import {User} from '../../_services/interfaces';
 import {TabsService} from '../../_services/tabs.service';
+import {share} from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -15,10 +16,8 @@ import {TabsService} from '../../_services/tabs.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  unsubscriptionToken: Subscription;
   unsubscriptionUser: Subscription;
   user: User;
-  displayName: string;
 
   get onLoggedIn(): boolean {
     return this.auth.loggedIn();
@@ -40,12 +39,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.unsubscriptionToken = this.auth.getDecToken
-      .subscribe(resp => {
-        this.displayName = resp && resp.nameid;
-      });
-
-    this.unsubscriptionUser = this.usersService.getCurrentUserSub
+    this.unsubscriptionUser = this.usersService.getCurrentUserSub.pipe(share())
       .subscribe(user => {
         this.user = this.usersService.getUserWithPhoto(user);
       });
@@ -53,11 +47,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logOut() {
     localStorage.removeItem('token');
-    this.auth.getDecToken.next('');
     setTimeout(() => {
       this.alertify.warningAlert('Logged Out.');
     }, 500);
-    this.usersService.pushUser(null);
     this.router.navigate(['/']);
   }
 
@@ -72,9 +64,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.unsubscriptionToken) {
-      this.unsubscriptionToken.unsubscribe();
-    }
     if (this.unsubscriptionUser) {
       this.unsubscriptionUser.unsubscribe();
     }

@@ -1,5 +1,5 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
@@ -37,6 +37,12 @@ import {SafeHtmlPipe} from './_pipes/safe-html.pipe';
 import {HamburgerComponent} from './navigation/hamburger/hamburger.component';
 import {TimeagoModule} from 'ngx-timeago';
 import {LikeResolver} from './_resolvers/like.resolver';
+import {ChatModule} from './_modules/chat/chat.module';
+
+import {registerLocaleData} from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+registerLocaleData(localeFr);
 
 @NgModule({
   declarations: [
@@ -73,6 +79,7 @@ import {LikeResolver} from './_resolvers/like.resolver';
     NgxGalleryModule,
     FileUploadModule,
     MaterialFileInputModule,
+    ChatModule,
     TimeagoModule.forRoot(),
     JwtModule.forRoot({
       config: {
@@ -83,11 +90,10 @@ import {LikeResolver} from './_resolvers/like.resolver';
         blacklistedRoutes: ['localhost:5000/api/auth']
       }
     }),
-
   ],
   providers: [httpInterceptorProviders, MemberDetailResolver,
     MemberListResolver, ProfileResolver, LikeResolver,
-    PreventUnsavedChangesGuard],
+    PreventUnsavedChangesGuard, {provide: LOCALE_ID, useValue: 'fr'}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

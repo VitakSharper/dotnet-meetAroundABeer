@@ -51,6 +51,6 @@ export interface RequestQueryUserParams {
 }
 
 export interface LogUser {
-  email: string,
-  password: string
+  token: string,
+  user: User
 }

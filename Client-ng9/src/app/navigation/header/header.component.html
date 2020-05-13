@@ -25,7 +25,7 @@
              (click)="onEditProfilesPhoto()">
       </div>
       <button mat-button [matMenuTriggerFor]="afterMenu">
-        Welcome {{displayName|titlecase}}
+        Welcome {{user.displayName|titlecase}}
         <mat-icon>arrow_drop_down</mat-icon>
       </button>
       <mat-menu #afterMenu="matMenu" xPosition="after" class="header__menu">

@@ -5,6 +5,8 @@ import {AuthService} from '../../_services/auth.service';
 import {AlertifyService} from '../../_services/alertify.service';
 import {UsersService} from '../../_services/users.service';
 import {Router} from '@angular/router';
+import {LogUser} from '../../_services/interfaces';
+import {catchError} from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -37,8 +39,8 @@ export class RegisterComponent implements OnInit {
       dateOfBirth: [undefined, Validators.required],
       city: ['Paris', Validators.required],
       country: ['France', Validators.required],
-      password: ['HY934hniB*', [Validators.required, Validators.minLength(6), Validators.maxLength(16)]],
-      confirmPassword: ['HY934hniB*', Validators.required]
+      password: ['96a@Ks5@Q', [Validators.required, Validators.minLength(6), Validators.maxLength(16)]],
+      confirmPassword: ['96a@Ks5@Q', Validators.required]
     }, {validator: CustomValidatorsComponent.passwordMatchValidator});
   }
 
@@ -47,18 +49,19 @@ export class RegisterComponent implements OnInit {
       return;
     }
 
-    this.auth.register(this.reactForm.value).subscribe((resp: any) => {
-      if (resp) {
-        localStorage.setItem('token', resp.token);
-        this.usersService.getCurrentUserSub.next(resp.userToReturn);
-        this.auth.getDecToken.next(this.auth.jwtHelper.decodeToken(resp.token));
-      }
-    }, error => {
-      this.errors = error;
-      this.alertify.errorAlert('Problem register user.');
-    }, () => {
-      this.router.navigate(['/members']);
-    });
+    this.auth.register(this.reactForm.value)
+      .pipe(
+        catchError((err: any) => {
+          this.errors = err;
+          return err;
+        })
+      )
+      .subscribe(() => {
+      }, () => {
+        this.alertify.errorAlert('Problem register user.');
+      }, () => {
+        this.router.navigate(['/members']);
+      });
   }
 
   onCancel() {

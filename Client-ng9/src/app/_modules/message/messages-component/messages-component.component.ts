@@ -67,4 +67,8 @@ export class MessagesComponentComponent implements OnInit {
     this.messageContainer = type;
     this.loadMessages();
   }
+
+  getLabel(index: number) {
+    return index === this.pagination.itemsPerPage || index === this.pagination.totalItems ? 'End' : 'Next';
+  }
 }

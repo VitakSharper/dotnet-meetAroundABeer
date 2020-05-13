@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {User} from '../../_services/interfaces';
 import {UsersService} from '../../_services/users.service';
 import {AlertifyService} from '../../_services/alertify.service';
+import {Router} from '@angular/router';
+import {TabsService} from '../../_services/tabs.service';
 
 @Component({
   selector: 'app-member-card',
@@ -14,7 +16,9 @@ export class MemberCardComponent implements OnInit {
 
   constructor(
     private usersService: UsersService,
-    private alertifyService: AlertifyService) {
+    private alertifyService: AlertifyService,
+    private router: Router,
+    private tabsService: TabsService) {
   }
 
   ngOnInit(): void {
@@ -30,5 +34,10 @@ export class MemberCardComponent implements OnInit {
 
   removeLike(id: string) {
     this.onUserIdDel.emit(id);
+  }
+
+  sendMsg() {
+    this.router.navigate(['/member/', this.user.id]);
+    this.tabsService.getTabIndex.next(3);
   }
 }

@@ -37,4 +37,7 @@ export class MessageService {
       );
   }
 
+  getMessageThread(recipientId: string) {
+    return this.http.get<Message[]>(`${this.baseUrl}/thread/${recipientId}`);
+  }
 }

@@ -66,9 +66,12 @@
         <p class="message-content">{{message.content}}</p>
 
         <mat-action-row class="message-footer">
+          <button class="btn-visibility" mat-icon-button matTooltip="View thread" matTooltipPosition="above">
+            <mat-icon class="icon-visibility">visibility</mat-icon>
+          </button>
           <button mat-button color="warn" *ngIf="i!==0" (click)="prevStep()">Previous</button>
           <button mat-button color="primary"
-                  (click)="nextStep()"> {{i + 1 === pagination.itemsPerPage ? 'End' : 'Next'}}</button>
+                  (click)="nextStep()"> {{getLabel(i + 1)}}</button>
         </mat-action-row>
 
       </mat-expansion-panel>
@@ -76,4 +79,3 @@
   </mat-card>
 
 </section>
-

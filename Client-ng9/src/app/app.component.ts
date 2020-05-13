@@ -9,31 +9,22 @@ import {UsersService} from './_services/users.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  unsubscriptionToken: Subscription;
   unsubscriptionUser: Subscription;
-  isLogged = false;
-
+  isLogged = !!localStorage.getItem('token');
 
   constructor(
     private auth: AuthService,
     private usersService: UsersService) {
+    this.unsubscriptionUser = this.usersService.getCurrentUser()
+      .subscribe(user => this.usersService.pushUser(user));
   }
 
   ngOnInit(): void {
-    this.unsubscriptionToken = this.auth.getDecToken.subscribe(resp => {
-      this.isLogged = resp && !!resp.nameid;
-    });
-
-    this.unsubscriptionUser = this.usersService.getCurrentUser()
-      .subscribe(user => this.usersService.pushUser(user));
   }
 
   ngOnDestroy(): void {
     if (this.unsubscriptionUser) {
       this.unsubscriptionUser.unsubscribe();
-    }
-    if (this.unsubscriptionToken) {
-      this.unsubscriptionToken.unsubscribe();
     }
   }
 }

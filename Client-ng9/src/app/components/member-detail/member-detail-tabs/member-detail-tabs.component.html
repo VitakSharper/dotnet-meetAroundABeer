@@ -36,8 +36,7 @@
     </mat-tab>
     <mat-tab label="CHAT">
       <section class="detail-tab">
-        <p class="detail-tab__title">{{user?.displayName}}'s chat</p>
-        <!--                <app-member-messages [user]="user"></app-member-messages>-->
+        <app-chat [repoUser]="user" class="detail-tab__chat-app"></app-chat>
       </section>
     </mat-tab>
   </mat-tab-group>

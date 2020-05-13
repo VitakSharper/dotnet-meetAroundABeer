@@ -91,10 +91,14 @@
         }
 
         .title-avatar {
+          overflow: hidden;
+
           .sender-photo {
             height: 40px;
-            width: 40px;
+            width: 100%;
             border-radius: 50%;
+            display: block;
+            object-fit: cover;
           }
         }
 
@@ -122,6 +126,14 @@
 
     .message-footer {
       background: linear-gradient(225deg, rgba(225, 245, 254, 1) 40%, rgba(250, 250, 250, 1) 100%);
+
+      .btn-visibility {
+        margin-right: auto;
+
+        .icon-visibility {
+          color: #43A047 !important;
+        }
+      }
     }
   }
 }

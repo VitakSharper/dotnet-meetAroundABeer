@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
 import {RequestQueryUserParams, User} from './interfaces';
 import {PaginationResult} from '../_pagination/paginationResult';
 import {map} from 'rxjs/operators';
@@ -10,8 +10,7 @@ import {map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UsersService {
-  protected currentUser: BehaviorSubject<any> = new BehaviorSubject<any>({});
-
+  protected currentUser: Subject<User>;
   paginatedResult: PaginationResult<User[]>;
 
   public get getCurrentUserSub() {
@@ -22,15 +21,19 @@ export class UsersService {
 
   constructor(private http: HttpClient) {
     this.paginatedResult = new PaginationResult<User[]>();
+    this.currentUser = new ReplaySubject<User>();
   }
 
   pushUser(user: User) {
     user
       ? this.currentUser.next(this.getUserWithPhoto(user))
-      : this.currentUser.next({});
+      : this.currentUser.next();
   }
 
   getUserWithPhoto(user: User): User {
+    if (user === null) {
+      return;
+    }
     return user.photoUrl
       ? user
       : {...user, photoUrl: '/assets/original.png'};
