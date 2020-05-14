@@ -1,15 +1,15 @@
 export interface User {
-  id: string;
-  username: string;
-  displayName: string;
-  age: number;
-  gender: string;
-  created: Date;
-  lastActive: Date;
-  dateOfBirth: Date;
-  photoUrl: string;
-  city: string;
-  country: string;
+  id?: string;
+  username?: string;
+  displayName?: string;
+  age?: number;
+  gender?: string;
+  created?: Date;
+  lastActive?: Date;
+  dateOfBirth?: Date;
+  photoUrl?: string;
+  city?: string;
+  country?: string;
   interests?: string;
   introduction?: string;
   lookingFor?: string;

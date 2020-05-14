@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from './_services/auth.service';
 import {Subscription} from 'rxjs';
 import {UsersService} from './_services/users.service';
+import {share} from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -15,11 +16,12 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private auth: AuthService,
     private usersService: UsersService) {
-    this.unsubscriptionUser = this.usersService.getCurrentUser()
-      .subscribe(user => this.usersService.pushUser(user));
+
   }
 
   ngOnInit(): void {
+    this.unsubscriptionUser = this.usersService.getCurrentUser().pipe(share())
+      .subscribe(user => this.usersService.pushUser(user));
   }
 
   ngOnDestroy(): void {

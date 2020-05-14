@@ -36,13 +36,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
       'beer',
       this.domSanitizer.bypassSecurityTrustResourceUrl('/assets/beer.svg')
     );
-  }
-
-  ngOnInit(): void {
     this.unsubscriptionUser = this.usersService.getCurrentUserSub.pipe(share())
       .subscribe(user => {
         this.user = this.usersService.getUserWithPhoto(user);
       });
+  }
+
+  ngOnInit(): void {
+
   }
 
   logOut() {

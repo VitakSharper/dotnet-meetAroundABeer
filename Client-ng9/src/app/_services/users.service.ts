@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient, HttpParams} from '@angular/common/http';
-import {BehaviorSubject, Observable, ReplaySubject, Subject} from 'rxjs';
+import {BehaviorSubject, Observable, Subject} from 'rxjs';
 import {RequestQueryUserParams, User} from './interfaces';
 import {PaginationResult} from '../_pagination/paginationResult';
 import {map} from 'rxjs/operators';
@@ -21,7 +21,7 @@ export class UsersService {
 
   constructor(private http: HttpClient) {
     this.paginatedResult = new PaginationResult<User[]>();
-    this.currentUser = new ReplaySubject<User>();
+    this.currentUser = new BehaviorSubject<User>({});
   }
 
   pushUser(user: User) {

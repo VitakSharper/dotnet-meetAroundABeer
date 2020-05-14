@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Message, User} from '../../../_services/interfaces';
-import {Observable, Subject} from 'rxjs';
+import {from, merge, Observable, of, Subject} from 'rxjs';
 import {Message as KendoMsg, SendMessageEvent, User as KendoUser} from '@progress/kendo-angular-conversational-ui';
 import {MessageService} from '../../message/message.service';
-import {map, scan, tap} from 'rxjs/operators';
+import {map, mergeMap, scan, tap} from 'rxjs/operators';
 import {UsersService} from '../../../_services/users.service';
 
 @Component({
@@ -15,14 +15,14 @@ export class ChatComponent implements OnInit {
   @Input() repoUser: User;
 
   feed: Observable<KendoMsg[]>;
-  private local: Subject<Message>;
+  private local: Subject<KendoMsg>;
 
   user: Observable<KendoUser>;
 
   constructor(
     private messageService: MessageService,
     private usersService: UsersService) {
-    this.local = new Subject<Message>();
+    this.local = new Subject<KendoMsg>();
     this.user = new Observable<KendoUser>();
   }
 
@@ -35,24 +35,30 @@ export class ChatComponent implements OnInit {
           name: user.displayName
         })));
 
-
-    this.feed = this.messageService.getMessageThread(this.repoUser.id)
+    const messages = this.messageService.getMessageThread(this.repoUser.id)
       .pipe(
-        map((response) => {
-            return response.map(m => ({
-              author: {name: m.senderDisplayName, id: m.senderId, avatarUrl: m.senderPhotoUrl},
-              text: m.content,
-              timestamp: new Date(m.messageSent)
-            }));
-          },
-          scan((acc: KendoMsg[], m: KendoMsg) => [...acc, m], [])
-        ),
-        tap(resp => console.log('Kendo message array: ', resp))
+        mergeMap(value => of(...value))
       );
+
+    this.feed = merge(
+      messages.pipe(
+        map(msg => ({
+          author: {name: msg.senderDisplayName, id: msg.senderId, avatarUrl: msg.senderPhotoUrl},
+          text: msg.content,
+          timestamp: new Date(msg.messageSent)
+        }))),
+      this.local
+    ).pipe(
+      scan((acc: KendoMsg[], m: KendoMsg) => [...acc, m], []),
+    );
   }
 
   sendMessage(e: SendMessageEvent) {
-    console.log('new message: ', e);
-    console.log('user: ', this.user);
+    this.user.subscribe(user => {
+      this.local.next({author: user, typing: true});
+      setTimeout(() => {
+        this.local.next(e.message);
+      }, 500);
+    });
   }
 }

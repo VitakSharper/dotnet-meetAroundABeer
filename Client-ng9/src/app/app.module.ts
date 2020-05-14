@@ -13,7 +13,6 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {httpInterceptorProviders} from './_interceptors/error.interceptor';
 import {JwtModule} from '@auth0/angular-jwt';
-import {NavMenuComponent} from './navigation/nav-menu/nav-menu.component';
 import {MemberListComponent} from './pages/member-list/member-list.component';
 import {ListsComponent} from './pages/lists/lists.component';
 import {MemberCardComponent} from './components/member-card/member-card.component';
@@ -41,6 +40,7 @@ import {ChatModule} from './_modules/chat/chat.module';
 
 import {registerLocaleData} from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import {MemberNavModule} from './_modules/member-nav/member-nav.module';
 
 registerLocaleData(localeFr);
 
@@ -51,7 +51,6 @@ registerLocaleData(localeFr);
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    NavMenuComponent,
     MemberListComponent,
     ListsComponent,
     MemberCardComponent,
@@ -80,6 +79,7 @@ registerLocaleData(localeFr);
     FileUploadModule,
     MaterialFileInputModule,
     ChatModule,
+    MemberNavModule,
     TimeagoModule.forRoot(),
     JwtModule.forRoot({
       config: {
