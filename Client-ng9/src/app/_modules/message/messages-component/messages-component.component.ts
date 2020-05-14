@@ -4,9 +4,10 @@ import {Pagination} from '../../../_pagination/paginationModel';
 import {MessageService} from '../message.service';
 import {AuthService} from '../../../_services/auth.service';
 import {AlertifyService} from '../../../_services/alertify.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PaginationResult} from '../../../_pagination/paginationResult';
 import {PageEvent} from '@angular/material/paginator';
+import {TabsService} from '../../../_services/tabs.service';
 
 @Component({
   selector: 'app-messages-component',
@@ -24,7 +25,9 @@ export class MessagesComponentComponent implements OnInit {
     private messageService: MessageService,
     private authService: AuthService,
     private alertifyService: AlertifyService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router,
+    private tabsService: TabsService
   ) {
   }
 
@@ -70,5 +73,10 @@ export class MessagesComponentComponent implements OnInit {
 
   getLabel(index: number) {
     return index === this.pagination.itemsPerPage || index === this.pagination.totalItems ? 'End' : 'Next';
+  }
+
+  sendMsg(senderId: string) {
+    this.router.navigate(['/member/', senderId]);
+    this.tabsService.getTabIndex.next(3);
   }
 }

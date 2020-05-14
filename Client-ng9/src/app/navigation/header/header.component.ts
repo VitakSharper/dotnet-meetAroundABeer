@@ -3,7 +3,7 @@ import {MatIconRegistry} from '@angular/material/icon';
 import {DomSanitizer} from '@angular/platform-browser';
 import {AlertifyService} from '../../_services/alertify.service';
 import {AuthService} from '../../_services/auth.service';
-import {Subscription} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {Router} from '@angular/router';
 import {UsersService} from '../../_services/users.service';
 import {User} from '../../_services/interfaces';
@@ -17,11 +17,8 @@ import {share} from 'rxjs/operators';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   unsubscriptionUser: Subscription;
+  onLoggedIn: Observable<boolean>;
   user: User;
-
-  get onLoggedIn(): boolean {
-    return this.auth.loggedIn();
-  }
 
   constructor(
     private matIconRegistry: MatIconRegistry,
@@ -32,6 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private tabsService: TabsService
   ) {
+    this.onLoggedIn = this.auth.getIsLoggedOutput;
     this.matIconRegistry.addSvgIcon(
       'beer',
       this.domSanitizer.bypassSecurityTrustResourceUrl('/assets/beer.svg')
@@ -47,11 +45,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logOut() {
-    localStorage.removeItem('token');
-    setTimeout(() => {
-      this.alertify.warningAlert('Logged Out.');
-    }, 500);
-    this.router.navigate(['/']);
+    this.auth.logOut();
   }
 
   onEditProfile() {

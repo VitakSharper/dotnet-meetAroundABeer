@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AlertifyService} from '../../_services/alertify.service';
 import {AuthService} from '../../_services/auth.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -9,23 +10,22 @@ import {AuthService} from '../../_services/auth.service';
 })
 export class HomeComponent implements OnInit {
 
-  get onLoggedIn(): boolean {
-    return this.auth.loggedIn();
-  }
+  onLoggedIn: Observable<boolean>;
 
   constructor(
     private alertify: AlertifyService,
     private auth: AuthService
   ) {
-    if (!this.onLoggedIn) {
-      setTimeout(() => {
-        this.alertify.warningAlert('Please log in or sign up.');
-      }, 3000);
-    }
+    this.onLoggedIn = auth.getIsLoggedOutput;
   }
 
   ngOnInit(): void {
+    this.onLoggedIn.subscribe(isLogged => {
+      if (!isLogged) {
+        setTimeout(() => {
+          this.alertify.warningAlert('Please log in or sign up.');
+        }, 3000);
+      }
+    });
   }
-
-
 }

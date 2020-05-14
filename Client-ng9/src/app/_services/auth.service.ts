@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map, share} from 'rxjs/operators';
+import {map, mergeMap, share} from 'rxjs/operators';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {Observable} from 'rxjs';
+import {Observable, of, Subject} from 'rxjs';
 import {LogUser, User} from './interfaces';
 import {environment} from '../../environments/environment';
 import {UsersService} from './users.service';
@@ -17,6 +17,12 @@ export class AuthService {
 
   jwtHelper: JwtHelperService;
   baseUrl = `${environment.apiUrl}/auth`;
+  private isLoggedInput: Subject<boolean>;
+  private readonly isLoggedOutput: Observable<boolean>;
+
+  get getIsLoggedOutput() {
+    return this.isLoggedOutput;
+  }
 
   constructor(
     private http: HttpClient,
@@ -24,6 +30,11 @@ export class AuthService {
     private alertifyService: AlertifyService,
     private router: Router
   ) {
+    this.isLoggedInput = new Subject<boolean>();
+    this.isLoggedOutput = this.isLoggedInput.pipe(
+      share(),
+      mergeMap(value => of(value))
+    );
     this.jwtHelper = new JwtHelperService();
   }
 
@@ -34,6 +45,7 @@ export class AuthService {
         map((resp: LogUser) => {
           if (resp) {
             localStorage.setItem('token', resp.token);
+            this.isLoggedInput.next(!this.jwtHelper.isTokenExpired(localStorage.getItem('token')));
             this.usersService.getCurrentUserSub.next(this.usersService.getUserWithPhoto(resp.user));
           }
         })
@@ -43,6 +55,15 @@ export class AuthService {
       () => {
         this.router.navigate(['/members']);
       });
+  }
+
+  logOut() {
+    localStorage.removeItem('token');
+    this.isLoggedInput.next(!this.jwtHelper.isTokenExpired(localStorage.getItem('token')));
+    setTimeout(() => {
+      this.alertifyService.warningAlert('Logged Out.');
+    }, 500);
+    this.router.navigate(['/']);
   }
 
   loggedIn() {
@@ -56,6 +77,7 @@ export class AuthService {
       map((resp: LogUser) => {
         if (resp) {
           localStorage.setItem('token', resp.token);
+          this.isLoggedInput.next(!this.jwtHelper.isTokenExpired(localStorage.getItem('token')));
           this.usersService.getCurrentUserSub.next(this.usersService.getUserWithPhoto(resp.user));
         }
       }));

@@ -79,7 +79,9 @@
     }
 
     .expansion-header {
-      background: linear-gradient(83deg, rgba(225, 245, 254, 1) 40%, rgba(250, 250, 250, 1) 100%);
+      background: linear-gradient(83deg, rgba(225, 245, 254, 1) 40%,
+        rgba(250, 250, 250, 1) 100%);
+      cursor: auto !important;
 
       &__title {
         align-items: center;
@@ -106,12 +108,17 @@
           font-size: .8rem;
         }
 
+        .title-person {
+          color: #D50000;
+        }
+
         .content-prev {
           font-size: .8rem;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
           width: 228px;
+          color: #0091EA;
         }
       }
 

@@ -50,15 +50,17 @@
                    alt="sender photo">
             </div>
             <span>{{messageContainer === 'Outbox' ? 'To: ' : 'From: '}}</span>
-            <span>{{messageContainer === 'Outbox' ? message.recipientDisplayName : message.senderDisplayName}}</span>
+            <span
+              class="title-person">{{messageContainer === 'Outbox' ? message.recipientDisplayName : message.senderDisplayName}}</span>
             <span class="title-date">{{message.messageSent|date}}</span>
 
             <span class="content-prev">{{message.content}}</span>
           </mat-panel-title>
 
           <mat-panel-description class="expansion-header__description">
-
-            <mat-icon>keyboard_arrow_down</mat-icon>
+            <button mat-icon-button color="primary">
+              <mat-icon>keyboard_arrow_down</mat-icon>
+            </button>
 
           </mat-panel-description>
         </mat-expansion-panel-header>
@@ -66,7 +68,9 @@
         <p class="message-content">{{message.content}}</p>
 
         <mat-action-row class="message-footer">
-          <button class="btn-visibility" mat-icon-button matTooltip="View thread" matTooltipPosition="above">
+          <button class="btn-visibility" mat-icon-button matTooltip="View thread" matTooltipPosition="above"
+                  (click)="sendMsg(message.senderId)"
+          >
             <mat-icon class="icon-visibility">visibility</mat-icon>
           </button>
           <button mat-button color="warn" *ngIf="i!==0" (click)="prevStep()">Previous</button>
