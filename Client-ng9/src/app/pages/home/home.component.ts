@@ -1,31 +1,41 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AlertifyService} from '../../_services/alertify.service';
 import {AuthService} from '../../_services/auth.service';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
-  onLoggedIn: Observable<boolean>;
+  isLogged = false;
+  private isLoggedSubscriber: Subscription;
 
   constructor(
     private alertify: AlertifyService,
     private auth: AuthService
   ) {
-    this.onLoggedIn = auth.getIsLoggedOutput;
   }
 
   ngOnInit(): void {
-    this.onLoggedIn.subscribe(isLogged => {
-      if (!isLogged) {
-        setTimeout(() => {
-          this.alertify.warningAlert('Please log in or sign up.');
-        }, 3000);
-      }
-    });
+    this.isLoggedSubscriber = this.auth.getIsLoggedOutput
+      .subscribe(predicate => {
+        console.log('in home: ', predicate);
+        this.isLogged = predicate;
+        if (!predicate) {
+          setTimeout(() => {
+            this.alertify.warningAlert('Please log in or sign up.');
+          }, 3000);
+        }
+      });
+    this.auth.pushIsLoggedInput();
+  }
+
+  ngOnDestroy(): void {
+    if (this.isLoggedSubscriber) {
+      this.isLoggedSubscriber.unsubscribe();
+    }
   }
 }

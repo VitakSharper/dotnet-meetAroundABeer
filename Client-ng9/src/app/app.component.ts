@@ -11,23 +11,30 @@ import {share} from 'rxjs/operators';
 })
 export class AppComponent implements OnInit, OnDestroy {
   unsubscriptionUser: Subscription;
-  isLogged$: Observable<boolean>;
+  isLogged = false;
+  private isLoggedSubscriber: Subscription;
 
   constructor(
     private auth: AuthService,
     private usersService: UsersService) {
-    this.isLogged$ = new Observable<boolean>();
   }
 
   ngOnInit(): void {
     this.unsubscriptionUser = this.usersService.getCurrentUser().pipe(share())
       .subscribe(user => this.usersService.pushUser(user));
-    this.isLogged$ = this.auth.getIsLoggedOutput;
+
+    this.isLoggedSubscriber = this.auth.getIsLoggedOutput.subscribe(predicate => {
+      this.isLogged = predicate;
+    });
+    this.auth.pushIsLoggedInput();
   }
 
   ngOnDestroy(): void {
     if (this.unsubscriptionUser) {
       this.unsubscriptionUser.unsubscribe();
+    }
+    if (this.isLoggedSubscriber) {
+      this.isLoggedSubscriber.unsubscribe();
     }
   }
 }

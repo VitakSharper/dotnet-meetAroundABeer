@@ -75,8 +75,12 @@ export class MessagesComponentComponent implements OnInit {
     return index === this.pagination.itemsPerPage || index === this.pagination.totalItems ? 'End' : 'Next';
   }
 
-  sendMsg(senderId: string) {
-    this.router.navigate(['/member/', senderId]);
+  sendMsg(senderId: string, recipientId: string) {
+    if (this.messageContainer === 'Outbox') {
+      this.router.navigate(['/member/', recipientId]);
+    } else {
+      this.router.navigate(['/member/', senderId]);
+    }
     this.tabsService.getTabIndex.next(3);
   }
 }

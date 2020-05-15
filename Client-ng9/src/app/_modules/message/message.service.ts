@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {PaginationResult} from '../../_pagination/paginationResult';
-import {Message} from '../../_services/interfaces';
+import {Message, MessageToSend} from '../../_services/interfaces';
 import {environment} from '../../../environments/environment';
 import {map} from 'rxjs/operators';
 
@@ -38,6 +38,12 @@ export class MessageService {
   }
 
   getMessageThread(recipientId: string) {
-    return this.http.get<Message[]>(`${this.baseUrl}/thread/${recipientId}`);
+    return this.http.get<Message[]>(`${this.baseUrl}/thread/${recipientId}`).pipe(
+      map(resp => resp.reverse())
+    );
+  }
+
+  sendMessage(message: MessageToSend) {
+    return this.http.post(this.baseUrl, message);
   }
 }

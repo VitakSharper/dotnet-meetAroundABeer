@@ -31,6 +31,11 @@ export interface Message {
   messageSent: Date
 }
 
+export interface MessageToSend {
+  recipientId: string
+  content: string
+}
+
 export interface Photo {
   id: string;
   url: string;

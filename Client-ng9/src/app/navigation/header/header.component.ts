@@ -17,7 +17,8 @@ import {share} from 'rxjs/operators';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   unsubscriptionUser: Subscription;
-  onLoggedIn: Observable<boolean>;
+  private isLoggedSubscriber: Subscription;
+  isLogged = false;
   user: User;
 
   constructor(
@@ -29,7 +30,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router,
     private tabsService: TabsService
   ) {
-    this.onLoggedIn = this.auth.getIsLoggedOutput;
     this.matIconRegistry.addSvgIcon(
       'beer',
       this.domSanitizer.bypassSecurityTrustResourceUrl('/assets/beer.svg')
@@ -41,7 +41,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
+    this.isLoggedSubscriber = this.auth.getIsLoggedOutput.subscribe(predicate => {
+      this.isLogged = predicate;
+    });
+    this.auth.pushIsLoggedInput();
   }
 
   logOut() {
@@ -61,6 +64,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.unsubscriptionUser) {
       this.unsubscriptionUser.unsubscribe();
+    }
+    if (this.isLoggedSubscriber) {
+      this.isLoggedSubscriber.unsubscribe();
     }
   }
 }

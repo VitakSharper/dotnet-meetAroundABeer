@@ -6,7 +6,7 @@
     </a>
     <span class="header-nav__spacer"></span>
 
-    <mat-nav-list class="header-nav__links" *ngIf="onLoggedIn|async">
+    <mat-nav-list class="header-nav__links" *ngIf="isLogged">
       <a class="link-item" mat-list-item routerLinkActive="active" [routerLink]="['/members']">Matches</a>
       <a class="link-item" mat-list-item routerLinkActive="active" [routerLink]="['/lists']">Favorite Members</a>
       <a class="link-item" mat-list-item routerLinkActive="active" [routerLink]="['/messages']">Messages</a>
@@ -15,7 +15,7 @@
     <span class="header-nav__spacer"></span>
 
 
-    <mat-chip-list class="header-nav__chip-list" *ngIf="!(onLoggedIn|async) else loggedInTemplate">
+    <mat-chip-list class="header-nav__chip-list" *ngIf="!isLogged else loggedInTemplate">
       <mat-chip class="chip" color="primary" selected>You are not logged in</mat-chip>
     </mat-chip-list>
 

@@ -7,7 +7,7 @@
 <mat-divider></mat-divider>
 
 
-<mat-tab-group mat-stretch-tabs class="stretched-tabs" *ngIf="!(onLoggedIn|async)">
+<mat-tab-group mat-stretch-tabs class="stretched-tabs" *ngIf="!isLogged">
   <mat-tab label="Sign In">
     <div>
       <app-login></app-login>

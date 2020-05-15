@@ -38,6 +38,10 @@ export class AuthService {
     this.jwtHelper = new JwtHelperService();
   }
 
+  pushIsLoggedInput() {
+    this.isLoggedInput.next(!this.jwtHelper.isTokenExpired(localStorage.getItem('token')));
+  }
+
   login(model: LogUser) {
     this.http.post(`${this.baseUrl}/login`, model)
       .pipe(
@@ -45,7 +49,7 @@ export class AuthService {
         map((resp: LogUser) => {
           if (resp) {
             localStorage.setItem('token', resp.token);
-            this.isLoggedInput.next(!this.jwtHelper.isTokenExpired(localStorage.getItem('token')));
+            this.pushIsLoggedInput();
             this.usersService.getCurrentUserSub.next(this.usersService.getUserWithPhoto(resp.user));
           }
         })
@@ -59,7 +63,7 @@ export class AuthService {
 
   logOut() {
     localStorage.removeItem('token');
-    this.isLoggedInput.next(!this.jwtHelper.isTokenExpired(localStorage.getItem('token')));
+    this.pushIsLoggedInput();
     setTimeout(() => {
       this.alertifyService.warningAlert('Logged Out.');
     }, 500);
@@ -77,7 +81,7 @@ export class AuthService {
       map((resp: LogUser) => {
         if (resp) {
           localStorage.setItem('token', resp.token);
-          this.isLoggedInput.next(!this.jwtHelper.isTokenExpired(localStorage.getItem('token')));
+          this.pushIsLoggedInput();
           this.usersService.getCurrentUserSub.next(this.usersService.getUserWithPhoto(resp.user));
         }
       }));
