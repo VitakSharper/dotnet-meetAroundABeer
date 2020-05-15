@@ -49,7 +49,7 @@ namespace Data.Repository
                     break;
             }
 
-            messages = messages.OrderByDescending(d => d.MessageSend);
+            messages = messages.OrderByDescending(d => d.MessageSent);
             return await PagedList<Message>.CreateAsync(messages, requestQueryMessageParams.PageNumber,
                 requestQueryMessageParams.PageSize);
         }
@@ -58,7 +58,7 @@ namespace Data.Repository
             await _context.Messages
                 .Where(m => m.RecipientId == currentUserId && m.SenderId == recipientId ||
                             m.RecipientId == recipientId && m.SenderId == currentUserId)
-                .OrderByDescending(m => m.MessageSend)
+                .OrderByDescending(m => m.MessageSent)
                 .ToListAsync();
 
         public async Task<bool> Save() =>

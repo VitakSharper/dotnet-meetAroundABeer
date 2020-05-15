@@ -68,7 +68,7 @@ namespace API.Controllers
 
             var messagesFromRepo = await _datingRepository.GetMessageThread(recipientId, currentUser.Id);
             var messageThread = _mapper.Map<IEnumerable<MessageToReturnDto>>(messagesFromRepo);
-            
+
             return Ok(messageThread);
         }
 
@@ -85,10 +85,14 @@ namespace API.Controllers
 
             var message = _mapper.Map<Message>(messageForCreationDto);
             message.Id = Guid.NewGuid().ToString();
+
             _datingRepository.Add(message);
-            var messageToReturn = _mapper.Map<MessageForCreationDto>(message);
             if (await _datingRepository.Save())
+            {
+                var messageToReturn = _mapper.Map<MessageForCreationDto>(message);
                 return CreatedAtRoute("GetMessage", new {id = message.Id}, messageToReturn);
+            }
+
             throw new Exception("Creating the message failed on save.");
         }
     }

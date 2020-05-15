@@ -36,7 +36,7 @@ namespace API.Controllers
             var userToReturn = _mapper.Map<UserForDetailedDto>(user);
 
             return CreatedAtRoute("GetUser", new {Controller = "Users", id = user.Id},
-                new {userToReturn, token = _jwtGenerator.CreateToken(user)});
+                new {user=userToReturn, token = _jwtGenerator.CreateToken(user)});
         }
 
         [AllowAnonymous]

@@ -15,6 +15,6 @@ namespace Data.Dtos
         public string SenderId { get; set; }
         public string RecipientId { get; set; }
         public DateTime? DateRead { get; set; }
-        public DateTime MessageSend { get; set; }
+        public DateTime MessageSent { get; set; }
     }
 }
