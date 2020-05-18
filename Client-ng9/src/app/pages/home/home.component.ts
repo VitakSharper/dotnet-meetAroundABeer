@@ -22,7 +22,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isLoggedSubscriber = this.auth.getIsLoggedOutput
       .subscribe(predicate => {
-        console.log('in home: ', predicate);
         this.isLogged = predicate;
         if (!predicate) {
           setTimeout(() => {

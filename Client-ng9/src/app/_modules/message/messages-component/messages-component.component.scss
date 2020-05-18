@@ -83,6 +83,11 @@
         rgba(250, 250, 250, 1) 100%);
       cursor: auto !important;
 
+      &.unread {
+        background-image: linear-gradient(315deg, rgba(255, 78, 0, 0.4) 0%, rgba(236, 159, 5, 0.5) 74%);
+      }
+
+
       &__title {
         align-items: center;
         margin-right: 0;
@@ -129,6 +134,7 @@
 
     .message-content {
       margin-top: 1.5rem;
+
     }
 
     .message-footer {

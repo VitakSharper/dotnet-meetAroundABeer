@@ -39,9 +39,13 @@
                            matTooltipPosition="before"
                            *ngFor="let message of messages; index as i"
                            [expanded]="step===i"
-                           (opened)="setStep(i)" hideToggle
+                           (opened)="setStep(i,message.id)"
+                           hideToggle="false"
                            class="message-expansion-panel">
-        <mat-expansion-panel-header class="expansion-header">
+        <mat-expansion-panel-header
+          class="expansion-header"
+          [ngClass]="{'unread': !message.isRead&&messageContainer!=='Outbox'}"
+        >
 
           <mat-panel-title class="expansion-header__title">
             <div class="title-avatar">
@@ -58,10 +62,6 @@
           </mat-panel-title>
 
           <mat-panel-description class="expansion-header__description">
-            <button mat-icon-button color="primary">
-              <mat-icon>keyboard_arrow_down</mat-icon>
-            </button>
-
           </mat-panel-description>
         </mat-expansion-panel-header>
 

@@ -54,8 +54,18 @@ export class MessagesComponentComponent implements OnInit {
     this.loadMessages();
   }
 
-  setStep(index: number) {
+  setStep(index: number, id: string) {
     this.step = index;
+    if (this.messageContainer !== 'Outbox') {
+      setTimeout(() => {
+        this.messages = this.messages.map(m => {
+          if (m.id === id) {
+            m.isRead = true;
+          }
+          return m;
+        });
+      }, 1000);
+    }
   }
 
   nextStep() {
