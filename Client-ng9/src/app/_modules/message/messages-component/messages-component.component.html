@@ -4,12 +4,12 @@
       <mat-chip-list class="switch-card__chip">
         <mat-chip color="primary">My messages</mat-chip>
       </mat-chip-list>
-      <mat-button-toggle-group class="switch-card__messages-toggle">
-        <mat-button-toggle class="btn-toggle" (click)="loadMessagesBy('Unread')">Unread
+      <mat-button-toggle-group class="switch-card__messages-toggle" [value]="messageContainer">
+        <mat-button-toggle value="Unread" class="btn-toggle" (click)="loadMessagesBy('Unread')">Unread
         </mat-button-toggle>
-        <mat-button-toggle class="btn-toggle" (click)="loadMessagesBy('Inbox')">Inbox
+        <mat-button-toggle value="Inbox" class="btn-toggle" (click)="loadMessagesBy('Inbox')">Inbox
         </mat-button-toggle>
-        <mat-button-toggle class="btn-toggle" (click)="loadMessagesBy('Outbox')">Outbox
+        <mat-button-toggle value="Outbox" class="btn-toggle" (click)="loadMessagesBy('Outbox')">Outbox
         </mat-button-toggle>
       </mat-button-toggle-group>
     </mat-card>
@@ -36,26 +36,30 @@
     <mat-accordion class="accordion">
 
       <mat-expansion-panel matTooltip="{{!message.isRead&&messageContainer!=='Outbox'?'Unread':''}}"
-                           matTooltipPosition="before"
+                           matTooltipPosition="above"
                            *ngFor="let message of messages; index as i"
                            [expanded]="step===i"
-                           (opened)="setStep(i,message.id)"
+                           (opened)="setStep(i,message.id,message.isRead)"
                            hideToggle="false"
                            class="message-expansion-panel">
         <mat-expansion-panel-header
           class="expansion-header"
-          [ngClass]="{'unread': !message.isRead&&messageContainer!=='Outbox'}"
+          [ngClass]="(messageContainer!=='Outbox'&&!message.isRead)?'unread':''"
         >
 
           <mat-panel-title class="expansion-header__title">
             <div class="title-avatar">
               <img class="sender-photo"
-                   src="{{messageContainer==='Outbox'? message.recipientPhotoUrl:message.senderPhotoUrl}}"
+                   src="{{messageContainer==='Outbox'
+                   ? message.recipientPhotoUrl
+                   :message.senderPhotoUrl}}"
                    alt="sender photo">
             </div>
             <span>{{messageContainer === 'Outbox' ? 'To: ' : 'From: '}}</span>
             <span
-              class="title-person">{{messageContainer === 'Outbox' ? message.recipientDisplayName : message.senderDisplayName}}</span>
+              class="title-person">{{messageContainer === 'Outbox'
+              ? message.recipientDisplayName
+              : message.senderDisplayName}}</span>
             <span class="title-date">{{message.messageSent|date}}</span>
 
             <span class="content-prev">{{message.content}}</span>
@@ -67,7 +71,9 @@
 
         <p class="message-content">{{message.content}}</p>
 
-        <mat-action-row class="message-footer">
+        <mat-action-row class="message-footer"
+                        [ngClass]="(messageContainer!=='Outbox'&&!message.isRead)?'unread':''"
+        >
           <button class="btn-visibility" mat-icon-button matTooltip="View thread" matTooltipPosition="above"
                   (click)="sendMsg(message.senderId,message.recipientId)">
             <mat-icon class="icon-visibility">visibility</mat-icon>

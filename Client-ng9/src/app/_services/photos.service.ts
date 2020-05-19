@@ -12,11 +12,6 @@ export class PhotosService {
 
   baseUrl = `${environment.apiUrl}/photos`;
 
-  // headers = new HttpHeaders({
-  //   'Content-Type': 'multipart/form-data',
-  //   'Authorization': 'Bearer ' + localStorage.getItem('token')
-  // });
-
   constructor(
     private http: HttpClient,
     private alertifyService: AlertifyService) {

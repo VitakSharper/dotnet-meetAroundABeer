@@ -36,12 +36,6 @@ export class ListsComponent implements OnInit {
       this.users = data['users'].result;
       this.pagination = data['users'].pagination;
     });
-    // this.unsubscribeRemLikeId = this.usersService.getRemoveLikeUserIdSub
-    //   .subscribe(userId => {
-    //     if (userId !== '') {
-    //       this.removeLike(userId);
-    //     }
-    //   });
   }
 
   loadUsers(userParams: RequestQueryUserParams) {

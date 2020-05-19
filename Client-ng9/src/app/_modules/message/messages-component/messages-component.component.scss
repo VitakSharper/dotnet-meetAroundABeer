@@ -140,6 +140,10 @@
     .message-footer {
       background: linear-gradient(225deg, rgba(225, 245, 254, 1) 40%, rgba(250, 250, 250, 1) 100%);
 
+      &.unread {
+        background-image: linear-gradient(315deg, rgba(255, 78, 0, 0.4) 0%, rgba(236, 159, 5, 0.5) 74%);
+      }
+
       .btn-visibility {
         margin-right: auto;
 

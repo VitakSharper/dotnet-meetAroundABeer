@@ -13,10 +13,10 @@
       <mat-chip-list>
         <mat-chip color="primary">My members lists</mat-chip>
       </mat-chip-list>
-      <mat-button-toggle-group class="like-toggle__btn-group">
-        <mat-button-toggle class="btn-toggle" (click)="onShowMembers('Likers')">Members who like me
+      <mat-button-toggle-group class="like-toggle__btn-group" [value]="likeParams">
+        <mat-button-toggle class="btn-toggle" value="Likers" (click)="onShowMembers('Likers')">Members who like me
         </mat-button-toggle>
-        <mat-button-toggle class="btn-toggle" (click)="onShowMembers('Likees')">Members who i like
+        <mat-button-toggle class="btn-toggle" value="Likees" (click)="onShowMembers('Likees')">Members who i like
         </mat-button-toggle>
       </mat-button-toggle-group>
     </mat-card>

@@ -46,4 +46,16 @@ export class MessageService {
   sendMessage(message: MessageToSend) {
     return this.http.post(this.baseUrl, message);
   }
+
+  isRead(id: string, path: string, value: string) {
+    const itemToUpdate = [
+      {
+        op: 'replace',
+        path,
+        value
+      }
+    ];
+    this.http.patch(`${this.baseUrl}/${id}`, itemToUpdate)
+      .subscribe();
+  }
 }

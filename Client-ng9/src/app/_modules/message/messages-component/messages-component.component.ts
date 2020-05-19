@@ -18,7 +18,7 @@ export class MessagesComponentComponent implements OnInit {
   messages: Message[];
   pagination: Pagination;
   messageContainer = 'Unread';
-  step = 0;
+  step = -1;
   pageSizeOptions = [5, 10, 15, 20];
 
   constructor(
@@ -39,7 +39,10 @@ export class MessagesComponentComponent implements OnInit {
   }
 
   loadMessages() {
-    this.messageService.getMessages(this.pagination.currentPage, this.pagination.itemsPerPage, this.messageContainer)
+    this.messageService.getMessages(
+      this.pagination.currentPage,
+      this.pagination.itemsPerPage,
+      this.messageContainer)
       .subscribe((res: PaginationResult<Message[]>) => {
         this.messages = res.result;
         this.pagination = res.pagination;
@@ -52,15 +55,18 @@ export class MessagesComponentComponent implements OnInit {
       this.pagination.itemsPerPage = $event.pageSize;
     }
     this.loadMessages();
+    this.step = -1;
   }
 
-  setStep(index: number, id: string) {
+  setStep(index: number, id: string, isRead: boolean) {
     this.step = index;
-    if (this.messageContainer !== 'Outbox') {
+
+    if (this.messageContainer !== 'Outbox' && !isRead) {
       setTimeout(() => {
         this.messages = this.messages.map(m => {
           if (m.id === id) {
             m.isRead = true;
+            this.messageService.isRead(id, '/isRead', 'true');
           }
           return m;
         });
@@ -77,8 +83,10 @@ export class MessagesComponentComponent implements OnInit {
   }
 
   loadMessagesBy(type: string) {
+    this.messages = [];
     this.messageContainer = type;
     this.loadMessages();
+    this.step = -1;
   }
 
   getLabel(index: number) {
