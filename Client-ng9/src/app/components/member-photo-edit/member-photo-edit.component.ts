@@ -28,29 +28,33 @@ export class MemberPhotoEditComponent implements OnInit, OnDestroy {
   }
 
   setMain(id: string) {
-    this.photosService.setMain(id).subscribe();
-    this.user.photos.forEach(p => {
-      if (p.isMain) {
-        p.isMain = false;
-      }
-      if (p.id === id) {
-        p.isMain = true;
-        this.user.photoUrl = p.url;
-      }
-    });
-    this.usersService.pushUser(this.user);
-    this.alertifyService.successAlert('Photo successfully set to main.');
+    this.photosService.setMain(id)
+      .subscribe(() => {
+        },
+        error => this.alertifyService.errorAlert('Problem updating.'),
+        () => {
+          this.user.photos.forEach(p => {
+            if (p.isMain) {
+              p.isMain = false;
+            }
+            if (p.id === id) {
+              p.isMain = true;
+              this.user.photoUrl = p.url;
+            }
+          });
+          this.usersService.pushUser(this.user);
+          this.alertifyService.successAlert('Photo successfully set to main.');
+        });
   }
 
   setStatus(id: string) {
-    this.photosService.setStatus(id).subscribe();
     this.user.photos.forEach(p => {
       if (p.id === id) {
         p.status = !p.status;
+        this.photosService.updatePhoto(id, '/status', p.status);
       }
     });
     this.usersService.pushUser(this.user);
-    this.alertifyService.successAlert('Status successfully changed.');
   }
 
   deletePhoto(id: string) {

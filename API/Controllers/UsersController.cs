@@ -3,10 +3,8 @@ using AutoMapper;
 using Data;
 using Data.Dtos;
 using Data.Helpers;
-using Data.Interfaces;
 using Data.Repository.Interfaces;
 using Microsoft.AspNetCore.Mvc;
-using Persistence;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -19,27 +17,19 @@ namespace API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IUsersRepository _usersRepository;
-        private readonly DataContext _context;
-        private readonly IUserAccessor _userAccessor;
         private readonly IDatingRepository _datingRepository;
         private readonly IAuthRepository _authRepository;
-        private readonly IJwtGenerator _jwtGenerator;
         private readonly IMapper _mapper;
 
         public UsersController(
             IUsersRepository usersRepository,
             IAuthRepository authRepository,
-            IJwtGenerator jwtGenerator,
             IMapper mapper,
-            DataContext context,
-            IUserAccessor userAccessor,
             IDatingRepository datingRepository
         )
         {
-            _context = context;
-            _userAccessor = userAccessor;
             _datingRepository = datingRepository;
-            (_authRepository, _jwtGenerator) = (authRepository, jwtGenerator);
+            _authRepository = authRepository;
             (_usersRepository, _mapper) = (usersRepository, mapper);
         }
 
@@ -102,7 +92,7 @@ namespace API.Controllers
             _ = userToReturn ??
                 throw new Exception("Updating failed");
 
-            return Ok(new {userToReturn});
+            return Ok();
         }
 
         [HttpPost("like/{recipientId}")]
@@ -138,7 +128,7 @@ namespace API.Controllers
 
             _datingRepository.Delete<Like>(like);
             if (await _datingRepository.Save())
-                return Ok();
+                return NoContent();
 
             return BadRequest("Something went wrong.");
         }

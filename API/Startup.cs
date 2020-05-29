@@ -28,6 +28,7 @@ using System.Net;
 using System.Reflection;
 using System.Text;
 using System.Text.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace API
 {
@@ -79,7 +80,7 @@ namespace API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // CORS Policy
+                // CORS Policy
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>
@@ -92,7 +93,7 @@ namespace API
                             "origin",
                             "x-requested-with")
                         .WithExposedHeaders("WWW-Authenticate", "Pagination")
-                        .WithMethods("GET", "POST", "UPDATE", "PUT", "DELETE")
+                        .WithMethods("GET", "POST", "UPDATE", "PUT","PATCH", "DELETE")
                         .WithOrigins("http://localhost:4200")
                         .AllowCredentials();
                 });
@@ -100,31 +101,31 @@ namespace API
 
             services.AddSingleton<FileManager>();
 
-            // AutoMapper
+                // AutoMapper
             services.AddAutoMapper(typeof(AuthRepository).Assembly);
 
-            // Repository services
+                 // Repository services
             services.AddScoped<IAuthRepository, AuthRepository>();
             services.AddScoped<IUsersRepository, UsersRepository>();
             services.AddScoped<IDatingRepository, DatingRepository>();
 
-            // Log User Activity service
+                 // Log User Activity service
             services.AddScoped<LogUserActivity>();
 
-            // JWT service
+                 // JWT service
             services.AddScoped<IJwtGenerator, JwtGenerator>();
 
-            // User accessor service
+                 // User accessor service
             services.AddScoped<IUserAccessor, UserAccessor>();
 
-            // Identity config
+                 // Identity config
             services.TryAddSingleton<ISystemClock, SystemClock>();
             var builder = services.AddIdentityCore<AppUser>();
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
             identityBuilder.AddEntityFrameworkStores<DataContext>();
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
-            // JWT config
+                 // JWT config
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(opt =>
                 {
@@ -148,7 +149,12 @@ namespace API
                     //opt.JsonSerializerOptions.PropertyNamingPolicy = null;
                     //opt.JsonSerializerOptions.DictionaryKeyPolicy = null;
                 })
-                // Fluent Validation
+                    // NewtonSoft JSON for JsonPatch
+                .AddNewtonsoftJson(opt =>
+                {
+                    opt.SerializerSettings.ContractResolver=new CamelCasePropertyNamesContractResolver();
+                })
+                     // Fluent Validation
                 .AddFluentValidation(opt =>
                     {
                         opt.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
@@ -156,15 +162,15 @@ namespace API
                     }
                 );
 
-            // Cloudinary
+                     // Cloudinary
             services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
-            // Cloudinary Accessor
+                    // Cloudinary Accessor
             services.AddScoped<IPhotoAccessor, PhotoAccessor>();
 
             services.AddAuthorization();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+                     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())

@@ -23,6 +23,11 @@ namespace Data.Repository
         public void Delete<T>(T entity) where T : class =>
             _context.Remove(entity);
 
+        public void Update<T>(T entity) where T : class
+        {
+            // HttpPatch
+        }
+
         public async Task<Photo> GetPhoto(string id) =>
             await _context.Photos.FirstOrDefaultAsync(p => p.Id == id);
 

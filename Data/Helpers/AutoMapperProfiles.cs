@@ -38,6 +38,7 @@ namespace Data.Helpers
             CreateMap<Photo, PhotosForDetailedDto>();
             CreateMap<Photo, PhotoForReturnDto>();
             CreateMap<PhotoForCreationDto, Photo>();
+            CreateMap<Photo, PhotoForUpdateDto>().ReverseMap();
             CreateMap<UserForUpdateDto, AppUser>();
             CreateMap<UserForRegisterDto, AppUser>();
             CreateMap<MessageForCreationDto, Message>().ReverseMap();
@@ -54,6 +55,7 @@ namespace Data.Helpers
                         opt.MapFrom(source =>
                             source.Recipient.Photos.FirstOrDefault(p => p.IsMain).Url);
                     });
+            CreateMap<Message, MessageForUpdateDto>().ReverseMap();
         }
     }
 }

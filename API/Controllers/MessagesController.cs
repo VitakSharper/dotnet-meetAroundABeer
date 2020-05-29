@@ -8,6 +8,7 @@ using Data.Dtos;
 using Data.Helpers;
 using Data.Repository.Interfaces;
 using Domain;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -32,9 +33,6 @@ namespace API.Controllers
         [HttpGet("{id}", Name = "GetMessage")]
         public async Task<IActionResult> GetMessage(string id)
         {
-            var currentUser = await _usersRepository.GetCurrentUser();
-            if (currentUser == null) return Unauthorized();
-
             var messageFromRepo = await _datingRepository.GetMessage(id);
             if (messageFromRepo == null) return NotFound();
 
@@ -81,7 +79,7 @@ namespace API.Controllers
             messageForCreationDto.SenderId = currentUser.Id;
 
             var recipient = await _usersRepository.GetUser(messageForCreationDto.RecipientId);
-            if (recipient == null) return BadRequest("Problem sent message.");
+            if (recipient == null) return NotFound("Problem sent message.");
 
             var message = _mapper.Map<Message>(messageForCreationDto);
             message.Id = Guid.NewGuid().ToString();
@@ -94,6 +92,30 @@ namespace API.Controllers
             }
 
             throw new Exception("Creating the message failed on save.");
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> IsRead(string id,
+            JsonPatchDocument<MessageForUpdateDto> patchDocument)
+        {
+            var currentUser = await _usersRepository.GetCurrentUser();
+            if (currentUser == null) return Unauthorized();
+
+            var message = await _datingRepository.GetMessage(id);
+            if (message == null) return NotFound("Problem getting message.");
+            if (message.IsRead) return NoContent();
+
+            var messageToPatch = _mapper.Map<MessageForUpdateDto>(message);
+
+            patchDocument.ApplyTo(messageToPatch, ModelState);
+
+            if (!TryValidateModel(messageToPatch)) return ValidationProblem(ModelState);
+
+            var updatedMessage = _mapper.Map(messageToPatch, message);
+            _datingRepository.Update(updatedMessage);
+
+            if (await _datingRepository.Save()) return NoContent();
+            return BadRequest("Something went wrong.");
         }
     }
 }

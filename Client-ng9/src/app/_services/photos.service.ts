@@ -21,8 +21,19 @@ export class PhotosService {
     return this.http.post(`${this.baseUrl}/${id}/main`, {});
   }
 
-  setStatus(id: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/${id}/status`, {});
+  updatePhoto(id: string, path: string, value: boolean) {
+    const itemToUpdate = [
+      {
+        op: 'replace',
+        path,
+        value
+      }
+    ];
+    this.http.patch(`${this.baseUrl}/${id}/status`, itemToUpdate)
+      .subscribe(() => {
+        }, error => this.alertifyService.errorAlert('Problem updating.')
+        , () => this.alertifyService.successAlert('Updated successfully.')
+      );
   }
 
   deletePhoto(id: string): Observable<any> {

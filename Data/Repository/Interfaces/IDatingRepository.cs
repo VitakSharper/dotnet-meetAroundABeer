@@ -10,6 +10,7 @@ namespace Data.Repository.Interfaces
     {
         void Add<T>(T entity) where T : class;
         void Delete<T>(T entity) where T : class;
+        void Update<T>(T entity) where T : class;
 
         Task<Photo> GetPhoto(string id);
         Task<Like> GetLike(string userId, string recipientId);

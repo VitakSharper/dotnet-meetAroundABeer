@@ -1,22 +1,18 @@
 ﻿using AutoMapper;
 using Data.Dtos;
-using Data.Interfaces;
 using Data.Repository.Interfaces;
 using Data.Security.Photo;
 using Domain;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Persistence;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Services;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
+using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.Extensions.Hosting;
 
 namespace API.Controllers
 {
@@ -24,37 +20,28 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class PhotosController : ControllerBase
     {
-        private readonly DataContext _context;
-        private readonly IUserAccessor _userAccessor;
         private readonly IPhotoAccessor _photoAccessor;
+        private readonly IUsersRepository _usersRepository;
         private readonly IDatingRepository _datingRepository;
         private readonly IMapper _mapper;
-        private readonly IOptions<CloudinarySettings> _cloudinaryConfig;
-        private readonly IWebHostEnvironment _env;
         private readonly FileManager _fileManager;
-        private string _dir;
+        private readonly string _dir;
 
         public PhotosController(
-            DataContext context,
-            IUserAccessor userAccessor,
             IPhotoAccessor photoAccessor,
+            IUsersRepository usersRepository,
             IDatingRepository datingRepository,
             IMapper mapper,
-            IOptions<CloudinarySettings> cloudinaryConfig,
-            IWebHostEnvironment env,
+            IHostEnvironment env,
             FileManager fileManager
         )
         {
-            _context = context;
-            _userAccessor = userAccessor;
             _photoAccessor = photoAccessor;
+            _usersRepository = usersRepository;
             _datingRepository = datingRepository;
-            _userAccessor = userAccessor;
             _mapper = mapper;
-            _cloudinaryConfig = cloudinaryConfig;
-            _env = env;
             _fileManager = fileManager;
-            _dir = _env.ContentRootPath;
+            _dir = env.ContentRootPath;
         }
 
         [HttpGet("{id}/", Name = "GetPhoto")]
@@ -69,9 +56,7 @@ namespace API.Controllers
         [HttpPost("photo")]
         public async Task<IActionResult> Add([FromForm] PhotoForCreationDto photo)
         {
-            var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
-                u.UserName == _userAccessor.GetCurrentUsername());
-
+            var currentUser = await _usersRepository.GetCurrentUser();
             if (currentUser == null) return Unauthorized();
 
             var (publicId, absoluteUri) = await _photoAccessor.AddPhoto(photo.File);
@@ -132,8 +117,7 @@ namespace API.Controllers
         [HttpPost("{id}/main")]
         public async Task<IActionResult> Main(string id)
         {
-            var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
-                u.UserName == _userAccessor.GetCurrentUsername());
+            var currentUser = await _usersRepository.GetCurrentUser();
             if (currentUser == null) return Unauthorized();
 
             var photo = currentUser.Photos.FirstOrDefault(p => p.Id == id);
@@ -146,45 +130,52 @@ namespace API.Controllers
 
             photo.IsMain = true;
             if (mainPhoto != null) mainPhoto.IsMain = false;
-            if (_context.SaveChanges() > 0) return NoContent();
+            if (await _datingRepository.Save()) return NoContent();
             return BadRequest("Problem saving changes");
         }
 
-        [HttpPost("{id}/status")]
-        public async Task<IActionResult> Status(string id)
+        [HttpPatch("{id}/status")]
+        public async Task<IActionResult> Status(string id,
+            JsonPatchDocument<PhotoForUpdateDto> jsonPatchDocument)
         {
-            var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
-                u.UserName == _userAccessor.GetCurrentUsername());
+            var currentUser = await _usersRepository.GetCurrentUser();
             if (currentUser == null) return Unauthorized();
 
             var photo = currentUser.Photos.FirstOrDefault(p => p.Id == id);
             if (photo == null) return NotFound();
 
-            photo.Status = !photo.Status;
-            if (_context.SaveChanges() > 0) return NoContent();
-            return BadRequest("Problem saving changes");
+            var photoToPatch = _mapper.Map<PhotoForUpdateDto>(photo);
+
+            jsonPatchDocument.ApplyTo(photoToPatch, ModelState);
+
+            if (!TryValidateModel(photoToPatch)) return ValidationProblem(ModelState);
+
+            var updatedPhoto = _mapper.Map(photoToPatch, photo);
+            _datingRepository.Update(updatedPhoto);
+
+            if (await _datingRepository.Save()) return NoContent();
+            return BadRequest("Something went wrong.");
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(string id)
         {
-            var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
-                u.UserName == _userAccessor.GetCurrentUsername());
+            var currentUser = await _usersRepository.GetCurrentUser();
             if (currentUser == null) return Unauthorized();
 
             var photo = currentUser.Photos.FirstOrDefault(p => p.Id == id);
             if (photo == null) return NotFound();
             if (photo.IsMain) return BadRequest("You cannot delete your main photo.");
-
+            // if photo is hosted on cloudinary then delete it
             if (photo.Id.Length < 21)
             {
                 var result = _photoAccessor.DeletePhoto(id);
-                if (result == null) throw new Exception("Problem delete the photo.");
+                _ = result ?? throw new Exception("Problem delete the photo.");
             }
 
             currentUser.Photos.Remove(photo);
 
-            if (_context.SaveChanges() > 0) return Ok();
+            if (await _datingRepository.Save()) return NoContent();
 
             return BadRequest("Problem deleting photo.");
         }
@@ -192,9 +183,9 @@ namespace API.Controllers
         [HttpGet("getPhotos")]
         public async Task<IActionResult> GetPhotos()
         {
-            var currentUser = await _context.Users.SingleOrDefaultAsync(u =>
-                u.UserName == _userAccessor.GetCurrentUsername());
+            var currentUser = await _usersRepository.GetCurrentUser();
             if (currentUser == null) return Unauthorized();
+
             var photos = currentUser.Photos.ToList();
 
             return Ok(photos);
